@@ -1,7 +1,5 @@
 package be.kuleuven.chess.models;
 
-import java.util.Arrays;
-import java.util.stream.Stream;
 
 public class Board {
     private Tile[][] board;
@@ -9,6 +7,10 @@ public class Board {
     public Board(){
         board = new Tile[8][8];
         generateBoard();
+    }
+
+    public Tile getTile(int row, int column){
+        return board[row][column];
     }
 
     private void generateBoard(){
@@ -20,4 +22,5 @@ public class Board {
 
         board[7][7].addPiece();
     }
+
 }
