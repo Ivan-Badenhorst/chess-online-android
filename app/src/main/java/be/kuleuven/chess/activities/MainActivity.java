@@ -1,8 +1,10 @@
-package be.kuleuven.chess;
+package be.kuleuven.chess.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import be.kuleuven.chess.R;
 
 public class MainActivity extends AppCompatActivity {
 
