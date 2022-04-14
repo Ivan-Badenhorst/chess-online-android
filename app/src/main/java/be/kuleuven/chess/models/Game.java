@@ -6,4 +6,8 @@ public class Game {
     public Game() {
         board = new Board();
     }
+
+    public Board getBoard() {
+        return board;
+    }
 }
