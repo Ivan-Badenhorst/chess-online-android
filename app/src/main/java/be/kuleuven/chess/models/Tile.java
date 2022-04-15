@@ -7,6 +7,8 @@ import android.graphics.drawable.Drawable;
 import java.util.Optional;
 
 import be.kuleuven.chess.R;
+import be.kuleuven.chess.models.pieces.King;
+import be.kuleuven.chess.models.pieces.Knight;
 
 public class Tile {
     private Optional<Piece> piece;
@@ -25,7 +27,7 @@ public class Tile {
     public void addPiece(){
         //for testing purpose we declare a fixed piece
         //normally use parameter
-        piece = Optional.of(new King(Color.black));
+        piece = Optional.of(new Knight(Color.white));
     }
 
 
