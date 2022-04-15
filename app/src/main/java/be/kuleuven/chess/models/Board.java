@@ -29,7 +29,7 @@ public class Board {
             }
         }
 
-        //board[7][7].addPiece();
+        board[7][7].addPiece();
     }
 
 }

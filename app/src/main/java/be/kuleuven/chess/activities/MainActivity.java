@@ -2,6 +2,7 @@ package be.kuleuven.chess.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -34,11 +35,11 @@ public class MainActivity extends AppCompatActivity {
         display();
     }
 
-    private void setupImageView(){
-        /*
+    /*private void setupImageView(){
+
         if we setup a display function this will no longer be necessary! This is just to
         check if it works
-         */
+         *//*
 
 
         TableLayout tableLayout= findViewById(R.id.gdBoard);
@@ -70,7 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
+*/
+    @SuppressLint("NewApi")
     public void display(){
         TableLayout tableLayout= findViewById(R.id.gdBoard);
         for(int i = 0; i<8; i++){
@@ -80,17 +82,15 @@ public class MainActivity extends AppCompatActivity {
                 ImageView imageView =  (ImageView) row.getChildAt(j);
 
                 Optional<Piece> piece = game.getBoard().getTile(i, j).getPiece();
-                /*if(piece.isPresent()){
-                    Piece piece2 = piece.get();
-                    Drawable[] image = piece.get().getImage();
-
+                if(piece.isPresent()){
+                    Drawable[] image = game.getBoard().getTile(i,j).getImage(this.getApplicationContext());
                     LayerDrawable layers = new LayerDrawable(image);
                     imageView.setImageDrawable(layers);
                     }
-                else {*/
-                    Drawable image = game.getBoard().getTile(i, j).getTileImage();
+                else {
+                    Drawable image = game.getBoard().getTile(i, j).getTileImage(this.getApplicationContext());
                     imageView.setImageDrawable(image);
-                //}
+                }
 
 
                     //figure out how to do this

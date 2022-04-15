@@ -1,5 +1,6 @@
 package be.kuleuven.chess.models;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
@@ -16,7 +17,7 @@ public class Tile {
 
 
     public Tile(Board board, Color color){
-        //piece = Optional.empty();
+        piece = Optional.empty();
         this.board = board;
         this.color = color;
     }
@@ -24,7 +25,7 @@ public class Tile {
     public void addPiece(){
         //for testing purpose we declare a fixed piece
         //normally use parameter
-        //piece = Optional.of(new King(Color.white));
+        piece = Optional.of(new King(Color.black));
     }
 
 
@@ -47,13 +48,25 @@ public class Tile {
         }
     }
 
-    public Drawable getTileImage(){
+    public Drawable getTileImage(Context ctx){
+        Resources r = ctx.getResources();
         if(this.color == Color.white){
-            return Resources.getSystem().getDrawable(R.drawable.dark_square);
+            return r.getDrawable(R.drawable.dark_square);
         }
         else{
-            return Resources.getSystem().getDrawable(R.drawable.light_square);
+            return r.getDrawable(R.drawable.light_square);
         }
+    }
+
+    public Drawable[] getImage(Context ctx){
+        Resources r = ctx.getResources();
+        Drawable tile = getTileImage(ctx);
+        Drawable image = piece.get().getImage(ctx);
+
+        Drawable[] layers = new Drawable[2];
+        layers[0] = tile;
+        layers[1] = image;
+        return layers;
     }
 
 }

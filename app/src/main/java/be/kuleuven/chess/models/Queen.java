@@ -6,25 +6,23 @@ import android.graphics.drawable.Drawable;
 
 import be.kuleuven.chess.R;
 
-public class King extends Piece{
-    //to do: write code to get the correct file
-    private Color color;
-    public King(Color color){
-        super();
+public class Queen extends Piece {
+    private final Color color;
+
+    public Queen(Color color) {
         this.color = color;
     }
 
     @Override
-    public Drawable getImage(Context ctx){
+    public Drawable getImage(Context ctx) {
         Resources r = ctx.getResources();
         Drawable symbol;
         if(color == Color.black) {
-            symbol = r.getDrawable(R.drawable.white_king);
+            symbol = r.getDrawable(R.drawable.white_queen);
         }
         else{
-            symbol = r.getDrawable(R.drawable.black_king);
+            symbol = r.getDrawable(R.drawable.black_queen);
         }
         return symbol;
-
     }
 }
