@@ -12,17 +12,19 @@ public class Tile {
     private Board board;
     private int row;
     private int column;
+    private Color color;
 
 
-    public Tile(Board board){
-        piece = Optional.empty();
+    public Tile(Board board, Color color){
+        //piece = Optional.empty();
         this.board = board;
+        this.color = color;
     }
 
     public void addPiece(){
         //for testing purpose we declare a fixed piece
         //normally use parameter
-        piece = Optional.of(new King());
+        //piece = Optional.of(new King(Color.white));
     }
 
 
@@ -42,6 +44,15 @@ public class Tile {
                 }
             }
 
+        }
+    }
+
+    public Drawable getTileImage(){
+        if(this.color == Color.white){
+            return Resources.getSystem().getDrawable(R.drawable.dark_square);
+        }
+        else{
+            return Resources.getSystem().getDrawable(R.drawable.light_square);
         }
     }
 

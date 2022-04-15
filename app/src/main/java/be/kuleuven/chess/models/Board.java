@@ -20,11 +20,16 @@ public class Board {
     private void generateBoard(){
         for(int i =0; i<board.length; i++){
             for(int j = 0; j<board[0].length; j++){
-                board[i][j] = new Tile(this);
+                if( (i %2 == 0 & j%2 != 0) || (i %2 != 0 & j%2 == 0) ) {
+                    board[i][j] = new Tile(this, Color.black);
+                }
+                else{
+                    board[i][j] = new Tile(this, Color.white);
+                }
             }
         }
 
-        board[7][7].addPiece();
+        //board[7][7].addPiece();
     }
 
 }
