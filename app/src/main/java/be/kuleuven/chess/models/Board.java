@@ -9,7 +9,7 @@ import be.kuleuven.chess.models.pieces.Queen;
 import be.kuleuven.chess.models.pieces.Rook;
 
 public class Board {
-    private Tile[][] board;
+    private final Tile[][] board;
 
     public Board(){
         board = new Tile[8][8];
@@ -37,8 +37,7 @@ public class Board {
         }
 
         placePieces();
-        //getTile(7, 7).addPiece(new Rook(Color.white));
-        //getTile(7, 6).addPiece(new Knight(Color.white));
+
     }
 
     private void placePieces(){
@@ -91,7 +90,7 @@ public class Board {
 
                     }
                 }
-                else if(i==1){
+                else{
                     getTile(i, j).addPiece(new Pawn(Color.black));
                     getTile(7-i, j).addPiece(new Pawn(Color.white));
 

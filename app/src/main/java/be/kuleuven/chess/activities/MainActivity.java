@@ -2,6 +2,7 @@ package be.kuleuven.chess.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -26,48 +27,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //setupImageView();
         game = new Game();
         display();
     }
-
-    /*private void setupImageView(){
-
-        if we setup a display function this will no longer be necessary! This is just to
-        check if it works
-         *//*
-
-
-        TableLayout tableLayout= findViewById(R.id.gdBoard);
-        for(int i = 0; i<8; i++){
-            TableRow row = (TableRow) tableLayout.getChildAt(i);
-
-            for(int j = 0; j<8; j++){
-                ImageView imageView =  (ImageView) row.getChildAt(j);
-
-                Resources r = getResources();
-                Drawable[] layers = new Drawable[2];
-
-                if( (i %2 == 0 & j%2 != 0) || (i %2 != 0 & j%2 == 0) ){
-                    layers[0] = r.getDrawable(R.drawable.dark_square);
-                }
-                else{
-                    layers[0] = r.getDrawable(R.drawable.light_square);
-                }
-
-                LayerDrawable layers2 = new LayerDrawable(layers);
-                imageView.setImageDrawable(layers2);
-
-            }
-
-        }
-
-
-
-
-
-    }
-*/
 
     public void display(){
         TableLayout tableLayout= findViewById(R.id.gdBoard);

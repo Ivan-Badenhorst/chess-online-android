@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import java.util.Optional;
 
 import be.kuleuven.chess.R;
-import be.kuleuven.chess.models.pieces.Knight;
 @SuppressLint("NewApi")
 public class Tile {
     private Optional<Piece> piece;
