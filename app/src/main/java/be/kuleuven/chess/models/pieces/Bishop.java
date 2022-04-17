@@ -21,10 +21,10 @@ public class Bishop extends Piece {
         Resources r = ctx.getResources();
         Drawable symbol;
         if(color == Color.black) {
-            symbol = r.getDrawable(R.drawable.white_bishop);
+            symbol = r.getDrawable(R.drawable.black_bishop);
         }
         else{
-            symbol = r.getDrawable(R.drawable.black_bishop);
+            symbol = r.getDrawable(R.drawable.white_bishop);
         }
         return symbol;
     }

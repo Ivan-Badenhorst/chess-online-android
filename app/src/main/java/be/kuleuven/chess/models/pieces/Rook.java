@@ -21,10 +21,10 @@ public class Rook extends Piece {
         Resources r = ctx.getResources();
         Drawable symbol;
         if(color == Color.black) {
-            symbol = r.getDrawable(R.drawable.white_rook);
+            symbol = r.getDrawable(R.drawable.black_rook);
         }
         else{
-            symbol = r.getDrawable(R.drawable.black_rook);
+            symbol = r.getDrawable(R.drawable.white_rook);
         }
         return symbol;
     }

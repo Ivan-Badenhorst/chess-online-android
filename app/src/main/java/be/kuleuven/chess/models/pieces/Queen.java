@@ -20,10 +20,10 @@ public class Queen extends Piece {
         Resources r = ctx.getResources();
         Drawable symbol;
         if(color == Color.black) {
-            symbol = r.getDrawable(R.drawable.white_queen);
+            symbol = r.getDrawable(R.drawable.black_queen);
         }
         else{
-            symbol = r.getDrawable(R.drawable.black_queen);
+            symbol = r.getDrawable(R.drawable.white_queen);
         }
         return symbol;
     }

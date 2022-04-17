@@ -21,10 +21,10 @@ public class Knight extends Piece {
         Resources r = ctx.getResources();
         Drawable symbol;
         if(color == Color.black) {
-            symbol = r.getDrawable(R.drawable.white_knight);
+            symbol = r.getDrawable(R.drawable.black_knight);
         }
         else{
-            symbol = r.getDrawable(R.drawable.black_knight);
+            symbol = r.getDrawable(R.drawable.white_knight);
         }
         return symbol;
     }

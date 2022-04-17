@@ -21,10 +21,10 @@ public class King extends Piece {
         Resources r = ctx.getResources();
         Drawable symbol;
         if(color == Color.black) {
-            symbol = r.getDrawable(R.drawable.white_king);
+            symbol = r.getDrawable(R.drawable.black_king);
         }
         else{
-            symbol = r.getDrawable(R.drawable.black_king);
+            symbol = r.getDrawable(R.drawable.white_king);
         }
         return symbol;
 
