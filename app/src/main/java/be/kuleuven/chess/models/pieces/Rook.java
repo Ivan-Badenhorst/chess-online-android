@@ -9,7 +9,7 @@ import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Piece;
 
 public class Rook extends Piece {
-    private Color color;
+    private final Color color;
 
     public Rook(Color color){
         super();
