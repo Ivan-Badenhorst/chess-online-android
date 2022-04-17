@@ -1,5 +1,6 @@
 package be.kuleuven.chess.models;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -7,15 +8,15 @@ import android.graphics.drawable.Drawable;
 import java.util.Optional;
 
 import be.kuleuven.chess.R;
-import be.kuleuven.chess.models.pieces.King;
 import be.kuleuven.chess.models.pieces.Knight;
-
+@SuppressLint("NewApi")
 public class Tile {
     private Optional<Piece> piece;
-    private Board board;
+    private final Board board;
     private int row;
     private int column;
-    private Color color;
+    private final Color color;
+
 
 
     public Tile(Board board, Color color){
@@ -24,10 +25,11 @@ public class Tile {
         this.color = color;
     }
 
-    public void addPiece(){
+
+    public void addPiece(Piece piece){
         //for testing purpose we declare a fixed piece
         //normally use parameter
-        piece = Optional.of(new Knight(Color.white));
+        this.piece = Optional.of(piece);
     }
 
 
@@ -61,7 +63,6 @@ public class Tile {
     }
 
     public Drawable[] getImage(Context ctx){
-        Resources r = ctx.getResources();
         Drawable tile = getTileImage(ctx);
         Drawable image = piece.get().getImage(ctx);
 

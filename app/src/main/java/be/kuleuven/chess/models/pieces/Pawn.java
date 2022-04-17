@@ -20,10 +20,10 @@ public class Pawn extends Piece {
         Resources r = ctx.getResources();
         Drawable symbol;
         if(color == Color.black) {
-            symbol = r.getDrawable(R.drawable.white_pawn);
+            symbol = r.getDrawable(R.drawable.black_pawn);
         }
         else{
-            symbol = r.getDrawable(R.drawable.black_pawn);
+            symbol = r.getDrawable(R.drawable.white_pawn);
         }
         return symbol;
     }
