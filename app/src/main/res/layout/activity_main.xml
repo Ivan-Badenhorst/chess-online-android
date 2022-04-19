@@ -36,6 +36,7 @@
                 android:id="@+id/ivA1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
@@ -90,6 +91,7 @@
                 android:id="@+id/ivA2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView

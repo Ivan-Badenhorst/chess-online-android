@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.annotation.SuppressLint;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -21,6 +24,7 @@ import be.kuleuven.chess.models.Piece;
 public class MainActivity extends AppCompatActivity {
 
     private Game game;
+    private ImageView tile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +60,29 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+
+    public void tileClick(View caller){ 
+        int id = caller.getId();
+
+         tile = (ImageView) findViewById(id);
+
+
+         int row, column;
+        TableRow tblRow = (TableRow) tile.getParent();
+         column = tblRow.indexOfChild(tile);
+
+         row = ((TableLayout) tblRow.getParent()).indexOfChild(tblRow);
+
+         if(row == 1 && column == 0){//just to test index
+             Resources r = getResources();
+             Drawable im = r.getDrawable(R.drawable.tester_on_click);
+             tile.setImageDrawable(im);
+         }
+
+
+    }
+
     public static void main(String[] args) {
-        
+
     }
 }
