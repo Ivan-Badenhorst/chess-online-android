@@ -20,6 +20,7 @@
         android:layout_width="400dp"
         android:layout_height="400dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
@@ -29,7 +30,7 @@
         <TableRow
             android:id="@+id/tr1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/ivA1"
@@ -83,7 +84,7 @@
         <TableRow
             android:id="@+id/tr2"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/ivA2"
@@ -353,7 +354,7 @@
         <TableRow
             android:id="@+id/tr7"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/ivA7"
