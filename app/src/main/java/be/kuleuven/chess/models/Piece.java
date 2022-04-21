@@ -12,5 +12,6 @@ public abstract class Piece {
 
 
     public abstract Drawable getImage(Context ctx);
+    public abstract void generateMoves();
 
 }
