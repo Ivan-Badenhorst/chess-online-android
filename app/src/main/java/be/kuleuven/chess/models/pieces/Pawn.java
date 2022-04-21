@@ -11,10 +11,12 @@ import be.kuleuven.chess.models.Piece;
 
 public class Pawn extends Piece {
     private final Color color;
+    private boolean hasMoved;
 
     public Pawn(Color color, Board board) {
         super(board);
         this.color = color;
+        hasMoved = false;
     }
 
     @Override
@@ -32,6 +34,20 @@ public class Pawn extends Piece {
     @Override
     public void generateMoves()
     {
+        determineTile();
+        int[] pos = tile.getPosition();
+        moves.clear();
+
+        if(pos[0] < 7 && pos[0] > 0){
+            if(this.color == Color.white){
+                moves.add(board.getTile(pos[0] - 1, pos[1]));
+            }
+            else{
+                moves.add(board.getTile(pos[0] + 1, pos[1]));
+            }
+
+        }
+
 
     }
 }

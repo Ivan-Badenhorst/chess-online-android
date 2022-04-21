@@ -12,8 +12,8 @@ import be.kuleuven.chess.R;
 public class Tile {
     private Optional<Piece> piece;
     private final Board board;
-    private final int row;
-    private final int column;
+    private  int row;
+    private  int column;
     private final Color color;
 
 
@@ -23,6 +23,7 @@ public class Tile {
         piece = Optional.empty();
         this.board = board;
         this.color = color;
+
     }
 
 
@@ -39,13 +40,13 @@ public class Tile {
         return piece;
     }
 
-    private void calcPosition(){
+    public void calcPosition(){
         for(int i =0; i<8 ; i++){
-
             for(int j =0; j<8 ; j++){
-                if(board.getBoard()[i][j].equals(this)){
+                if(board.getTile(i, j).equals(this)){
                     row = i;
                     column = j;
+                    break;
                 }
             }
 

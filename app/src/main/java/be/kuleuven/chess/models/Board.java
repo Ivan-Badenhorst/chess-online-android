@@ -41,6 +41,12 @@ public class Board {
             }
         }
 
+        for(int i =0; i<board.length; i++) {
+            for (int j = 0; j < board[0].length; j++) {
+                board[i][j].calcPosition();
+            }
+        }
+
         placePieces();
 
     }
@@ -124,8 +130,14 @@ public class Board {
     }
 
     private void calculateMoves(){
-        whitePieces.stream().forEach(n -> n.generateMoves());
-        blackPieces.stream().forEach(n -> n.generateMoves());
+        for(int i = 0; i<whitePieces.size(); i++){
+            whitePieces.get(i).generateMoves();
+        }
+        for(int i = 0; i<blackPieces.size(); i++){
+            blackPieces.get(i).generateMoves();
+        }
+        //whitePieces.stream().forEach(Piece::generateMoves);
+        //blackPieces.stream().forEach(n -> n.generateMoves());
     }
 
 }

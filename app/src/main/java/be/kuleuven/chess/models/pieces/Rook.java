@@ -32,6 +32,7 @@ public class Rook extends Piece {
     @Override
     public void generateMoves()
     {
-
+        moves.clear();
+        moves = getStraightMoves();
     }
 }

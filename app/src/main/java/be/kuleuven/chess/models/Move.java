@@ -13,7 +13,11 @@ public class Move {
     public void makeMove()
     {
         Piece piece = first.getPiece().get();
-        sec.addPiece(piece);
-        first.removePiece();
+        if(piece.getMoves().contains(sec)){
+            sec.addPiece(piece);
+            first.removePiece();
+            piece.generateMoves();
+        }
+
     }
 }
