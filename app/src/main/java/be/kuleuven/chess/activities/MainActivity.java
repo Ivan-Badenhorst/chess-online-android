@@ -73,11 +73,11 @@ public class MainActivity extends AppCompatActivity {
 
          row = ((TableLayout) tblRow.getParent()).indexOfChild(tblRow);
 
-         if(row == 1 && column == 0){//just to test index
+         //if(row == 1 && column == 0){//just to test index
              Resources r = getResources();
              Drawable im = r.getDrawable(R.drawable.tester_on_click);
              tile.setImageDrawable(im);
-         }
+         //}
 
 
     }

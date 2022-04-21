@@ -36,49 +36,65 @@
                 android:id="@+id/ivA1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
                 android:onClick="tileClick"
-                app:srcCompat="@drawable/place_holder" />
+                app:srcCompat="@drawable/place_holder"
+                tools:ignore="DuplicateSpeakableTextCheck" />
 
             <ImageView
                 android:id="@+id/ivB1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivC1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivD1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivE1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivF1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivG1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivH1"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
         </TableRow>
 
@@ -91,6 +107,7 @@
                 android:id="@+id/ivA2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
                 android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
@@ -98,42 +115,56 @@
                 android:id="@+id/ivB2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivC2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivD2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivE2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivF2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivG2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivH2"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
         </TableRow>
 
@@ -146,48 +177,64 @@
                 android:id="@+id/ivA3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivB3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivC3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivD3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivE3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivF3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivG3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivH3"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
         </TableRow>
 
@@ -200,264 +247,348 @@
                 android:id="@+id/ivA4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivB4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:srcCompat="@drawable/place_holder" />
+                app:srcCompat="@drawable/place_holder"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick" />
 
             <ImageView
                 android:id="@+id/ivC4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivD4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivE4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivF4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivG4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivH4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
         </TableRow>
 
         <TableRow
             android:id="@+id/tr5"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_imageView">
 
             <ImageView
                 android:id="@+id/ivA5"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivB5"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivC5"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivD5"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivE5"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivF5"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivG5"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivH5"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
         </TableRow>
 
         <TableRow
             android:id="@+id/tr6"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_imageView">
 
             <ImageView
                 android:id="@+id/ivA6"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivB6"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivC6"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivD6"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivE6"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivF6"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivG6"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivH6"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
         </TableRow>
 
         <TableRow
             android:id="@+id/tr7"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_imageView">
 
             <ImageView
                 android:id="@+id/ivA7"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivB7"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivC7"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivD7"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivE7"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivF7"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivG7"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivH7"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
         </TableRow>
 
         <TableRow
             android:id="@+id/tr8"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:contentDescription="@string/content_imageView">
 
             <ImageView
                 android:id="@+id/ivA8"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivB8"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivC8"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivD8"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivE8"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivF8"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivG8"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivH8"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
+                android:contentDescription="@string/content_imageView"
+                android:onClick="tileClick"
                 app:srcCompat="@drawable/place_holder" />
         </TableRow>
 
