@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
          row = ((TableLayout) tblRow.getParent()).indexOfChild(tblRow);
 
          game.addClick(row, column);
+         display();
 
              /*Resources r = getResources();
              Drawable im = r.getDrawable(R.drawable.tester_on_click);

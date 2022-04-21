@@ -31,7 +31,7 @@ public class Game {
         else{
             firstClick = true;
             move = new Move(firstTile, board.getTile(row, column));
-            move.execute();
+            move.makeMove();
         }
 
     }
