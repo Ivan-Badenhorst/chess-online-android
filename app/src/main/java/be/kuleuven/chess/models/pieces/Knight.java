@@ -29,4 +29,9 @@ public class Knight extends Piece {
         }
         return symbol;
     }
+    @Override
+    public void generateMoves()
+    {
+
+    }
 }

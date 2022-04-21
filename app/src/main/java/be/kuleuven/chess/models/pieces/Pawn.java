@@ -29,4 +29,9 @@ public class Pawn extends Piece {
         }
         return symbol;
     }
+    @Override
+    public void generateMoves()
+    {
+
+    }
 }
