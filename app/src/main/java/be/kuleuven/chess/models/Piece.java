@@ -3,10 +3,13 @@ package be.kuleuven.chess.models;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import java.util.List;
+
 public abstract class Piece {
     protected Color color;
     protected Board board;
     protected Tile tile;
+    protected List<Tile> moves;
 
     public Piece(Board board)
     {
