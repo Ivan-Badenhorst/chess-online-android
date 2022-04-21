@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 public abstract class Piece {
     protected Color color;
     protected Board board;
+    protected Tile tile;
 
     public Piece(Board board)
     {
@@ -17,8 +18,16 @@ public abstract class Piece {
     public abstract Drawable getImage(Context ctx);
     public abstract void generateMoves();
 
-    private void determineTile(){
-
+    protected void determineTile(){
+        for(int i = 0; i<8;i++){
+            for(int j = 0; j<8;j++){
+                if(board.getTile(i,j).getPiece().isPresent()){
+                    if(board.getTile(i,j).getPiece().get().equals(this)){
+                        this.tile = board.getTile(i,j);
+                    }
+                }
+            }
+        }
     }
 
 }
