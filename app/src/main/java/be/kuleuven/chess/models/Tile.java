@@ -12,9 +12,10 @@ import be.kuleuven.chess.R;
 public class Tile {
     private Optional<Piece> piece;
     private final Board board;
-    private int row;
-    private int column;
+    private final int row;
+    private final int column;
     private final Color color;
+
 
 
 
@@ -73,6 +74,11 @@ public class Tile {
 
     public void removePiece(){
         piece = Optional.empty();
+    }
+
+    public int[] getPosition(){
+        int[] loc = {row, column};
+        return loc;
     }
 
 }
