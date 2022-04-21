@@ -68,10 +68,34 @@ public abstract class Piece {
         for(int i = 0; i<8; i++){
             int[] current = new int[2];
             current[0] = pos[0] - i;
-            current[0] = pos[1] - i;
-            if(!(current[0] < 0 || current[1] < 0 )){
+            current[1] = pos[1] - i;
+
+            if(current[0] >= 0 && current[1] >= 0){
                 moves.add(board.getTile(current[0], current[1]));
             }
+
+            current[0] = pos[0] + i;
+            current[1] = pos[1] + i;
+
+            if(current[0] < 8 && current[1] < 8){
+                moves.add(board.getTile(current[0], current[1]));
+            }
+
+            current[0] = pos[0] - i;
+            current[1] = pos[1] + i;
+
+            if(current[0] >= 0 && current[1] < 8){
+                moves.add(board.getTile(current[0], current[1]));
+            }
+
+            current[0] = pos[0] + i;
+            current[1] = pos[1] - i;
+
+            if(current[0] < 8 && current[1] >= 0){
+                moves.add(board.getTile(current[0], current[1]));
+            }
+
+
         }
 
         return moves;

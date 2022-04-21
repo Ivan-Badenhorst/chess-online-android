@@ -33,6 +33,9 @@ public class Queen extends Piece {
     @Override
     public void generateMoves()
     {
+        moves.clear();
+        moves = getDiagonalMoves();
+        moves.addAll(getStraightMoves());
 
     }
 }
