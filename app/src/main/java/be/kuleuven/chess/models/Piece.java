@@ -3,6 +3,7 @@ package be.kuleuven.chess.models;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
@@ -14,6 +15,7 @@ public abstract class Piece {
     public Piece(Board board)
     {
         this.board = board;
+        moves = new ArrayList<>();
     }
 
 
