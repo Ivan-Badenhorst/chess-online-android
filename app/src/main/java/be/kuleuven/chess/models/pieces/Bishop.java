@@ -29,4 +29,9 @@ public class Bishop extends Piece {
         }
         return symbol;
     }
+    @Override
+    public void generateMoves()
+    {
+
+    }
 }

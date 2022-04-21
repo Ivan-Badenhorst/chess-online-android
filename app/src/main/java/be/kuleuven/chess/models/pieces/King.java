@@ -30,4 +30,9 @@ public class King extends Piece {
         return symbol;
 
     }
+    @Override
+    public void generateMoves()
+    {
+
+    }
 }

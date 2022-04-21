@@ -29,4 +29,9 @@ public class Rook extends Piece {
         }
         return symbol;
     }
+    @Override
+    public void generateMoves()
+    {
+
+    }
 }

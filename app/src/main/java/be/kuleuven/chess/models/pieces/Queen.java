@@ -30,6 +30,7 @@ public class Queen extends Piece {
         return symbol;
     }
 
+    @Override
     public void generateMoves()
     {
 
