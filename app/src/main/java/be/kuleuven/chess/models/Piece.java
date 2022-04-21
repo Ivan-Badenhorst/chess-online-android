@@ -12,10 +12,11 @@ public abstract class Piece {
     protected Tile tile;
     protected List<Tile> moves;
 
-    public Piece(Board board)
+    public Piece(Board board, Color color)
     {
         this.board = board;
         moves = new ArrayList<>();
+        this.color = color;
     }
 
 
@@ -53,6 +54,9 @@ public abstract class Piece {
         //second vertical
         for(int i = 0; i<8; i++){
             if(i != pos[0]){
+                if(board.getTile(i, pos[1]).getPiece().isPresent()){
+                    break;
+                }
                 moves.add(board.getTile(i, pos[1]));
             }
         }
@@ -100,5 +104,12 @@ public abstract class Piece {
 
         return moves;
 
+    }
+
+    public Color getColor(){
+        if (color == Color.black){
+            return Color.black;
+        }
+        return Color.white;
     }
 }

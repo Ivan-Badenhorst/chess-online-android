@@ -10,11 +10,9 @@ import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Piece;
 
 public class Rook extends Piece {
-    private final Color color;
 
     public Rook(Color color, Board board) {
-        super(board);
-        this.color = color;
+        super(board, color);
     }
 
     @Override

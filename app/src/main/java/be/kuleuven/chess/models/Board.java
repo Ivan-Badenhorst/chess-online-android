@@ -3,6 +3,7 @@ package be.kuleuven.chess.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.WeakHashMap;
 
 import be.kuleuven.chess.models.pieces.Bishop;
 import be.kuleuven.chess.models.pieces.King;
@@ -120,16 +121,28 @@ public class Board {
         //for now this only works for the initial setup, not for a midgame start
         whitePieces = new ArrayList<>();
         blackPieces = new ArrayList<>();
+        whitePieces.clear();
+        blackPieces.clear();
+        //REFACTOR TO NOT USE GET 60000 TIMES
+        for(int i =0; i<8 ; i++) {
+            for (int j = 0; j < 8; j++) {
 
-        for(int i = 0; i<2;i++){
-            for(int j = 0; j<8; j++){
-                blackPieces.add(board[i][j].getPiece().get());
-                whitePieces.add(board[7-i][j].getPiece().get());
+                if(getTile(i, j).getPiece().isPresent()){
+                    Piece p  = getTile(i, j).getPiece().get();
+                    Color color = p.getColor();
+                    if(color == Color.black){
+                        blackPieces.add(getTile(i, j).getPiece().get());
+                    }
+                    else{
+                        whitePieces.add(getTile(i, j).getPiece().get());
+                    }
+                }
             }
         }
     }
 
-    private void calculateMoves(){
+    public void calculateMoves(){
+        readPieces();
         for(int i = 0; i<whitePieces.size(); i++){
             whitePieces.get(i).generateMoves();
         }

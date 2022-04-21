@@ -11,10 +11,9 @@ import be.kuleuven.chess.models.Piece;
 
 public class King extends Piece {
     //to do: write code to get the correct file
-    private final Color color;
+
     public King(Color color, Board board) {
-        super(board);
-        this.color = color;
+        super(board, color);
     }
 
     @Override

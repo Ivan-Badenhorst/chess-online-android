@@ -30,7 +30,7 @@ public class Game {
         }
         else{
             firstClick = true;
-            move = new Move(firstTile, board.getTile(row, column));
+            move = new Move(firstTile, board.getTile(row, column), board);
             move.makeMove();
         }
 

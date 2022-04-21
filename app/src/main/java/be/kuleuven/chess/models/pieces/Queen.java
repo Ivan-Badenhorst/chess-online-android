@@ -10,12 +10,10 @@ import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Piece;
 
 public class Queen extends Piece {
-    private final Color color;
-    public Queen(Color color, Board board) {
-        super(board);
-        this.color = color;
-    }
 
+    public Queen(Color color, Board board) {
+        super(board, color);
+    }
 
     @Override
     public Drawable getImage(Context ctx) {

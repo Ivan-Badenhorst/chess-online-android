@@ -5,9 +5,10 @@ public class Move {
     Tile first;
     Tile sec;
 
-    public Move(Tile first, Tile sec) {
+    public Move(Tile first, Tile sec, Board board) {
         this.first = first;
         this.sec = sec;
+        this.board = board;
     }
 
     public void makeMove()
@@ -17,6 +18,7 @@ public class Move {
             sec.addPiece(piece);
             first.removePiece();
             piece.generateMoves();
+            board.calculateMoves();
         }
 
     }

@@ -10,13 +10,10 @@ import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Piece;
 
 public class Pawn extends Piece {
-    private final Color color;
     private boolean hasMoved;
 
     public Pawn(Color color, Board board) {
-        super(board);
-        this.color = color;
-        hasMoved = false;
+        super(board, color);
     }
 
     @Override
