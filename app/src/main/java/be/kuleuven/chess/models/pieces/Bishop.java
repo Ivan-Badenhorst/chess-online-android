@@ -5,14 +5,15 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import be.kuleuven.chess.R;
+import be.kuleuven.chess.models.Board;
 import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Piece;
 
 public class Bishop extends Piece {
     private final Color color;
 
-    public Bishop(Color color){
-        super();
+    public Bishop(Color color, Board board) {
+        super(board);
         this.color = color;
     }
 

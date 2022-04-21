@@ -5,15 +5,17 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import be.kuleuven.chess.R;
+import be.kuleuven.chess.models.Board;
 import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Piece;
 
 public class Queen extends Piece {
     private final Color color;
-
-    public Queen(Color color) {
+    public Queen(Color color, Board board) {
+        super(board);
         this.color = color;
     }
+
 
     @Override
     public Drawable getImage(Context ctx) {
@@ -26,5 +28,10 @@ public class Queen extends Piece {
             symbol = r.getDrawable(R.drawable.white_queen);
         }
         return symbol;
+    }
+
+    public void generateMoves()
+    {
+
     }
 }

@@ -5,14 +5,15 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import be.kuleuven.chess.R;
+import be.kuleuven.chess.models.Board;
 import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Piece;
 
 public class King extends Piece {
     //to do: write code to get the correct file
     private final Color color;
-    public King(Color color){
-        super();
+    public King(Color color, Board board) {
+        super(board);
         this.color = color;
     }
 
