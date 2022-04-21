@@ -71,4 +71,8 @@ public class Tile {
         return layers;
     }
 
+    public void removePiece(){
+        piece = Optional.empty();
+    }
+
 }
