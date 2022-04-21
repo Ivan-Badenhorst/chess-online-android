@@ -8,6 +8,7 @@ import be.kuleuven.chess.R;
 import be.kuleuven.chess.models.Board;
 import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Piece;
+import be.kuleuven.chess.models.Tile;
 
 public class King extends Piece {
     //to do: write code to get the correct file
@@ -33,6 +34,8 @@ public class King extends Piece {
     @Override
     public void generateMoves()
     {
+        determineTile();
+
 
     }
 }
