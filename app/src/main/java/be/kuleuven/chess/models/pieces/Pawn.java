@@ -4,16 +4,27 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
+import java.util.ArrayList;
+
 import be.kuleuven.chess.R;
 import be.kuleuven.chess.models.Board;
 import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Piece;
+import be.kuleuven.chess.models.Tile;
 
 public class Pawn extends Piece {
     private boolean hasMoved;
+    private ArrayList<Tile> enPassant; /*
+    format:
+    [0] - left top/bottom
+    [1] - right top/bottom
+    [2] - left
+    [3] - right
+    */
 
     public Pawn(Color color, Board board) {
         super(board, color);
+        enPassant = null;
     }
 
     @Override
@@ -31,20 +42,81 @@ public class Pawn extends Piece {
     @Override
     public void generateMoves()
     {
+
         determineTile();
         int[] pos = tile.getPosition();
+
+        if((this.color == Color.white && pos[0] == 3) || pos[0] == 4){
+            generateEnPassant(pos);
+        }
+        else{
+            enPassant = null;
+        }
+
         moves.clear();
 
         if(pos[0] < 7 && pos[0] > 0){
             if(this.color == Color.white && !board.getTile(pos[0] - 1, pos[1]).getPiece().isPresent()){
                 moves.add(board.getTile(pos[0] - 1, pos[1]));
+                if(!hasMoved){
+                    moves.add(board.getTile(pos[0] - 2, pos[1]));
+                }
             }
             else if(!board.getTile(pos[0] + 1, pos[1]).getPiece().isPresent()){
                 moves.add(board.getTile(pos[0] + 1, pos[1]));
+                if(!hasMoved){
+                    moves.add(board.getTile(pos[0] + 2, pos[1]));
+                }
             }
 
         }
 
 
+    }
+
+    private void generateEnPassant(int[] pos) {
+        enPassant = new ArrayList<>(4);
+        int vert = 0;
+        if(color == Color.white){
+            vert = -1;
+        }
+        else{
+            vert = 1;
+        }
+        /*
+    USING 4 IF'S BECAUSE WE ORDER WE ADD IT TO THE ARRAYLIST MATTERS
+    */
+        if(pos[1] >0){
+            enPassant.add( board.getTile(pos[0] + vert, pos[1] - 1));
+        }else{
+            enPassant.add(null);
+        }
+        if(pos[1] <7){
+            enPassant.add(board.getTile(pos[0] + vert, pos[1] + 1));
+        }else{
+            enPassant.add(null);
+        }
+        if(pos[1] >0){
+            enPassant.add(board.getTile(pos[0], pos[1] - 1));
+        }else{
+            enPassant.add(null);
+        }
+        if(pos[1] <7){
+            enPassant.add(board.getTile(pos[0], pos[1] + 1));
+        }else{
+            enPassant.add(null);
+        }
+
+
+
+
+    }
+
+    public void setHasMoved(){
+        hasMoved = true;
+    }
+
+    public ArrayList<Tile> getEnPassant(){
+        return enPassant;
     }
 }
