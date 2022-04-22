@@ -45,9 +45,15 @@ public class Knight extends Piece {
             int newRow = pos[0] + horizontalComb[i];
             int newCol = pos[1] + verticalComb[i];
             if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
-                moves.add(board.getTile(newRow, newCol));
-            }
+                if(board.getTile(newRow,newCol).getPiece().isPresent()){
+                    if(board.getTile(newRow,newCol).getPiece().get().getColor() != this.color)
+                    {moves.add(board.getTile(newRow,newCol));}
+                }
 
+            }
+            else{
+                moves.add(board.getTile(newRow,newCol));
+            }
         }
 
     }
