@@ -42,7 +42,6 @@ public class Pawn extends Piece {
     @Override
     public void generateMoves()
     {
-
         determineTile();
         int[] pos = tile.getPosition();
 
@@ -55,7 +54,36 @@ public class Pawn extends Piece {
 
         moves.clear();
 
+        int[] captureTilesWhite = {pos[0]-1, pos[1]-1, pos[1]+1, pos[0]+1 };
+        int[] captureTilesBlack = {pos[0]+1, pos[1]-1, pos[1]+1 };
+
         if(pos[0] < 7 && pos[0] > 0){
+            if(this.color == Color.white)
+            {
+
+               if(!board.getTile(pos[0] - 1, pos[1]).getPiece().isPresent())
+               {
+                    moves.add(board.getTile(pos[0] - 1, pos[1]));
+               }
+
+                if(pos[1]!=0) {
+                    if (board.getTile(captureTilesWhite[0], captureTilesWhite[1]).getPiece().isPresent()) {
+                        if (board.getTile(captureTilesWhite[0], captureTilesWhite[1]).getPiece().get().getColor() == Color.black)
+                        {
+                            moves.add(board.getTile(captureTilesWhite[0], captureTilesWhite[1]));
+                        }
+
+                    }
+                }
+                if(pos[1]!=7) {
+                    if (board.getTile(captureTilesWhite[0], captureTilesWhite[2]).getPiece().isPresent()) {
+                        if (board.getTile(captureTilesWhite[0], captureTilesWhite[2]).getPiece().get().getColor() == Color.black) {
+                            moves.add(board.getTile(captureTilesWhite[0], captureTilesWhite[2]));
+                        }
+
+                    }
+                }
+
             if(this.color == Color.white && !board.getTile(pos[0] - 1, pos[1]).getPiece().isPresent()){
                 moves.add(board.getTile(pos[0] - 1, pos[1]));
                 if(!hasMoved){
@@ -69,8 +97,27 @@ public class Pawn extends Piece {
                 }
             }
 
-        }
+                if(pos[1]!=0) {
+                    if (board.getTile(captureTilesWhite[3], captureTilesWhite[1]).getPiece().isPresent()) {
+                        if (board.getTile(captureTilesWhite[3], captureTilesWhite[1]).getPiece().get().getColor() == Color.white)
+                        {
+                            moves.add(board.getTile(captureTilesWhite[3], captureTilesWhite[1]));
+                        }
 
+                    }
+                }
+                if(pos[1]!=7) {
+                    if (board.getTile(captureTilesWhite[3], captureTilesWhite[2]).getPiece().isPresent()) {
+                        if (board.getTile(captureTilesWhite[3], captureTilesWhite[2]).getPiece().get().getColor() == Color.white) {
+                            moves.add(board.getTile(captureTilesWhite[3], captureTilesWhite[2]));
+                        }
+
+                    }
+                }
+
+            }
+
+        }
 
     }
 
