@@ -40,6 +40,7 @@ public abstract class Piece {
         return moves;
     }
 
+
     protected List<Tile> getStraightMoves(){
         determineTile();
 
@@ -48,7 +49,14 @@ public abstract class Piece {
         //first horizontal
         for(int i = 0; i<8; i++){
             if(i != pos[1]){
-                moves.add(board.getTile(pos[0], i));
+                if(board.getTile(pos[0],i).getPiece().isPresent())
+                {
+                    if(board.getTile(pos[0],i).getPiece().get().getColor() != this.color))
+                    {
+                        moves.add(board.getTile(pos[0], i));
+                    }
+                }
+
             }
         }
         //second vertical
@@ -62,6 +70,8 @@ public abstract class Piece {
         }
         return moves;
     }
+
+
 
     protected List<Tile> getDiagonalMoves(){
         determineTile();
