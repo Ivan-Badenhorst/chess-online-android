@@ -36,10 +36,10 @@ public class Pawn extends Piece {
         moves.clear();
 
         if(pos[0] < 7 && pos[0] > 0){
-            if(this.color == Color.white){
+            if(this.color == Color.white && !board.getTile(pos[0] - 1, pos[1]).getPiece().isPresent()){
                 moves.add(board.getTile(pos[0] - 1, pos[1]));
             }
-            else{
+            else if(!board.getTile(pos[0] + 1, pos[1]).getPiece().isPresent()){
                 moves.add(board.getTile(pos[0] + 1, pos[1]));
             }
 
