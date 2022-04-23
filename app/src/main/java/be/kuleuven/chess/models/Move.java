@@ -2,13 +2,14 @@ package be.kuleuven.chess.models;
 
 import java.util.ArrayList;
 
+import be.kuleuven.chess.models.SpecialMoves.EnPassant;
 import be.kuleuven.chess.models.pieces.Pawn;
 
 public class Move {
-    private Board board;
-    private Tile first;
-    private Tile sec;
-    private Move previousMove;
+    private final Board board;
+    private final Tile first;
+    private final Tile sec;
+    private final Move previousMove;
     private Piece piece;
 
     public Move(Tile first, Tile sec, Board board, Move previousMove) {
@@ -28,13 +29,14 @@ public class Move {
             if(!piece.getMoves().contains(sec)) {
                 ArrayList<Tile> eP = ((Pawn) piece).getEnPassant();
                 if(eP != null){
-                    if (eP.subList(0, 2).contains(sec)) {
-                        //this condition means the pawn is trying to move to a position that could be en pas
-                        if (!(sec.getPiece().isPresent())) {
-                            //can only be en pas if there is no piece on this square!
-                            hasMoved = enPassant(eP);
-                        }
+
+                    EnPassant ep = new EnPassant(this, eP);
+
+                    if(ep.isValid()){
+                        ep.complete();
+                        hasMoved = true;
                     }
+
                 }
 
             }
@@ -49,7 +51,30 @@ public class Move {
 
     }
 
-    private boolean enPassant(ArrayList<Tile> tiles){
+
+
+    public Piece getPiece() {
+        return this.piece;
+    }
+
+    public Tile getFirst(){
+        return this.first;
+    }
+
+    public Tile getSec() {
+        return sec;
+    }
+
+    public Move getPreviousMove(){
+        return this.previousMove;
+    }
+
+}
+
+
+
+
+/*    private boolean enPassant(ArrayList<Tile> tiles){
         int i = tiles.indexOf(sec);
         Tile tileToCheck = tiles.get(i+2);
 
@@ -78,19 +103,10 @@ public class Move {
 
         return false;
 
-    }
-
+    }*/
+/*
     private void enPassant(Tile first, Tile second, Tile take){
         second.addPiece(first.getPiece().get());
         first.removePiece();
         take.removePiece();
-    }
-
-    private Piece getPiece() {
-        return this.piece;
-    }
-
-    private Tile getFirst(){
-        return this.first;
-    }
-}
+    }*/
