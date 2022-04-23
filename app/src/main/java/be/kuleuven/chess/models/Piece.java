@@ -179,7 +179,7 @@ public abstract class Piece {
             }
 
         }
-        return new Pair<Boolean, Tile>(ret, tile);
+        return new Pair<>(ret, tile);
     }
 
     public Color getColor(){

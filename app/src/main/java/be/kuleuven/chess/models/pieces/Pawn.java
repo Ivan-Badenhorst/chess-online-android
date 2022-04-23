@@ -55,7 +55,6 @@ public class Pawn extends Piece {
         moves.clear();
 
         int[] captureTilesWhite = {pos[0]-1, pos[1]-1, pos[1]+1, pos[0]+1 };
-        int[] captureTilesBlack = {pos[0]+1, pos[1]-1, pos[1]+1 };
 
         if(pos[0] < 7 && pos[0] > 0){
             if(this.color == Color.white) {

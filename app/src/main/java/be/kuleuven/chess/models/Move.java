@@ -43,8 +43,9 @@ public class Move {
             sec.addPiece(piece);
             first.removePiece();
             piece.generateMoves();
-            board.calculateMoves();
         }
+
+        board.calculateMoves();
 
     }
 
