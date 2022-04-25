@@ -153,4 +153,21 @@ public class Board {
         //blackPieces.stream().forEach(n -> n.generateMoves());
     }
 
+    public Tile getKingTile(Color color){
+        for(int i = 0; i<8; i++){
+            for(int j = 0; j<8; j++){
+                Tile t = board[i][j];
+                if(t.getPiece().isPresent()){
+                    if(t.getPiece().get() instanceof King && t.getPiece().get().getColor() == color){
+                        return t;
+                    }
+                }
+
+            }
+        }
+        return null;
+    }
+
 }
+
+

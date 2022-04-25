@@ -43,7 +43,16 @@ public class Pawn extends Piece {
     public void generateMoves()
     {
         determineTile();
+
         int[] pos = tile.getPosition();
+
+        //pawn promotes to queen automatically
+        if(this.color == Color.white && pos[0] == 0){
+            tile.addPiece(new Queen(this.color, this.board));
+        }
+        else if(pos[0] == 7){
+            tile.addPiece(new Queen(this.color, this.board));
+        }
 
         if((this.color == Color.white && pos[0] == 3) || pos[0] == 4){
             generateEnPassant(pos);
@@ -155,9 +164,6 @@ public class Pawn extends Piece {
         }else{
             enPassant.add(null);
         }
-
-
-
 
     }
 

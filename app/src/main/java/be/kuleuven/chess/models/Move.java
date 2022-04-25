@@ -1,8 +1,8 @@
 package be.kuleuven.chess.models;
 
 import java.util.ArrayList;
-
 import be.kuleuven.chess.models.SpecialMoves.EnPassant;
+import be.kuleuven.chess.models.pieces.King;
 import be.kuleuven.chess.models.pieces.Pawn;
 
 public class Move {
@@ -42,9 +42,35 @@ public class Move {
             }
         }
         if(piece.getMoves().contains(sec) && !hasMoved){
-            sec.addPiece(piece);
-            first.removePiece();
-            piece.generateMoves();
+            Piece secPiece = null;
+            if(!(piece instanceof King) ){
+                sec.addPiece(piece);
+                first.removePiece();
+                piece.generateMoves();
+            }
+            else{///if the piece is a king
+
+                if(sec.getPiece().isPresent()){
+                    secPiece = sec.getPiece().get();
+                }
+                sec.addPiece(piece);
+                first.removePiece();
+
+                //at this moment we made the move
+                //now we check if its okay
+                if(sec.checkCheck(piece.getColor())){
+                    //if its check we undo the move
+                    if(secPiece != null){
+                        sec.addPiece(secPiece);
+                    }
+                    else{
+                        sec.removePiece();
+                    }
+                    first.addPiece(piece);
+                }
+            }
+
+
         }
 
         board.calculateMoves();
