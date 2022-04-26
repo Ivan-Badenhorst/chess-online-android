@@ -7,6 +7,13 @@ import android.util.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @Author: Ivan Badenhorst, Sudarshan Iyengar
+ *
+ * @Definition: Contains all properties and methods used by different types of pieces.
+ *
+ * @Structure:  Parent of classes in package: be.kuleuven.chess.models.pieces
+ */
 public abstract class Piece {
     protected Color color;
     protected Board board;
@@ -25,6 +32,9 @@ public abstract class Piece {
     public abstract Drawable getImage(Context ctx);
     public abstract void generateMoves();
 
+    /**
+     *Method determines the Tile that this Piece is positioned on
+     */
     protected void determineTile(){
         for(int i = 0; i<8;i++){
             for(int j = 0; j<8;j++){
@@ -41,6 +51,12 @@ public abstract class Piece {
         return moves;
     }
 
+    /**
+     * Method determines all tiles that a specific piece can move to in straight lines
+     * Straight line - left, right, up or down
+     *
+     * @return A list of Tiles the specific could move to based on mentioned directions
+     */
     protected List<Tile> getStraightMoves(){
         determineTile();
 
@@ -100,6 +116,12 @@ public abstract class Piece {
         return moves;
     }
 
+    /**
+     *  Method determines all tiles that a specific piece can move to in diagonal lines
+     *  Straight line - left top/bottom, right top/bottom
+     *
+     * @return A list of Tiles the specific could move to based on mentioned directions
+     */
     protected List<Tile> getDiagonalMoves(){
         determineTile();
 
@@ -160,6 +182,17 @@ public abstract class Piece {
 
     }
 
+    /**
+     * Determines wether or not a specific tile is a valid tile to land on
+     * This means:
+     *      The tile is in the board
+     *      The tile is not occupied by a piece of the same color as this piece
+     *
+     * @param current The current indices of the tile being investigated
+     * @return A pair - boolean indicates if there is a piece on the tile. Tile is the object
+     *                  of the tile as the specified index. Only assigned if the boolean is true
+     *
+     */
     private Pair<Boolean, Tile> getMove(int[] current){
 
         boolean ret = true;
@@ -182,10 +215,8 @@ public abstract class Piece {
         return new Pair<>(ret, tile);
     }
 
+
     public Color getColor(){
-        if (color == Color.black){
-            return Color.black;
-        }
-        return Color.white;
+       return this.color;
     }
 }

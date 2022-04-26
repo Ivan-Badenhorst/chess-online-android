@@ -21,8 +21,11 @@ public class Move {
 
     public void makeMove()
     {
+        //HAVE TO ADD SOMETHIG THAT CHEKC EN PASSANT FOR CHECK AND UNDOS IT IF NEEDED!!
+
         boolean hasMoved = false;
         piece = first.getPiece().get();
+
         if(piece instanceof Pawn){
             ((Pawn) piece).setHasMoved();
 
@@ -43,10 +46,23 @@ public class Move {
         }
         if(piece.getMoves().contains(sec) && !hasMoved){
             Piece secPiece = null;
+
+
             if(!(piece instanceof King) ){
+                if(sec.getPiece().isPresent()){
+                    secPiece = sec.getPiece().get();
+                }
                 sec.addPiece(piece);
                 first.removePiece();
                 piece.generateMoves();
+                /*if(!(board.getKingTile(piece.getColor()).checkCheck(piece.getColor()))){
+                    //if the move puts the king in check
+                    //undo the move!
+                    if(secPiece != null){
+                        sec.addPiece(secPiece);
+                        first.addPiece(piece);
+                    }
+                }*/
             }
             else{///if the piece is a king
 
