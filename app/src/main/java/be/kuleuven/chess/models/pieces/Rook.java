@@ -10,9 +10,11 @@ import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Piece;
 
 public class Rook extends Piece {
+    private boolean hasMoved;
 
     public Rook(Color color, Board board) {
         super(board, color);
+        hasMoved = false;
     }
 
     @Override
@@ -32,5 +34,13 @@ public class Rook extends Piece {
     {
         moves.clear();
         moves = getStraightMoves();
+    }
+
+    public void setHasMoved(boolean val){
+        hasMoved = val;
+    }
+
+    public boolean hasMoved() {
+        return hasMoved;
     }
 }

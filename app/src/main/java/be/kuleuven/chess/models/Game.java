@@ -5,15 +5,17 @@ import android.annotation.SuppressLint;
 import java.util.Optional;
 @SuppressLint("NewApi")
 public class Game {
-    Board board;
-    Tile firstTile, secondTile;
-    boolean firstClick;
-    Move move;
+    private Board board;
+    private Tile firstTile, secondTile;
+    private boolean firstClick;
+    private Move move;
+    private int counterForTesting;
 
     public Game() {
         board = new Board();
         move = null;
         firstClick = true;
+        counterForTesting=0;
     }
 
     public Board getBoard() {
@@ -32,6 +34,10 @@ public class Game {
         else{
             firstClick = true;
             Move prevMov = move;
+            counterForTesting += 1;
+            if(counterForTesting == 7){
+                System.out.println("hi");
+            }
             move = new Move(firstTile, board.getTile(row, column), board, prevMov);
             move.makeMove();
         }

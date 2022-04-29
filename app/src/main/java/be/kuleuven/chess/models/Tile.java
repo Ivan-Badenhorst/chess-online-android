@@ -108,17 +108,15 @@ public class Tile {
 
         for(int i = 1; i<8; i++){
 
-
-
             if(left) {
                 current[0] = pos[0] ;
                 current[1] = pos[1] - i;
 
-                Piece p = getCheckPiece(current, color);
+                Piece p = getCheckPiece(current, color);//remove color from method later
 
                 if(p != null){
                     left = false;
-                    if (p.getColor() != this.color) {
+                    if (p.getColor() != color) {
                         if (p instanceof Rook || p instanceof Queen) {
                             return true;
                         }
@@ -137,7 +135,7 @@ public class Tile {
 
                 if(p != null) {
                     right = false;
-                    if (p.getColor() != this.color) {
+                    if (p.getColor() != color) {
                         if (p instanceof Rook || p instanceof Queen) {
                             return true;
                         }
@@ -156,7 +154,7 @@ public class Tile {
 
                 if(p != null) {
                     top = false;
-                    if (p.getColor() != this.color) {
+                    if (p.getColor() != color) {
                         if (p instanceof Rook || p instanceof Queen) {
                             return true;
                         }
@@ -176,7 +174,7 @@ public class Tile {
 
                 if(p != null) {
                     bottom = false;
-                    if (p.getColor() != this.color) {
+                    if (p.getColor() != color) {
                         if (p instanceof Rook || p instanceof Queen) {
                             return true;
                         }
@@ -208,7 +206,7 @@ public class Tile {
 
                 if(p != null) {
                     leftTop = false;
-                    if (p.getColor() != this.color) {
+                    if (p.getColor() != color) {
 
                         if (p instanceof Bishop || p instanceof Queen) {
                             return true;
@@ -231,7 +229,7 @@ public class Tile {
 
                 if(p != null) {
                     rightBottom  = false;
-                    if (p.getColor() != this.color) {
+                    if (p.getColor() != color) {
 
 
                         if (p instanceof Bishop || p instanceof Queen) {
@@ -255,7 +253,7 @@ public class Tile {
 
                 if(p != null) {
 
-                    if (p.getColor() != this.color) {
+                    if (p.getColor() != color) {
                         rightTop = false;
                         if (p instanceof Bishop || p instanceof Queen) {
                             return true;
@@ -279,7 +277,7 @@ public class Tile {
 
                 if(p != null) {
                     leftBottom = false;
-                    if(p.getColor() != this.color) {
+                    if(p.getColor() != color) {
 
                         if (p instanceof Bishop || p instanceof Queen) {
                             return true;
@@ -335,13 +333,12 @@ public class Tile {
         if (current[0] >= 0 && current[1] >= 0 && current[0] < 8 && current[1] < 8) {
 
             if (board.getTile(current[0], current[1]).getPiece().isPresent()) {
-                if (board.getTile(current[0], current[1]).getPiece().get().getColor() != color) {
                     return board.getTile(current[0], current[1]).getPiece().get();
                 }
 
             }
 
-        }
+
         return null;
     }
 
