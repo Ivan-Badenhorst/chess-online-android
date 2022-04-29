@@ -257,6 +257,7 @@ public class Tile {
 
                     if (p.getColor() != this.color) {
                         rightTop = false;
+
                         if (p instanceof Bishop || p instanceof Queen) {
                             return true;
                         }
