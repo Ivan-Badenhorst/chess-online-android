@@ -24,7 +24,7 @@ public class Move {
         this.previousMove = previousMove;
     }
 
-    public void makeMove()
+    public boolean makeMove()
     {
         //HAVE TO ADD SOMETHING THAT CHECKS EN PASSANT FOR CHECK AND UNDOES IT IF NEEDED!!
 
@@ -147,16 +147,20 @@ public class Move {
             }
         }
 
+        board.calculateMoves();
 
         if(hasMoved){
             if(piece instanceof King) {
                 ((King) piece).setHasMoved(true);
             }else if (piece instanceof Rook){
                 ((Rook) piece).setHasMoved(true);
+            }else if(piece instanceof Pawn){
+                ((Pawn) piece).setHasMoved(true);
             }
+            return true;
         }
+        return false;
 
-        board.calculateMoves();
 
     }
 

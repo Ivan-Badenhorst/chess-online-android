@@ -94,8 +94,10 @@ public class Pawn extends Piece {
 
                 }
 
-                if (!hasMoved && !board.getTile(pos[0] - 2, pos[1]).getPiece().isPresent()) {
-                    moves.add(board.getTile(pos[0] - 2, pos[1]));
+                if (!hasMoved) {
+                    if(!board.getTile(pos[0] - 2, pos[1]).getPiece().isPresent()) {
+                        moves.add(board.getTile(pos[0] - 2, pos[1]));
+                    }
                 }
 
             }
@@ -117,8 +119,10 @@ public class Pawn extends Piece {
                 if (!board.getTile(pos[0] + 1, pos[1]).getPiece().isPresent()) {
                     moves.add(board.getTile(pos[0] + 1, pos[1]));
                 }
-                if (!hasMoved && !board.getTile(pos[0] + 2, pos[1]).getPiece().isPresent()) {
-                    moves.add(board.getTile(pos[0] + 2, pos[1]));
+                if (!hasMoved) {
+                    if(!board.getTile(pos[0] + 2, pos[1]).getPiece().isPresent()) {
+                        moves.add(board.getTile(pos[0] + 2, pos[1]));
+                    }
                 }
                 if(pos[1]!=7) {
                     if (board.getTile(captureTilesWhite[3], captureTilesWhite[2]).getPiece().isPresent()) {
