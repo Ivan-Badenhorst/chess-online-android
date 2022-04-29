@@ -21,13 +21,12 @@ public class Move {
 
     public void makeMove()
     {
-        //HAVE TO ADD SOMETHIG THAT CHEKC EN PASSANT FOR CHECK AND UNDOS IT IF NEEDED!!
+        //HAVE TO ADD SOMETHING THAT CHECKS EN PASSANT FOR CHECK AND UNDOES IT IF NEEDED!!
 
         boolean hasMoved = false;
         piece = first.getPiece().get();
 
         if(piece instanceof Pawn){
-            ((Pawn) piece).setHasMoved();
 
             if(!piece.getMoves().contains(sec)) {
                 ArrayList<Tile> eP = ((Pawn) piece).getEnPassant();
@@ -37,12 +36,15 @@ public class Move {
 
                     if(ep.isValid()){
                         ep.complete();
+                        ((Pawn) piece).setHasMoved(true);
                         hasMoved = true;
                     }
+
 
                 }
 
             }
+
         }
         if(piece.getMoves().contains(sec) && !hasMoved){
             Piece secPiece = null;
@@ -54,15 +56,17 @@ public class Move {
                 }
                 sec.addPiece(piece);
                 first.removePiece();
-                piece.generateMoves();
-                /*if(!(board.getKingTile(piece.getColor()).checkCheck(piece.getColor()))){
+
+                if(board.getKingTile(piece.getColor()).checkCheck(piece.getColor())){
                     //if the move puts the king in check
                     //undo the move!
                     if(secPiece != null){
                         sec.addPiece(secPiece);
                         first.addPiece(piece);
                     }
-                }*/
+                }
+
+                piece.generateMoves();
             }
             else{///if the piece is a king
 

@@ -34,11 +34,11 @@ public class Knight extends Piece {
         moves.clear();
         int[] pos = tile.getPosition();
 
-        int horizontalComb[] = {-1, 1, 2, 2, -2, -2, -1, 1};
-        int verticalComb[] = {-2, -2, -1, 1, -1, 1, 2, 2};
+        int[] horizontalComb = {-1, 1, 2, 2, -2, -2, -1, 1};
+        int[] verticalComb = {-2, -2, -1, 1, -1, 1, 2, 2};
 
 
-        // Check if each possible move is valid or not
+        // Check if each possible move is valid or not  
         for (int i = 0; i < 8; i++) {
 
             // Position of knight after move

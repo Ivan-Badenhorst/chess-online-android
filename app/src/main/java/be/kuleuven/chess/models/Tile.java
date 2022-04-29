@@ -1,13 +1,11 @@
 package be.kuleuven.chess.models;
 
-import android.annotation.SuppressLint;
+
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.util.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Optional;
 
 import be.kuleuven.chess.R;
@@ -18,16 +16,13 @@ import be.kuleuven.chess.models.pieces.Pawn;
 import be.kuleuven.chess.models.pieces.Queen;
 import be.kuleuven.chess.models.pieces.Rook;
 
-@SuppressLint("NewApi")
+
 public class Tile {
     private Optional<Piece> piece;
     private final Board board;
     private  int row;
     private  int column;
     private final Color color;
-
-
-
 
     public Tile(Board board, Color color){
         piece = Optional.empty();
@@ -88,8 +83,7 @@ public class Tile {
     }
 
     public int[] getPosition(){
-        int[] loc = {row, column};
-        return loc;
+        return new int[]{row, column};
     }
 
     public boolean checkCheck(Color color){
@@ -104,15 +98,7 @@ public class Tile {
             check for knight
 
         */
-
-        boolean check = false;
-        //first we check straights
-        if(checkStraight(color) || checkDiagonal(color) || checkKnight(color)){
-            check = true;
-        }
-
-        return check;
-
+        return checkStraight(color) || checkDiagonal(color) || checkKnight(color);
     }
 
     private boolean checkStraight(Color color){
@@ -122,6 +108,8 @@ public class Tile {
 
         for(int i = 1; i<8; i++){
 
+
+
             if(left) {
                 current[0] = pos[0] ;
                 current[1] = pos[1] - i;
@@ -130,11 +118,13 @@ public class Tile {
 
                 if(p != null){
                     left = false;
-                    if(p instanceof Rook || p instanceof Queen){
-                        return true;
-                    }
-                    if(p instanceof King && i == 1){
-                        return true;
+                    if (p.getColor() != this.color) {
+                        if (p instanceof Rook || p instanceof Queen) {
+                            return true;
+                        }
+                        if (p instanceof King && i == 1) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -147,11 +137,13 @@ public class Tile {
 
                 if(p != null) {
                     right = false;
-                    if (p instanceof Rook || p instanceof Queen) {
-                        return true;
-                    }
-                    if(p instanceof King && i == 1){
-                        return true;
+                    if (p.getColor() != this.color) {
+                        if (p instanceof Rook || p instanceof Queen) {
+                            return true;
+                        }
+                        if (p instanceof King && i == 1) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -164,11 +156,13 @@ public class Tile {
 
                 if(p != null) {
                     top = false;
-                    if (p instanceof Rook || p instanceof Queen) {
-                        return true;
-                    }
-                    if(p instanceof King && i == 1){
-                        return true;
+                    if (p.getColor() != this.color) {
+                        if (p instanceof Rook || p instanceof Queen) {
+                            return true;
+                        }
+                        if (p instanceof King && i == 1) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -182,11 +176,13 @@ public class Tile {
 
                 if(p != null) {
                     bottom = false;
-                    if (p instanceof Rook || p instanceof Queen) {
-                        return true;
-                    }
-                    if(p instanceof King && i == 1){
-                        return true;
+                    if (p.getColor() != this.color) {
+                        if (p instanceof Rook || p instanceof Queen) {
+                            return true;
+                        }
+                        if (p instanceof King && i == 1) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -212,14 +208,17 @@ public class Tile {
 
                 if(p != null) {
                     leftTop = false;
-                    if (p instanceof Bishop || p instanceof Queen) {
-                        return true;
-                    }
-                    if(i == 1 && p instanceof Pawn && color == Color.white){
-                        return true;
-                    }
-                    if(p instanceof King && i == 1){
-                        return true;
+                    if (p.getColor() != this.color) {
+
+                        if (p instanceof Bishop || p instanceof Queen) {
+                            return true;
+                        }
+                        if (i == 1 && p instanceof Pawn && color == Color.white) {
+                            return true;
+                        }
+                        if (p instanceof King && i == 1) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -232,14 +231,18 @@ public class Tile {
 
                 if(p != null) {
                     rightBottom  = false;
-                    if (p instanceof Bishop || p instanceof Queen) {
-                        return true;
-                    }
-                    if(i == 1 && p instanceof Pawn && color == Color.black){
-                        return true;
-                    }
-                    if(p instanceof King && i == 1){
-                        return true;
+                    if (p.getColor() != this.color) {
+
+
+                        if (p instanceof Bishop || p instanceof Queen) {
+                            return true;
+                        }
+                        if (i == 1 && p instanceof Pawn && color == Color.black) {
+                            return true;
+                        }
+                        if (p instanceof King && i == 1) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -251,15 +254,18 @@ public class Tile {
                 Piece p = getCheckPiece(current, color);
 
                 if(p != null) {
-                    rightTop = false;
-                    if (p instanceof Bishop || p instanceof Queen) {
-                        return true;
-                    }
-                    if(i == 1 && p instanceof Pawn && color == Color.white){
-                        return true;
-                    }
-                    if(p instanceof King && i == 1){
-                        return true;
+
+                    if (p.getColor() != this.color) {
+                        rightTop = false;
+                        if (p instanceof Bishop || p instanceof Queen) {
+                            return true;
+                        }
+                        if (i == 1 && p instanceof Pawn && color == Color.white) {
+                            return true;
+                        }
+                        if (p instanceof King && i == 1) {
+                            return true;
+                        }
                     }
                 }
 
@@ -273,14 +279,17 @@ public class Tile {
 
                 if(p != null) {
                     leftBottom = false;
-                    if (p instanceof Bishop || p instanceof Queen) {
-                        return true;
-                    }
-                    if(i == 1 && p instanceof Pawn && color == Color.black){
-                        return true;
-                    }
-                    if(p instanceof King && i == 1){
-                        return true;
+                    if(p.getColor() != this.color) {
+
+                        if (p instanceof Bishop || p instanceof Queen) {
+                            return true;
+                        }
+                        if (i == 1 && p instanceof Pawn && color == Color.black) {
+                            return true;
+                        }
+                        if (p instanceof King && i == 1) {
+                            return true;
+                        }
                     }
                 }
             }
@@ -322,9 +331,6 @@ public class Tile {
     }
 
     private Piece getCheckPiece(int[] current, Color color) {
-
-        boolean ret = true;
-        Tile tile = null;
 
         if (current[0] >= 0 && current[1] >= 0 && current[0] < 8 && current[1] < 8) {
 
