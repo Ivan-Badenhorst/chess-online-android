@@ -45,16 +45,18 @@ public class Pawn extends Piece {
         determineTile();
 
         int[] pos = tile.getPosition();
+        int currentRank = pos[0];
+        int currentFile = pos[1];
 
         //pawn promotes to queen automatically
-        if(this.color == Color.white && pos[0] == 0){
+        if(this.color == Color.white && currentRank == 0){
             tile.addPiece(new Queen(this.color, this.board));
         }
-        else if(pos[0] == 7){
+        else if(currentRank == 7){
             tile.addPiece(new Queen(this.color, this.board));
         }
 
-        if((this.color == Color.white && pos[0] == 3) || pos[0] == 4){
+        if((this.color == Color.white && currentRank == 3) || currentRank == 4){
             generateEnPassant(pos);
         }
         else{
@@ -63,94 +65,66 @@ public class Pawn extends Piece {
 
         moves.clear();
 
-        int[] captureTilesWhite = {pos[0]-1, pos[1]-1, pos[1]+1, pos[0]+1 };
+        int up = pos[0]-1;
+        int doubleUp = pos[0]-2;
+        int down = pos[0]+1;
+        int doubleDown = pos[0]+2;
+        int left = pos[1]-1;
+        int right = pos[1]+1;
 
-        if(pos[0] < 7 && pos[0] > 0){
+
+        if(currentRank < 7 && currentRank > 0){
+
             if(this.color == Color.white) {
 
-                if (!board.getTile(pos[0] - 1, pos[1]).getPiece().isPresent()) {
-                    moves.add(board.getTile(pos[0] - 1, pos[1]));
-                }
-
-                if (pos[1] != 0) {
-                    if (board.getTile(captureTilesWhite[0], captureTilesWhite[1]).getPiece().isPresent()) {
-                        if (board.getTile(captureTilesWhite[0], captureTilesWhite[1]).getPiece().get().getColor() == Color.black) {
-                            moves.add(board.getTile(captureTilesWhite[0], captureTilesWhite[1]));
-                        }
-
-                    }
-                }
-                if (pos[1] != 7) {
-                    if (board.getTile(captureTilesWhite[0], captureTilesWhite[2]).getPiece().isPresent()) {
-                        if (board.getTile(captureTilesWhite[0], captureTilesWhite[2]).getPiece().get().getColor() == Color.black) {
-                            moves.add(board.getTile(captureTilesWhite[0], captureTilesWhite[2]));
-                        }
-
-                    }
-                }
-
-                if (!board.getTile(pos[0] - 1, pos[1]).getPiece().isPresent()) {
-                    moves.add(board.getTile(pos[0] - 1, pos[1]));
-
-                }
-
                 if (!hasMoved) {
-                    if(!board.getTile(pos[0] - 2, pos[1]).getPiece().isPresent()) {
-                        moves.add(board.getTile(pos[0] - 2, pos[1]));
-                    }
+                    addNormalMove(doubleUp, currentFile);
                 }
 
+                addNormalMove(up, currentFile);
+
+                //capture diagonal left
+                if (currentFile != 0) {
+                    addCaptures(up, left, Color.black);
+                }
+                //capture diagonal right
+                if (currentFile != 7) {
+                    addCaptures(up, right, Color.black);
+                }
             }
             else if (this.color == Color.black)
             {
-                if(!board.getTile(pos[0] + 1, pos[1]).getPiece().isPresent())
-                {
-                    moves.add(board.getTile(pos[0] + 1, pos[1]));
-                }
-                if(pos[1]!=0) {
-                    if (board.getTile(captureTilesWhite[3], captureTilesWhite[1]).getPiece().isPresent()) {
-                        if (board.getTile(captureTilesWhite[3], captureTilesWhite[1]).getPiece().get().getColor() == Color.white)
-                        {
-                            moves.add(board.getTile(captureTilesWhite[3], captureTilesWhite[1]));
-                        }
-
-                    }
-                }
-                if (!board.getTile(pos[0] + 1, pos[1]).getPiece().isPresent()) {
-                    moves.add(board.getTile(pos[0] + 1, pos[1]));
-                }
                 if (!hasMoved) {
-                    if(!board.getTile(pos[0] + 2, pos[1]).getPiece().isPresent()) {
-                        moves.add(board.getTile(pos[0] + 2, pos[1]));
-                    }
-                }
-                if(pos[1]!=7) {
-                    if (board.getTile(captureTilesWhite[3], captureTilesWhite[2]).getPiece().isPresent()) {
-                        if (board.getTile(captureTilesWhite[3], captureTilesWhite[2]).getPiece().get().getColor() == Color.white) {
-                            moves.add(board.getTile(captureTilesWhite[3], captureTilesWhite[2]));
-                        }
-
-                    }
+                    addNormalMove(doubleDown, currentFile);
                 }
 
+                addNormalMove(down, currentFile);
+
+                if(currentFile!=0) {
+                    addCaptures(down, left, Color.white);
+                }
+
+                if(currentFile!=7) {
+                    addCaptures(down, right, Color.white);
+                }
             }
-
         }
-
     }
+
+
 
     private void generateEnPassant(int[] pos) {
         enPassant = new ArrayList<>(4);
-        int vert = 0;
+        int vert;
         if(color == Color.white){
             vert = -1;
         }
         else{
             vert = 1;
         }
-        /*
-    USING 4 IF'S BECAUSE WE ORDER WE ADD IT TO THE ARRAYLIST MATTERS
-    */
+
+    //USING 4 IF'S BECAUSE WE ORDER WE ADD IT TO THE ARRAYLIST MATTERS
+
         if(pos[1] >0){
             enPassant.add( board.getTile(pos[0] + vert, pos[1] - 1));
         }else{

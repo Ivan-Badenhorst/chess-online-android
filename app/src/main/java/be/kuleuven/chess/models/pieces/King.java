@@ -47,16 +47,15 @@ public class King extends Piece {
         {
             for (int j = bounds[1]	; j<= bounds[3]; j++)
             {
-
-                if(board.getTile(i,j).getPiece().isPresent()) {
-                    if (board.getTile(i, j).getPiece().get().getColor() != this.color) {
-                        moves.add(board.getTile(i, j));
-                    }
-
+                addNormalMove(i, j);
+                if(this.color == Color.white) {
+                    addCaptures(i, j, Color.black);
                 }
-                else{
-                    moves.add(board.getTile(i, j));
+                else if (this.color == Color.black) {
+                    addCaptures(i, j, Color.white);
                 }
+
+
             }
         }
 
