@@ -43,12 +43,15 @@ public class DBConnect
     private Color colorPlayer;
     private int gameId;
 
+    private boolean moveWritten;
+
 
 
     public DBConnect(AppCompatActivity activity, Board board, Color color){
         this.activity = activity;
         this.board = board;
         lMove = null;
+        moveWritten = false;
 
 
         if(color == Color.white){
@@ -60,6 +63,7 @@ public class DBConnect
     }
 
     public DBConnect(AppCompatActivity activity){
+        this.activity = activity;
         colorPlayer = null;
         gameId = 0;
     }
@@ -171,8 +175,9 @@ public class DBConnect
                     @Override
                     public void onResponse(JSONArray response)
                     {
+                        color = "We got here";
                         try {
-                            String responseString = "";
+
                             for( int i = 0; i < response.length(); i++ )
                             {
                                 JSONObject curObject = response.getJSONObject( i );
@@ -184,19 +189,25 @@ public class DBConnect
                                     //once thats done the game starts
 
                                 }
-                                else if(colorPlayer == null){
-                                    createNewGame(); //should somehow tell me that I can start the game
+                                else if (colorPlayer == null)
+                                {
+                                    createNewGame();
                                 }
                                 else if (curObject.getString("playerb") != null && colorPlayer != null){//this means I am white but now I have a second player
                                     gameId = curObject.getInt("idGame");
                                 }
                                 //HAVE TO SET THE PREVIOUS MOVE IN THE GAME CLASS WHEN WE GET THIS!!!
                             }
+                            if(response.length()==0)
+                            {
+                                createNewGame();
+                            }
 
                         }
                         catch( JSONException e )
                         {
                             Log.e( "Database", e.getMessage(), e );
+
                         }
                     }
                 },
@@ -206,7 +217,7 @@ public class DBConnect
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-
+                        color = "We got here e";
                     }
                 }
         );
@@ -218,7 +229,8 @@ public class DBConnect
     {
         requestQueue = Volley.newRequestQueue(activity);
 
-        int randomNum = ThreadLocalRandom.current().nextInt(1, 1000000000);
+
+        int randomNum = (int) (Math.random() * (1000000000 - 1)) + 1;
 
         String requestURL = "https://studev.groept.be/api/a21pt402/addB/" + String.valueOf(randomNum)+ "/" + String.valueOf(idGame);
         //this will then add me to the game
@@ -229,16 +241,16 @@ public class DBConnect
                     @Override
                     public void onResponse(JSONArray response)
                     {
-                        try {
+                        //try {
                             //if I have a response, I simply set the values of Color and GameID and the activity class will then know the game is ready
-                            JSONObject curObject = response.getJSONObject( 0 );
+                            //JSONObject curObject = response.getJSONObject( 0 );
                             colorPlayer = Color.black;
                             gameId = idGame;
-                        }
+                        /*}
                         catch( JSONException e )
                         {
                             Log.e( "Database", e.getMessage(), e );
-                        }
+                        }*/
                     }
                 },
 
@@ -259,7 +271,7 @@ public class DBConnect
     {
         requestQueue = Volley.newRequestQueue(activity);
 
-        int randomNum = ThreadLocalRandom.current().nextInt(1, 1000000000);
+        int randomNum = (int) (Math.random() * (1000000000 - 1)) + 1;
 
         String requestURL = "https://studev.groept.be/api/a21pt402/createGame/" + String.valueOf(randomNum);
         //this will then add me to the game
@@ -270,6 +282,7 @@ public class DBConnect
                     @Override
                     public void onResponse(JSONArray response)
                     {
+
                         try {
                             //if I have a response, I simply set the values of Color and GameID and the activity class will then know the game is ready
                             JSONObject curObject = response.getJSONObject( 0 );
@@ -304,6 +317,47 @@ public class DBConnect
         requestQueue.add(submitRequest);
     }
 
+    public void addMove(int frow, int fcol, int srow, int scol, int gameId, Color color) //View v )
+    {
+        requestQueue = Volley.newRequestQueue(activity);
+        moveWritten = false;
+
+        String col = color.name();
+        String requestURL = "https://studev.groept.be/api/a21pt402/createMove/"+ frow+"/"+fcol+"/"+ srow+"/"+scol+ "/"+ gameId+"/"+col;
+        //this will then add me to the game
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+
+                new Response.Listener<JSONArray>()
+                {
+                    @Override
+                    public void onResponse(JSONArray response)
+                    {
+                        try {
+                            //if I have a response, I simply set the values of Color and GameID and the activity class will then know the game is ready
+                            JSONObject curObject = response.getJSONObject( 0 );
+                            //DONT HAVE THE GAME ID, WILL HAVE TO SET THAT WHEN I CHECK IF THERE IS A PLAYER B
+                        }
+                        catch( JSONException e )
+                        {
+                            Log.e( "Database", e.getMessage(), e );
+                        }
+                    }
+                },
+
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+
+                    }
+                }
+        );
+
+        requestQueue.add(submitRequest);
+    }
+
+
     public Move getMove(){
         Move r = this.lMove;
         lMove = null;
@@ -317,7 +371,60 @@ public class DBConnect
     public Color getColorPlayer(){
         return this.getColorPlayer();
     }
+
+    public void checkMoveWritten(int idGame) //View v )
+    {
+        requestQueue = Volley.newRequestQueue(activity);    //OR MAYBE JUST MAKE A REQUEST CUE
+        // IN THE ACTIVITY AND GIVE IT HERE
+        String requestURL = "https://studev.groept.be/api/a21pt402/readMove/" +  String.valueOf(idGame);
+
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+
+                new Response.Listener<JSONArray>()
+                {
+                    @Override
+                    public void onResponse(JSONArray response)
+                    {
+                        try {
+                            String responseString = "";
+                            for( int i = 0; i < response.length(); i++ )
+                            {
+                                JSONObject curObject = response.getJSONObject( i );
+                                if(curObject.getString("color").equals(color))
+                                {
+                                    moveWritten= true;
+                                }
+                                //HAVE TO SET THE PREVIOUS MOVE IN THE GAME CLASS WHEN WE GET THIS!!!
+                            }
+
+                        }
+                        catch( JSONException e )
+                        {
+                            Log.e( "Database", e.getMessage(), e );
+                        }
+                    }
+                },
+
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+
+                    }
+                }
+        );
+
+        requestQueue.add(submitRequest);
+    }
+
+    public boolean getWritten()
+    {
+        return moveWritten;
+    }
 }
+
+
 
 
 

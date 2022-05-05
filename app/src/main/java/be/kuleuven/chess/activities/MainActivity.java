@@ -57,7 +57,13 @@ public class MainActivity extends AppCompatActivity {
         createGame();
 
         game = new Game(this);
-        display(start.get(0));
+        if(color == Color.white){
+            display(start.get(0));
+        }
+        else
+        {
+            display(start.get(1));
+        }
     }
 
     public void display(int start){
@@ -108,7 +114,13 @@ public class MainActivity extends AppCompatActivity {
 
          game.addClick(row, column);
 
-         display(start.get(1)); // just for testing! Normall has to do with your actual color!
+        if(color == Color.white){
+            display(start.get(0));
+        }
+        else
+        {
+            display(start.get(1));
+        }
 
              /*Resources r = getResources();
              Drawable im = r.getDrawable(R.drawable.tester_on_click);
@@ -120,7 +132,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void createGame(){
         //here I have a loop that runs until I have a game
+        // db.createNewGame();
         db.getGame();
+
         while(db.getGameId() == 0){
             try{
                 Thread.sleep(1000);
