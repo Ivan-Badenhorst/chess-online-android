@@ -183,7 +183,7 @@ public abstract class Piece {
     }
 
     /**
-     * Determines wether or not a specific tile is a valid tile to land on
+     * Determines whether or not a specific tile is a valid tile to land on
      * This means:
      *      The tile is in the board
      *      The tile is not occupied by a piece of the same color as this piece
@@ -218,5 +218,24 @@ public abstract class Piece {
 
     public Color getColor(){
        return this.color;
+    }
+
+    public void addNormalMove(int row, int col)
+    {
+        if(!board.getTile(row, col).getPiece().isPresent())
+        {
+            moves.add(board.getTile(row, col));
+        }
+    }
+
+    public void addCaptures(int row, int col, Color oppColor)
+    {
+        if(board.getTile(row, col).getPiece().isPresent())
+        {
+            if(board.getTile(row, col).getPiece().get().getColor() == oppColor)
+            {
+                moves.add(board.getTile(row, col));
+            }
+        }
     }
 }
