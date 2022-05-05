@@ -24,6 +24,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.concurrent.ThreadLocalRandom;
 
 import be.kuleuven.chess.R;
 
@@ -35,19 +36,32 @@ public class DBConnect
     private AppCompatActivity activity;
     private Board board;
     private Move lMove;
-    private final String color;
+    private  String color;
+
+
+    //for starting the game:
+    private Color colorPlayer;
+    private int gameId;
+
 
 
     public DBConnect(AppCompatActivity activity, Board board, Color color){
         this.activity = activity;
         this.board = board;
         lMove = null;
+
+
         if(color == Color.white){
             this.color = "white";
         }
         else{
             this.color = "black";
         }
+    }
+
+    public DBConnect(AppCompatActivity activity){
+        colorPlayer = null;
+        gameId = 0;
     }
     /**
      * Retrieve information from DB with Volley JSONRequest
@@ -144,10 +158,164 @@ public class DBConnect
         requestQueue.add(submitRequest);
     }
 
+    public void getGame() //View v )
+    {
+        requestQueue = Volley.newRequestQueue(activity);
+        String requestURL = "https://studev.groept.be/api/a21pt402/getGame";
+
+
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+
+                new Response.Listener<JSONArray>()
+                {
+                    @Override
+                    public void onResponse(JSONArray response)
+                    {
+                        try {
+                            String responseString = "";
+                            for( int i = 0; i < response.length(); i++ )
+                            {
+                                JSONObject curObject = response.getJSONObject( i );
+                                if(curObject.getString("playerb") == null && colorPlayer == null){
+                                    //this means there is a game that is waiting to be played.
+
+                                    //add myself to the game
+                                    addPlayerB(curObject.getInt("idGame")); //player b should somehow tell me that I cans start the game
+                                    //once thats done the game starts
+
+                                }
+                                else if(colorPlayer == null){
+                                    createNewGame(); //should somehow tell me that I can start the game
+                                }
+                                else if (curObject.getString("playerb") != null && colorPlayer != null){//this means I am white but now I have a second player
+                                    gameId = curObject.getInt("idGame");
+                                }
+                                //HAVE TO SET THE PREVIOUS MOVE IN THE GAME CLASS WHEN WE GET THIS!!!
+                            }
+
+                        }
+                        catch( JSONException e )
+                        {
+                            Log.e( "Database", e.getMessage(), e );
+                        }
+                    }
+                },
+
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+
+                    }
+                }
+        );
+
+        requestQueue.add(submitRequest);
+    }
+
+    public void addPlayerB(int idGame) //View v )
+    {
+        requestQueue = Volley.newRequestQueue(activity);
+
+        int randomNum = ThreadLocalRandom.current().nextInt(1, 1000000000);
+
+        String requestURL = "https://studev.groept.be/api/a21pt402/addB/" + String.valueOf(randomNum)+ "/" + String.valueOf(idGame);
+        //this will then add me to the game
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+
+                new Response.Listener<JSONArray>()
+                {
+                    @Override
+                    public void onResponse(JSONArray response)
+                    {
+                        try {
+                            //if I have a response, I simply set the values of Color and GameID and the activity class will then know the game is ready
+                            JSONObject curObject = response.getJSONObject( 0 );
+                            colorPlayer = Color.black;
+                            gameId = idGame;
+                        }
+                        catch( JSONException e )
+                        {
+                            Log.e( "Database", e.getMessage(), e );
+                        }
+                    }
+                },
+
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+
+                    }
+                }
+        );
+
+        requestQueue.add(submitRequest);
+    }
+
+    public void createNewGame() //View v )
+    {
+        requestQueue = Volley.newRequestQueue(activity);
+
+        int randomNum = ThreadLocalRandom.current().nextInt(1, 1000000000);
+
+        String requestURL = "https://studev.groept.be/api/a21pt402/createGame/" + String.valueOf(randomNum);
+        //this will then add me to the game
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+
+                new Response.Listener<JSONArray>()
+                {
+                    @Override
+                    public void onResponse(JSONArray response)
+                    {
+                        try {
+                            //if I have a response, I simply set the values of Color and GameID and the activity class will then know the game is ready
+                            JSONObject curObject = response.getJSONObject( 0 );
+                            colorPlayer = Color.white;
+                            while(gameId == 0){
+                                getGame();
+                                try{
+                                    Thread.sleep(1000);
+                                }catch(InterruptedException e){
+                                    Log.e( "Sleep in database", e.getMessage(), e );
+                                }
+                            }
+                            //DONT HAVE THE GAME ID, WILL HAVE TO SET THAT WHEN I CHECK IF THERE IS A PLAYER B
+                        }
+                        catch( JSONException e )
+                        {
+                            Log.e( "Database", e.getMessage(), e );
+                        }
+                    }
+                },
+
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+
+                    }
+                }
+        );
+
+        requestQueue.add(submitRequest);
+    }
+
     public Move getMove(){
         Move r = this.lMove;
         lMove = null;
         return r;
+    }
+
+    public int getGameId(){
+        return this.gameId;
+    }
+
+    public Color getColorPlayer(){
+        return this.getColorPlayer();
     }
 }
 
