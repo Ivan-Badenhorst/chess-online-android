@@ -46,14 +46,19 @@ public class DBConnect
 
     private boolean moveWritten;
 
+    private Game game;
 
 
-    public DBConnect(AppCompatActivity activity, Board board, Color color){
+
+    public DBConnect(AppCompatActivity activity, Board board, Color color, Game game){
         this.activity = activity;
         this.board = board;
         lMove = null;
         moveWritten = false;
 
+        this.game = game;
+
+        colorPlayer = color;
 
         if(color == Color.white){
             this.color = "white";
@@ -72,12 +77,14 @@ public class DBConnect
      * Retrieve information from DB with Volley JSONRequest
      */
 
-    private void readMove(int idGame) //View v )
+    public void readMove(int idGame) //View v )
     {
         requestQueue = Volley.newRequestQueue(activity);    //OR MAYBE JUST MAKE A REQUEST CUE
                                                             // IN THE ACTIVITY AND GIVE IT HERE
         String requestURL = "https://studev.groept.be/api/a21pt402/readMove/" +  String.valueOf(idGame);
         lMove = null;
+
+        Log.d("readMove", "got here");
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
 
@@ -86,21 +93,56 @@ public class DBConnect
                     @Override
                     public void onResponse(JSONArray response)
                     {
+                        Log.d("readMove", "resp");
                         try {
-                            String responseString = "";
+
                             for( int i = 0; i < response.length(); i++ )
                             {
                                 JSONObject curObject = response.getJSONObject( i );
+                                Log.d("readMove", "1");
+
                                 Tile first = board.getTile(curObject.getInt("fRow"), curObject.getInt("fCol"));
+                                Log.d("readMove", "2");
+
                                 Tile sec = board.getTile(curObject.getInt("sRow"), curObject.getInt("sCol"));
+                                Log.d("readMove", "3");
+
                                 lMove = new Move(first, sec, board, null);
+                                //lMove.getEnemyPiece();
+                                Log.d("readMove", "4");
+
+                                if(lMove.isFirstPresent()){
+                                    //call method to make enemy move
+                                    Log.d("readMove", "in the if");
+                                    lMove.makeMove();
+                                    //make it possible for us to move again!!
+                                    game.myMove();
+                                }
+                                else{
+                                    Log.d("readMove", "in the else");
+                                    try{
+                                        Thread.sleep(1000);
+                                    } catch(InterruptedException e){
+                                        Log.e("er", e.getMessage());
+                                    }
+                                    readMove(idGame);
+                                }
                                 //HAVE TO SET THE PREVIOUS MOVE IN THE GAME CLASS WHEN WE GET THIS!!!
+                            }
+                            if (response.length() == 0){
+                                try{
+                                    Thread.sleep(1000);
+                                } catch(InterruptedException e){
+                                    Log.e("er", e.getMessage());
+                                }
+                                readMove(idGame);
                             }
 
                         }
                         catch( JSONException e )
                         {
                             Log.e( "Database", e.getMessage(), e );
+                            Log.d("readMove", "errrrr");
                         }
                     }
                 },
@@ -339,12 +381,14 @@ public class DBConnect
 
     public void addMove(int frow, int fcol, int srow, int scol, int gameId, Color color) //View v )
     {
+        Log.d("addMove", "got here");
         requestQueue = Volley.newRequestQueue(activity);
         moveWritten = false;
-
         String col = color.name();
         String requestURL = "https://studev.groept.be/api/a21pt402/createMove/"+ frow+"/"+fcol+"/"+ srow+"/"+scol+ "/"+ gameId+"/"+col;
         //this will then add me to the game
+        Log.d("addMove", "got here 2");
+        Log.d("addMove", requestURL);
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
 
                 new Response.Listener<JSONArray>()
@@ -352,15 +396,12 @@ public class DBConnect
                     @Override
                     public void onResponse(JSONArray response)
                     {
-                        try {
-                            //if I have a response, I simply set the values of Color and GameID and the activity class will then know the game is ready
-                            JSONObject curObject = response.getJSONObject( 0 );
-                            //DONT HAVE THE GAME ID, WILL HAVE TO SET THAT WHEN I CHECK IF THERE IS A PLAYER B
-                        }
-                        catch( JSONException e )
-                        {
-                            Log.e( "Database", e.getMessage(), e );
-                        }
+                        Log.d("addMove", "resp");
+                        //change the turn color to not my color
+                        game.changeColor(); //maybe refactor and remove this????????????????????????
+                        //go an look in database until he made his move
+                        readMove(gameId);
+
                     }
                 },
 
@@ -369,7 +410,7 @@ public class DBConnect
                     @Override
                     public void onErrorResponse(VolleyError error)
                     {
-
+                        Log.d("addMove", "errrrr");
                     }
                 }
         );

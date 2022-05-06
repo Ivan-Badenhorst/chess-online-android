@@ -104,7 +104,13 @@ public class MainActivity extends AppCompatActivity {
 
          row = ((TableLayout) tblRow.getParent()).indexOfChild(tblRow);
 
-         game.addClick(row, column);
+         if(this.color == Color.white){
+             game.addClick(row, column);
+         }
+         else{
+             game.addClick(7-row, 7-column);
+         }
+
 
         if(color == Color.white){
             display(start.get(0));

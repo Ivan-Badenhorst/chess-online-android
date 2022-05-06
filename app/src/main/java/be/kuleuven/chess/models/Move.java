@@ -205,6 +205,10 @@ public class Move {
 
     }
 
+    public boolean isFirstPresent(){
+        return first.getPiece().isPresent();
+    }
+
 
 
     public Piece getPiece() {

@@ -1,11 +1,20 @@
 package be.kuleuven.chess.models;
 
 import android.annotation.SuppressLint;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Optional;
+
+import be.kuleuven.chess.R;
+import be.kuleuven.chess.activities.MainActivity;
+
 @SuppressLint("NewApi")
 public class Game {
     private Board board;
@@ -25,16 +34,27 @@ public class Game {
         board = new Board();
         move = null;
         firstClick = true;
+
         counterForTesting=0;
+
         turnColor = Color.white;
         this.activity = activity;//MAYBE FIND BETTER WAY, CHECK COMMENT DB CONNECT CLASS
-        DBConnect db = new DBConnect(activity, board, turnColor);
+        db = new DBConnect(activity, board, turnColor, this);
         //initialize db correctly
         //somewhere in this class we'll need to create a loop that runs
         firstMove=false;
 
         this.myColor = myColor;
         this.gameId = gameId;
+
+        if(myColor == Color.black){
+            setClickableAll(false);
+            //go look in database for the next move
+            db.readMove(gameId);
+        }
+        else{
+            setClickableAll(true);
+        }
 
     }
 
@@ -64,10 +84,11 @@ public class Game {
             boolean moved = move.makeMove();
 
             if(moved){
-                db.addMove(firstTile.getPosition()[0], firstTile.getPosition()[1], secondTile.getPosition()[0], secondTile.getPosition()[1], gameId, myColor);
+                setClickableAll(false);
+                db.addMove(move.getFirst().getPosition()[0], move.getFirst().getPosition()[1], move.getSec().getPosition()[0], move.getSec().getPosition()[1], gameId, myColor);
                 /* we have now reached the point where our move is made and we send it to database.
                 now we wait until it has been written */
-                while(!db.getWritten())
+                /*while(!db.getWritten())
                 {
                     db.checkMoveWritten(gameId);
                     try{
@@ -79,17 +100,27 @@ public class Game {
                     }
 
                 }
-                if(turnColor == Color.white){
-                    turnColor = Color.black;
-                }
-                else{
-                    turnColor = Color.white;
-                }
+                */
             }
 
 
         }
 
+    }
+    public void myMove(){
+        changeColor();
+        setClickableAll(true);
+        display();
+
+    }
+    private void display(){
+        if(myColor == Color.white){
+            ( (MainActivity) activity).display(0);
+        }
+        else
+        {
+            ( (MainActivity) activity).display(7);
+        }
     }
 
     private void multipleDeviceGame(){
@@ -139,6 +170,28 @@ public class Game {
 
             //also, after each move we should check the enemy for checkmate
             //if yes, game done should be true
+        }
+    }
+
+    private void setClickableAll(boolean val){
+        TableLayout tableLayout= activity.findViewById(R.id.gdBoard);
+        for(int i = 0; i<8; i++){
+            TableRow row = (TableRow) tableLayout.getChildAt(i);
+            for(int j = 0; j<8; j++){
+                ImageView imageView =  (ImageView) row.getChildAt(j);
+                           imageView.setClickable(val);
+
+            }
+
+        }
+    }
+
+    public void changeColor(){
+        if(turnColor == Color.white){
+            turnColor = Color.black;
+        }
+        else{
+            turnColor = Color.white;
         }
     }
 }
