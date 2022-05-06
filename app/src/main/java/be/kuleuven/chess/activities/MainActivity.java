@@ -54,16 +54,8 @@ public class MainActivity extends AppCompatActivity {
                 //check if there is a game available - if yes join it and get the ID of the game + my color is black
                 //if not, make a new record for me - I am white + get the ID
         db = new DBConnect(this); //CHANGE THE THIS!!!!
-        createGame();
-
-        game = new Game(this);
-        if(color == Color.white){
-            display(start.get(0));
-        }
-        else
-        {
-            display(start.get(1));
-        }
+        //createGame();
+        db.getGame();
     }
 
     public void display(int start){
@@ -133,9 +125,9 @@ public class MainActivity extends AppCompatActivity {
     public void createGame(){
         //here I have a loop that runs until I have a game
         // db.createNewGame();
-        db.getGame();
 
-        while(db.getGameId() == 0){
+
+        /*while(db.getGameId() == 0){
             try{
                 Thread.sleep(1000);
             }catch(InterruptedException e){
@@ -143,13 +135,27 @@ public class MainActivity extends AppCompatActivity {
             }
 
 
-        }
-        this.color = db.getColorPlayer();
-        this.gameId = db.getGameId();
+        }*/
+        //this.color = db.getColorPlayer();
+        //this.gameId = db.getGameId();
     }
 
     public static void main(String[] args) {
 
+    }
+
+    public void gameFound(){
+        this.color = db.getColorPlayer();
+        this.gameId = db.getGameId();
+
+        game = new Game(this, color, gameId);
+        if(color == Color.white){
+            display(start.get(0));
+        }
+        else
+        {
+            display(start.get(1));
+        }
     }
 }
 

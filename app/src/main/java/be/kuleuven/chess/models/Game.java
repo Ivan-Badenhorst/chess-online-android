@@ -21,7 +21,7 @@ public class Game {
 
     private DBConnect db;
 
-    public Game(AppCompatActivity activity) {
+    public Game(AppCompatActivity activity, Color myColor, int gameId) {
         board = new Board();
         move = null;
         firstClick = true;
@@ -32,6 +32,9 @@ public class Game {
         //initialize db correctly
         //somewhere in this class we'll need to create a loop that runs
         firstMove=false;
+
+        this.myColor = myColor;
+        this.gameId = gameId;
 
     }
 
