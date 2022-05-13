@@ -107,7 +107,7 @@ public class DBConnect
                                 Tile sec = board.getTile(curObject.getInt("sRow"), curObject.getInt("sCol"));
                                 Log.d("readMove", "3");
 
-                                lMove = new Move(first, sec, board, null);
+                                lMove = new Move(first, sec, board, game.getMove());
                                 //lMove.getEnemyPiece();
                                 Log.d("readMove", "4");
 
@@ -115,6 +115,7 @@ public class DBConnect
                                     //call method to make enemy move
                                     Log.d("readMove", "in the if");
                                     lMove.makeMove();
+                                    game.setPrevMov(lMove);
                                     //make it possible for us to move again!!
                                     game.myMove();
                                 }

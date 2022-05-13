@@ -14,7 +14,7 @@ public class Move {
     private final Board board;
     private final Tile first;
     private final Tile sec;
-    private final Move previousMove;
+    private Move previousMove;
     private Piece piece;
 
     public Move(Tile first, Tile sec, Board board, Move previousMove) {
@@ -22,6 +22,10 @@ public class Move {
         this.sec = sec;
         this.board = board;
         this.previousMove = previousMove;
+    }
+
+    public void setPreviousMove (Move move){
+        previousMove = move;
     }
 
     public boolean makeMove()

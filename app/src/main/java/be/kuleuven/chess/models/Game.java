@@ -27,6 +27,7 @@ public class Game {
     private Color myColor;
     private int gameId;
     private boolean firstMove;
+    private Move prevMov;
 
     private DBConnect db;
 
@@ -34,6 +35,8 @@ public class Game {
         board = new Board();
         move = null;
         firstClick = true;
+
+        counterForTesting = 0;
 
         turnColor = Color.white;
         this.activity = activity;//MAYBE FIND BETTER WAY, CHECK COMMENT DB CONNECT CLASS
@@ -73,7 +76,11 @@ public class Game {
         }
         else{
             firstClick = true;
-            Move prevMov = move;
+            counterForTesting += 1;
+
+            if(counterForTesting == 3){
+                Log.d("here", "makingmove");
+            }
 
             move = new Move(firstTile, board.getTile(row, column), board, prevMov);
             boolean moved = move.makeMove();
@@ -122,5 +129,13 @@ public class Game {
         else{
             turnColor = Color.white;
         }
+    }
+
+    public Move getMove(){
+        return move;
+    }
+
+    public void setPrevMov(Move lMove){
+        prevMov = lMove;
     }
 }
