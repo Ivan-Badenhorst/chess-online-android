@@ -26,8 +26,6 @@ public class Move {
 
     public boolean makeMove()
     {
-        //HAVE TO ADD SOMETHING THAT CHECKS EN PASSANT FOR CHECK AND UNDOES IT IF NEEDED!!
-
         boolean hasMoved = false;
         piece = first.getPiece().get();
 
@@ -41,8 +39,14 @@ public class Move {
 
                     if(ep.isValid()){
                         ep.complete();
-                        ((Pawn) piece).setHasMoved(true);
-                        hasMoved = true;
+                        if(board.getKingTile(piece.getColor()).checkCheck(piece.getColor())){
+                            ep.undo();
+                        }
+                        else{
+                            hasMoved = true;
+                        }
+
+
                     }
 
 

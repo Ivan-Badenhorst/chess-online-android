@@ -11,6 +11,7 @@ public class EnPassant {
     private Move move;
     private ArrayList<Tile> eP;
     private Tile tileToCheck;
+    private Piece removedPiece;
 
     public EnPassant(Move move, ArrayList<Tile> eP){
         this.move = move;
@@ -59,6 +60,13 @@ public class EnPassant {
     public void complete(){
         move.getSec().addPiece(move.getFirst().getPiece().get());
         move.getFirst().removePiece();
+        removedPiece = tileToCheck.getPiece().get();
         tileToCheck.removePiece();
+    }
+
+    public void undo(){
+        tileToCheck.addPiece(removedPiece);
+        move.getFirst().addPiece(move.getPiece());
+        move.getSec().removePiece();
     }
 }

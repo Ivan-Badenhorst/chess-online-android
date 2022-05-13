@@ -56,7 +56,7 @@ public class Pawn extends Piece {
             tile.addPiece(new Queen(this.color, this.board));
         }
 
-        if((this.color == Color.white && currentRank == 3) || currentRank == 4){
+        if((this.color == Color.white && currentRank == 3) || (this.color == Color.black && currentRank == 4)){
             generateEnPassant(pos);
         }
         else{
