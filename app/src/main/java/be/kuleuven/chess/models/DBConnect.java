@@ -174,7 +174,7 @@ public class DBConnect
         requestQueue = Volley.newRequestQueue(activity);    //OR MAYBE JUST MAKE A REQUEST CUE
         // IN THE ACTIVITY AND GIVE IT HERE
         String requestURL = "https://studev.groept.be/api/a21pt402/getStatus/" +  String.valueOf(idGame);
-        lMove = null;
+        //lMove = null;
 
 
 
