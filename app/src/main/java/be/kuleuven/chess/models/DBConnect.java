@@ -126,7 +126,11 @@ public class DBConnect
                                     } catch(InterruptedException e){
                                         Log.e("er", e.getMessage());
                                     }
-                                    readMove(idGame);
+                                    //readMove(idGame);
+                                    //changing to check the status!! So to get back
+                                    //to this version just delete the following code
+
+                                    readStatus(idGame);
                                 }
                                 //HAVE TO SET THE PREVIOUS MOVE IN THE GAME CLASS WHEN WE GET THIS!!!
                             }
@@ -160,6 +164,77 @@ public class DBConnect
 
         requestQueue.add(submitRequest);
     }
+
+
+    //readStatus
+
+
+    public void readStatus(int idGame) //View v )
+    {
+        requestQueue = Volley.newRequestQueue(activity);    //OR MAYBE JUST MAKE A REQUEST CUE
+        // IN THE ACTIVITY AND GIVE IT HERE
+        String requestURL = "https://studev.groept.be/api/a21pt402/getStatus/" +  String.valueOf(idGame);
+        lMove = null;
+
+
+
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+
+                new Response.Listener<JSONArray>()
+                {
+                    @Override
+                    public void onResponse(JSONArray response)
+                    {
+                        Log.d("readMove", "resp");
+                        try {
+
+                            for( int i = 0; i < response.length(); i++ )
+                            {
+                                JSONObject curObject = response.getJSONObject( i );
+                                boolean resigned = curObject.getBoolean("status");
+
+                                if(resigned){
+                                    //do something
+                                    //for now as a test I remove pieces from the board!!!
+                                    game.resigned();//removes half the board
+
+                                    //maybe have to do some more?
+                                    //or just actually call a method that stops everything and
+                                    //displays whats needed
+                                }
+                                else{
+                                    readMove(idGame);
+                                }
+                                //HAVE TO SET THE PREVIOUS MOVE IN THE GAME CLASS WHEN WE GET THIS!!!
+                            }
+
+                        }
+                        catch( JSONException e )
+                        {
+                            Log.e( "Database", e.getMessage(), e );
+                            Log.d("readStatus", "errrrr");
+                        }
+                    }
+                },
+
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+
+                    }
+                }
+        );
+
+        requestQueue.add(submitRequest);
+    }
+
+
+
+
+
+
 
     public void checkPrevMove(int idGame) //View v )
     {
@@ -483,5 +558,39 @@ public class DBConnect
     public boolean getWritten()
     {
         return moveWritten;
+    }
+
+
+
+    public void setGameStatus(boolean resigned, int gameid) //View v )
+    {
+        Log.d("addMove", "got here");
+        requestQueue = Volley.newRequestQueue(activity);
+        moveWritten = false;
+        String requestURL = "https://studev.groept.be/api/a21pt402/setStatus/" + resigned + "/" + gameid;
+        //maybe resign needs to be either 0 or 1!!!
+
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+
+                new Response.Listener<JSONArray>()
+                {
+                    @Override
+                    public void onResponse(JSONArray response)
+                    {
+                        ((MainActivity) activity).resigned();
+                    }
+                },
+
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Log.d("addMove", "errrrr");
+                    }
+                }
+        );
+
+        requestQueue.add(submitRequest);
     }
 }

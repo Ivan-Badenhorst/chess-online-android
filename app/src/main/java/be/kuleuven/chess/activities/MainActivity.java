@@ -150,6 +150,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void btnResignedClick(View caller){
+        db.setGameStatus(true, gameId);
+    }
+
+    public void resigned(){
+            game.resigned();
+            //this is useless for now!!!
+    }
+
     public void gameFound(){
         this.color = db.getColorPlayer();
         this.gameId = db.getGameId();

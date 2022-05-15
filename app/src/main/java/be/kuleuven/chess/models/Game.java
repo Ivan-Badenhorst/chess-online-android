@@ -87,6 +87,22 @@ public class Game {
 
             if(moved){
                 setClickableAll(false);
+                //check cm for oponent
+                Color opCol;
+                if(myColor == Color.white){
+                    opCol = Color.black;
+                }
+                else{
+                    opCol = Color.white;
+                }
+
+                if(board.getKingTile(opCol).checkCheck(opCol)){
+                    if(isCheckMate(opCol)){
+                        quickCMaction();
+                    };
+                }
+
+
                 db.addMove(move.getFirst().getPosition()[0], move.getFirst().getPosition()[1], move.getSec().getPosition()[0], move.getSec().getPosition()[1], gameId, myColor);
             }
 
@@ -95,10 +111,18 @@ public class Game {
     }
     public void myMove(){
         changeColor();
-        setClickableAll(true);
         if(board.getKingTile(myColor).checkCheck(myColor)){
-            if(isCheckMate()){
-                Log.d("checkMate", "check worked");
+            if(isCheckMate(myColor)){
+                //do something useful! - call a method
+                quickCMaction(); //removes quarter of the board
+            }
+        }
+        else {
+            setClickableAll(true);
+            if (board.getKingTile(myColor).checkCheck(myColor)) {
+                if (isCheckMate(myColor)) {
+                    Log.d("checkMate", "check worked");
+                }
             }
         }
         display();
@@ -144,7 +168,7 @@ public class Game {
         prevMov = lMove;
     }
 
-    public boolean isCheckMate(){
+    public boolean isCheckMate(Color c){
 
         for(int i = 0; i<8; i++){
             for(int j =0; j<8; j++){
@@ -157,7 +181,7 @@ public class Game {
 
                     Piece p = tile1.getPiece().get();
 
-                    if(p.getColor() == myColor){
+                    if(p.getColor() == c){
 
                         //for a move we need: prev mov, tile 1, tile 2
 
@@ -177,5 +201,31 @@ public class Game {
         }
 
         return true;
+    }
+
+
+
+
+    public void resigned(){//possbily delete tyhis!!
+        for(int i = 0; i<8; i++){
+            for(int j =0; j<5; j++){
+
+                board.getTile(i,j).removePiece();
+
+            }
+        }
+        display();
+    }
+
+
+    public void quickCMaction(){
+        for(int i = 0; i<5; i++){
+            for(int j =0; j<5; j++){
+
+                board.getTile(i,j).removePiece();
+
+            }
+        }
+        display();
     }
 }
