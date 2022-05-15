@@ -191,9 +191,9 @@ public class DBConnect
                             for( int i = 0; i < response.length(); i++ )
                             {
                                 JSONObject curObject = response.getJSONObject( i );
-                                boolean resigned = curObject.getBoolean("status");
+                                int resigned = curObject.getInt("status");
 
-                                if(resigned){
+                                if(resigned == 1){
                                     //do something
                                     //for now as a test I remove pieces from the board!!!
                                     game.resigned();//removes half the board
