@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @Structure:  Parent of classes in package: be.kuleuven.chess.models.pieces
  */
-public abstract class Piece {
+public abstract class Piece implements Cloneable{
     protected Color color;
     protected Board board;
     protected Tile tile;
@@ -237,5 +237,11 @@ public abstract class Piece {
                 moves.add(board.getTile(row, col));
             }
         }
+    }
+
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

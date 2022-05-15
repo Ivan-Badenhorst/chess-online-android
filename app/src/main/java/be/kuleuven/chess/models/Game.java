@@ -96,6 +96,11 @@ public class Game {
     public void myMove(){
         changeColor();
         setClickableAll(true);
+        if(board.getKingTile(myColor).checkCheck(myColor)){
+            if(isCheckMate()){
+                Log.d("checkMate", "check worked");
+            }
+        }
         display();
 
     }
@@ -137,5 +142,40 @@ public class Game {
 
     public void setPrevMov(Move lMove){
         prevMov = lMove;
+    }
+
+    public boolean isCheckMate(){
+
+        for(int i = 0; i<8; i++){
+            for(int j =0; j<8; j++){
+                if(i == 6 && j ==0){
+                    System.out.println();
+                }
+                Tile tile1 = board.getTile(i,j);
+
+                if(tile1.getPiece().isPresent()){
+
+                    Piece p = tile1.getPiece().get();
+
+                    if(p.getColor() == myColor){
+
+                        //for a move we need: prev mov, tile 1, tile 2
+
+                        for(int k =0; k<p.getMoves().size(); k++){
+                            Tile tile2 = p.getMoves().get(k);
+                            Move moveTry = new Move(tile1, tile2, board, prevMov);
+                            boolean possible = moveTry.makeMove();
+                            if(possible){
+                                //undo move
+                                moveTry.undoMove();
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 }

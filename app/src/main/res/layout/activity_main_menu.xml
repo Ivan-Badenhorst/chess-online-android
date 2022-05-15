@@ -23,7 +23,8 @@
         android:id="@+id/btnStart"
         android:layout_width="149dp"
         android:layout_height="0dp"
-        android:text="Button"
+        android:onClick="startGame"
+        android:text="Find Match"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

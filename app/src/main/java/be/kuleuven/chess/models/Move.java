@@ -1,6 +1,7 @@
 package be.kuleuven.chess.models;
 
 import android.os.Build;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,21 +18,49 @@ public class Move {
     private Move previousMove;
     private Piece piece;
 
+    private Piece piece2Undo;
+    private Piece piece1Undo;
+
     public Move(Tile first, Tile sec, Board board, Move previousMove) {
         this.first = first;
         this.sec = sec;
         this.board = board;
         this.previousMove = previousMove;
+
+
     }
 
     public void setPreviousMove (Move move){
         previousMove = move;
     }
 
+    public void undoMove(){
+      /*  first.addPiece(piece1Undo);
+        if(piece2Undo != null) {
+            sec.addPiece(piece2Undo);
+        }
+        else{
+            sec.removePiece();
+        }*/
+
+    }
+
     public boolean makeMove()
     {
-        boolean hasMoved = false;
         piece = first.getPiece().get();
+        if(sec.getPiece().isPresent()){
+            piece2Undo = sec.getPiece().get();
+        }
+        else{
+            piece2Undo = null;
+        }
+        try{
+            piece1Undo = (Piece) piece.clone();
+        }catch(CloneNotSupportedException e){
+            Log.e("clone fail",e.getMessage());
+        }
+
+        boolean hasMoved = false;
 
         if(piece instanceof Pawn){
 
