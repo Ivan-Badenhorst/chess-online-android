@@ -567,7 +567,14 @@ public class DBConnect
         Log.d("addMove", "got here");
         requestQueue = Volley.newRequestQueue(activity);
         moveWritten = false;
-        String requestURL = "https://studev.groept.be/api/a21pt402/setStatus/" + resigned + "/" + gameid;
+        int boolval;
+        if(resigned){
+            boolval = 1;
+        }
+        else{
+            boolval = 0;
+        }
+        String requestURL = "https://studev.groept.be/api/a21pt402/setStatus/" + boolval + "/" + gameid;
         //maybe resign needs to be either 0 or 1!!!
 
         JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
