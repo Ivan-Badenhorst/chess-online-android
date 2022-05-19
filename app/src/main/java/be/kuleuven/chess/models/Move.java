@@ -21,10 +21,10 @@ public class Move {
     private Piece piece2Undo;
     private Piece piece1Undo;
 
-    public Move(Tile first, Tile sec, Board board, Move previousMove) {
+    public Move(Tile first, Tile sec, Move previousMove) {
         this.first = first;
         this.sec = sec;
-        this.board = board;
+        this.board = Board.getBoardObj();
         this.previousMove = previousMove;
 
 
