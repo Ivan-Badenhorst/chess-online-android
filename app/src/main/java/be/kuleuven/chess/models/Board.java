@@ -127,7 +127,7 @@ public class Board {
         }
 
         readPieces();
-        calculateMoves();
+        calculateMoves(null);
     }
 
     private void readPieces(){
@@ -154,13 +154,27 @@ public class Board {
         }
     }
 
-    public void calculateMoves(){
+    public void calculateMoves(Move prev){
         readPieces();
         for(int i = 0; i<whitePieces.size(); i++){
-            whitePieces.get(i).generateMoves();
+            if(whitePieces.get(i) instanceof Pawn){
+                ( (Pawn) whitePieces.get(i)).generateMoves(prev);
+            }
+            else{
+                whitePieces.get(i).generateMoves();
+            }
+
+
         }
         for(int i = 0; i<blackPieces.size(); i++){
-            blackPieces.get(i).generateMoves();
+
+            if(blackPieces.get(i) instanceof Pawn){
+                ( (Pawn) blackPieces.get(i)).generateMoves(prev);
+            }
+            else{
+                blackPieces.get(i).generateMoves();
+            }
+
         }
         //whitePieces.stream().forEach(Piece::generateMoves);
         //blackPieces.stream().forEach(n -> n.generateMoves());

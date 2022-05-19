@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import be.kuleuven.chess.R;
 import be.kuleuven.chess.models.Board;
 import be.kuleuven.chess.models.Color;
+import be.kuleuven.chess.models.Move;
 import be.kuleuven.chess.models.Piece;
 import be.kuleuven.chess.models.Tile;
 
@@ -39,8 +40,13 @@ public class Pawn extends Piece {
         }
         return symbol;
     }
+
     @Override
-    public void generateMoves()
+    public void generateMoves(){
+        generateMoves(null);
+    }
+
+    public void generateMoves(Move prev)
     {
         determineTile();
 
@@ -56,11 +62,44 @@ public class Pawn extends Piece {
             tile.addPiece(new Queen(this.color));
         }
 
+
         if((this.color == Color.white && currentRank == 3) || (this.color == Color.black && currentRank == 4)){
             generateEnPassant(pos);
         }
         else{
             enPassant = null;
+        }
+
+
+        if(enPassant != null){
+
+            //check if prev move, sec tile is positione 1 or 2 in the array
+            //check if the previous move as a pawn
+            //check if it was a double move
+            int vert;
+            if(color == Color.white){
+                vert = -1;
+            }
+            else{
+                vert = 1;
+            }
+
+
+            if(prev.getFirst() == enPassant.get(0) && prev.getSec() == enPassant.get(2)){
+
+                if(prev.getPiece() instanceof Pawn){
+                    moves.add(board.getTile(tile.getPosition()[0]+vert , tile.getPosition()[1] -1));
+                }
+
+            }
+            else if(prev.getFirst() == enPassant.get(1) && prev.getSec() == enPassant.get(3)){
+
+                if(prev.getPiece() instanceof Pawn){
+                    moves.add(board.getTile(tile.getPosition()[0]+vert , tile.getPosition()[1] + 1));
+                }
+
+            }
+
         }
 
         moves.clear();
@@ -77,11 +116,17 @@ public class Pawn extends Piece {
 
             if(this.color == Color.white) {
 
-                if (!hasMoved) {
+
+
+
+
+                addNormalMove(up, currentFile);
+
+                if (!hasMoved && !board.getTile(up, currentFile).getPiece().isPresent()) {
                     addNormalMove(doubleUp, currentFile);
                 }
 
-                addNormalMove(up, currentFile);
+
 
                 //capture diagonal left
                 if (currentFile != 0) {
@@ -91,14 +136,22 @@ public class Pawn extends Piece {
                 if (currentFile != 7) {
                     addCaptures(up, right, Color.black);
                 }
+
+
+
+
+
+
             }
             else if (this.color == Color.black)
             {
-                if (!hasMoved) {
+
+                addNormalMove(down, currentFile);
+
+                if (!hasMoved && !board.getTile(down, currentFile).getPiece().isPresent()) {
                     addNormalMove(doubleDown, currentFile);
                 }
 
-                addNormalMove(down, currentFile);
 
                 if(currentFile!=0) {
                     addCaptures(down, left, Color.white);
@@ -117,10 +170,10 @@ public class Pawn extends Piece {
         enPassant = new ArrayList<>(4);
         int vert;
         if(color == Color.white){
-            vert = -1;
+            vert = -2;
         }
         else{
-            vert = 1;
+            vert = 2;
         }
 
     //USING 4 IF'S BECAUSE WE ORDER WE ADD IT TO THE ARRAYLIST MATTERS
