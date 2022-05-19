@@ -26,6 +26,9 @@ public class Move {
         this.sec = sec;
         this.board = Board.getBoardObj();
         this.previousMove = previousMove;
+        if(first.getPiece().isPresent()){
+            this.piece = first.getPiece().get();
+        }
 
 
     }
@@ -47,6 +50,8 @@ public class Move {
 
     public boolean makeMove()
     {
+        board.calculateMoves(previousMove);
+
         piece = first.getPiece().get();
         if(sec.getPiece().isPresent()){
             piece2Undo = sec.getPiece().get();
@@ -91,7 +96,7 @@ public class Move {
         if(piece.getMoves().contains(sec)){
             Piece secPiece = null;
 
-
+            Log.d("moveClass", "array contains the tile");
             if(!(piece instanceof King || piece instanceof Pawn) ){
                 if(sec.getPiece().isPresent()){
                     secPiece = sec.getPiece().get();
@@ -170,13 +175,16 @@ public class Move {
                     if(sec.getPiece().isPresent()){
                         secPiece = sec.getPiece().get();
                     }
+
                     sec.addPiece(piece);
                     first.removePiece();
                     hasMoved = true;
-
+                    Log.d("moveClass", "we made the move");
                     if(board.getKingTile(piece.getColor()).checkCheck(piece.getColor())){
                         //if the move puts the king in check
                         //undo the move!
+
+                        Log.d("moveClass", "it is check");
                         if(secPiece != null){
                             sec.addPiece(secPiece);
 
@@ -186,6 +194,7 @@ public class Move {
                         }
                         first.addPiece(piece);
                         hasMoved = false;
+
                     }
                 }
             }

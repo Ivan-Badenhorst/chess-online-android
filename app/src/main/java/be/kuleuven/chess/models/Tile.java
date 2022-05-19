@@ -86,7 +86,7 @@ public class Tile {
         return new int[]{row, column};
     }
 
-    public boolean checkCheck(Color color){
+    public boolean checkCheck(Color kingColor){
         /*
 
             idea for checking a tile for check:
@@ -98,7 +98,7 @@ public class Tile {
             check for knight
 
         */
-        return checkStraight(color) || checkDiagonal(color) || checkKnight(color);
+        return checkStraight(kingColor) || checkDiagonal(kingColor) || checkKnight(kingColor);
     }
 
     private boolean checkStraight(Color color){
@@ -253,8 +253,10 @@ public class Tile {
 
                 if(p != null) {
 
+                    rightTop = false;
+
                     if (p.getColor() != color) {
-                        rightTop = false;
+
 
                         if (p instanceof Bishop || p instanceof Queen) {
                             return true;

@@ -239,4 +239,8 @@ public class Game {
         }
         display();
     }
+
+    public Color getMyColor(){
+        return myColor;
+    }
 }

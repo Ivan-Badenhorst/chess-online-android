@@ -15,15 +15,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import be.kuleuven.chess.activities.MainActivity;
-
 public class DBGame {
 
     private RequestQueue requestQueue;
     private AppCompatActivity activity;
     private Board board;
     private Move lMove;
-    private String color;
+    private String colorString;
     private Game game;
 
 
@@ -32,12 +30,14 @@ public class DBGame {
         this.board = Board.getBoardObj();
         lMove = null;
         this.game = game;
+
         if(color == Color.white){
-            this.color = "white";
+            this.colorString = "white";
         }
         else{
-            this.color = "black";
+            this.colorString = "black";
         }
+
     }
 
     public void readMove(int idGame) //View v )
@@ -66,9 +66,11 @@ public class DBGame {
                                 Tile sec = board.getTile(curObject.getInt("sRow"), curObject.getInt("sCol"));
                                 lMove = new Move(first, sec, game.getMove());
 
-                                if(lMove.isFirstPresent()){
+                                if(lMove.getPiece() != null){
                                     //call method to make enemy move
-                                    lMove.makeMove();
+                                    boolean made = false;
+                                    made = lMove.makeMove();
+                                    Log.d("making move", String.valueOf(made));
                                     game.setPrevMov(lMove);
                                     //make it possible for us to move again!!
                                     game.myMove();
