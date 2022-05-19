@@ -73,50 +73,50 @@ public class Board {
                 if(i == 0 ){//first row of black:
                     switch(j){
                         case 0:{
-                            getTile(i, j).addPiece(new Rook(Color.black, this));
-                            getTile(i, 7).addPiece(new Rook(Color.black, this));
+                            getTile(i, j).addPiece(new Rook(Color.black));
+                            getTile(i, 7).addPiece(new Rook(Color.black));
 
-                            getTile(7, j).addPiece(new Rook(Color.white, this));
-                            getTile(7, 7).addPiece(new Rook(Color.white, this));
+                            getTile(7, j).addPiece(new Rook(Color.white));
+                            getTile(7, 7).addPiece(new Rook(Color.white));
                             break;
                         }
                         case 1:{
-                            getTile(i, j).addPiece(new Knight(Color.black, this));
-                            getTile(i, 7-j).addPiece(new Knight(Color.black, this));
+                            getTile(i, j).addPiece(new Knight(Color.black));
+                            getTile(i, 7-j).addPiece(new Knight(Color.black));
 
-                            getTile(7-i, j).addPiece(new Knight(Color.white, this));
-                            getTile(7-i, 7-j).addPiece(new Knight(Color.white, this));
+                            getTile(7-i, j).addPiece(new Knight(Color.white));
+                            getTile(7-i, 7-j).addPiece(new Knight(Color.white));
                             break;
                         }
                         case 2:{
-                            getTile(i, j).addPiece(new Bishop(Color.black, this));
-                            getTile(i, 7-j).addPiece(new Bishop(Color.black, this));
+                            getTile(i, j).addPiece(new Bishop(Color.black));
+                            getTile(i, 7-j).addPiece(new Bishop(Color.black));
 
-                            getTile(7-i, j).addPiece(new Bishop(Color.white, this));
-                            getTile(7-i, 7-j).addPiece(new Bishop(Color.white, this));
+                            getTile(7-i, j).addPiece(new Bishop(Color.white));
+                            getTile(7-i, 7-j).addPiece(new Bishop(Color.white));
                             break;
 
                         }
                         case 3:{
-                            getTile(i, j).addPiece(new Queen(Color.black, this));
-                            getTile(7-i, j).addPiece(new Queen(Color.white, this));
+                            getTile(i, j).addPiece(new Queen(Color.black));
+                            getTile(7-i, j).addPiece(new Queen(Color.white));
                             break;
 
                         }
                         case 4:{
-                            getTile(i, j).addPiece(new King(Color.black, this));
-                            getTile(7-i, j).addPiece(new King(Color.white, this));
+                            getTile(i, j).addPiece(new King(Color.black));
+                            getTile(7-i, j).addPiece(new King(Color.white));
                             break;
                         }
 
                     }
                 }
                 else{
-                    getTile(i, j).addPiece(new Pawn(Color.black, this));
-                    getTile(7-i, j).addPiece(new Pawn(Color.white, this));
+                    getTile(i, j).addPiece(new Pawn(Color.black));
+                    getTile(7-i, j).addPiece(new Pawn(Color.white));
 
-                    getTile(i, 7-j).addPiece(new Pawn(Color.black, this));
-                    getTile(7-i, 7-j).addPiece(new Pawn(Color.white, this));
+                    getTile(i, 7-j).addPiece(new Pawn(Color.black));
+                    getTile(7-i, 7-j).addPiece(new Pawn(Color.white));
                 }
 
             }
