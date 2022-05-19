@@ -11,8 +11,8 @@ import be.kuleuven.chess.models.Piece;
 
 public class Knight extends Piece {
 
-    public Knight(Color color, Board board) {
-        super(board, color);
+    public Knight(Color color) {
+        super(color);
     }
 
     @Override

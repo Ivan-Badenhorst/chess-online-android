@@ -12,8 +12,8 @@ import be.kuleuven.chess.models.Piece;
 public class Rook extends Piece {
     private boolean hasMoved;
 
-    public Rook(Color color, Board board) {
-        super(board, color);
+    public Rook(Color color) {
+        super(color);
         hasMoved = false;
     }
 

@@ -22,8 +22,8 @@ public class Pawn extends Piece {
     [3] - right
     */
 
-    public Pawn(Color color, Board board) {
-        super(board, color);
+    public Pawn(Color color) {
+        super(color);
         enPassant = null;
     }
 

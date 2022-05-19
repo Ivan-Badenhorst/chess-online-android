@@ -11,8 +11,8 @@ import be.kuleuven.chess.models.Piece;
 
 public class Bishop extends Piece {
 
-    public Bishop(Color color, Board board) {
-        super(board, color);
+    public Bishop(Color color) {
+        super(color);
     }
 
     @Override

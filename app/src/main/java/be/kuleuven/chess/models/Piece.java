@@ -20,9 +20,9 @@ public abstract class Piece implements Cloneable{
     protected Tile tile;
     protected List<Tile> moves;
 
-    public Piece(Board board, Color color)
+    public Piece(Color color)
     {
-        this.board = board;
+        this.board = Board.getBoardObj();
         moves = new ArrayList<>();
         this.color = color;
     }

@@ -17,8 +17,8 @@ public class King extends Piece {
     //to do: write code to get the correct file
     private boolean hasMoved;
 
-    public King(Color color, Board board) {
-        super(board, color);
+    public King(Color color) {
+        super(color);
         hasMoved = false;
     }
 
