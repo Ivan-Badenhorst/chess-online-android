@@ -154,11 +154,11 @@ public class Board {
         }
     }
 
-    public void calculateMoves(Move prev){
+    public void calculateMoves(Move move){
         readPieces();
         for(int i = 0; i<whitePieces.size(); i++){
             if(whitePieces.get(i) instanceof Pawn){
-                ( (Pawn) whitePieces.get(i)).generateMoves(prev);
+                ( (Pawn) whitePieces.get(i)).generateMoves(move);
             }
             else{
                 whitePieces.get(i).generateMoves();
@@ -169,7 +169,7 @@ public class Board {
         for(int i = 0; i<blackPieces.size(); i++){
 
             if(blackPieces.get(i) instanceof Pawn){
-                ( (Pawn) blackPieces.get(i)).generateMoves(prev);
+                ( (Pawn) blackPieces.get(i)).generateMoves(move);
             }
             else{
                 blackPieces.get(i).generateMoves();

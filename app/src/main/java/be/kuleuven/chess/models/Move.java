@@ -115,7 +115,7 @@ public class Move {
                 }
 
                 if(piece instanceof Pawn){
-                    ( (Pawn) piece).generateMoves(previousMove);
+                    ( (Pawn) piece).generateMoves(this);
                 }else{
                     piece.generateMoves();
                 }
@@ -244,7 +244,7 @@ public class Move {
             board.calculateMoves(previousMove);
             return true;
         }
-        board.calculateMoves(previousMove);
+        board.calculateMoves(this);
         return false;
 
 

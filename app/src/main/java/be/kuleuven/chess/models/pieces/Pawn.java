@@ -23,6 +23,12 @@ public class Pawn extends Piece {
     [3] - right
     */
 
+
+    private int counter = 0;
+
+
+
+
     public Pawn(Color color) {
         super(color);
         enPassant = null;
@@ -48,6 +54,16 @@ public class Pawn extends Piece {
 
     public void generateMoves(Move prev)
     {
+
+
+        counter ++;
+
+        if(counter == 5){
+            System.out.println("yo");
+        }
+
+
+
         determineTile();
 
         int[] pos = tile.getPosition();

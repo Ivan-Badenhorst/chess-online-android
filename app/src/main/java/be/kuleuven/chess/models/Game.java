@@ -29,6 +29,10 @@ public class Game {
     private boolean firstMove;
     private Move prevMov;
 
+
+
+
+
     private DBGame db;
 
     public Game(AppCompatActivity activity, Color myColor, int gameId) {
@@ -36,6 +40,13 @@ public class Game {
         board.generateBoard();
         move = null;
         firstClick = true;
+
+
+
+
+
+
+
 
         counterForTesting = 0;
 
