@@ -371,11 +371,11 @@ public class DBConnect
                     {
                         Log.d("PB", "Resp");
                         //try {
-                            //if I have a response, I simply set the values of Color and GameID and the activity class will then know the game is ready
-                            //JSONObject curObject = response.getJSONObject( 0 );
-                            colorPlayer = Color.black;
-                            gameId = idGame;
-                            ( (MainActivity) activity).gameFound();
+                        //if I have a response, I simply set the values of Color and GameID and the activity class will then know the game is ready
+                        //JSONObject curObject = response.getJSONObject( 0 );
+                        colorPlayer = Color.black;
+                        gameId = idGame;
+                        ( (MainActivity) activity).gameFound();
 
                         /*}
                         catch( JSONException e )
@@ -420,8 +420,8 @@ public class DBConnect
                         getGame();
 
                         //try {
-                            //if I have a response, I simply set the values of Color and GameID and the activity class will then know the game is ready
-                            //JSONObject curObject = response.getJSONObject( 0 );
+                        //if I have a response, I simply set the values of Color and GameID and the activity class will then know the game is ready
+                        //JSONObject curObject = response.getJSONObject( 0 );
 
 
 
@@ -433,7 +433,7 @@ public class DBConnect
                                     Log.e( "Sleep in database", e.getMessage(), e );
                                 }
                             }*/
-                            //DONT HAVE THE GAME ID, WILL HAVE TO SET THAT WHEN I CHECK IF THERE IS A PLAYER B
+                        //DONT HAVE THE GAME ID, WILL HAVE TO SET THAT WHEN I CHECK IF THERE IS A PLAYER B
                        /* }
                         catch( JSONException e )
                         {
