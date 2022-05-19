@@ -29,7 +29,7 @@ public class Game {
     private boolean firstMove;
     private Move prevMov;
 
-    private DBConnect db;
+    private DBGame db;
 
     public Game(AppCompatActivity activity, Color myColor, int gameId) {
         board = Board.getBoardObj();
@@ -41,7 +41,7 @@ public class Game {
 
         turnColor = Color.white;
         this.activity = activity;//MAYBE FIND BETTER WAY, CHECK COMMENT DB CONNECT CLASS
-        db = new DBConnect(activity, board, turnColor, this);
+        db = new DBGame(activity, turnColor, this);
         //initialize db correctly
         //somewhere in this class we'll need to create a loop that runs
         firstMove=false;
