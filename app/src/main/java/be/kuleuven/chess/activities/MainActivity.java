@@ -24,7 +24,6 @@ import java.util.concurrent.TimeUnit;
 import be.kuleuven.chess.R;
 import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.DBActivity;
-import be.kuleuven.chess.models.DBConnect;
 import be.kuleuven.chess.models.Game;
 import be.kuleuven.chess.models.Piece;
 
