@@ -50,10 +50,10 @@ public class Pawn extends Piece {
 
         //pawn promotes to queen automatically
         if(this.color == Color.white && currentRank == 0){
-            tile.addPiece(new Queen(this.color, this.board));
+            tile.addPiece(new Queen(this.color));
         }
         else if(currentRank == 7){
-            tile.addPiece(new Queen(this.color, this.board));
+            tile.addPiece(new Queen(this.color));
         }
 
         if((this.color == Color.white && currentRank == 3) || (this.color == Color.black && currentRank == 4)){
