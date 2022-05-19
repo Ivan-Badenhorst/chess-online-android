@@ -67,32 +67,6 @@ public class Move {
 
         boolean hasMoved = false;
 
-        /*if(piece instanceof Pawn){
-
-            if(!piece.getMoves().contains(sec)) {
-                ArrayList<Tile> eP = ((Pawn) piece).getEnPassant();
-                if(eP != null){
-
-                    EnPassant ep = new EnPassant(this, eP);
-
-                    if(ep.isValid()){
-                        ep.complete();
-                        if(board.getKingTile(piece.getColor()).checkCheck(piece.getColor())){
-                            ep.undo();
-                        }
-                        else{
-                            hasMoved = true;
-                        }
-
-
-                    }
-
-
-                }
-
-            }
-
-        }*/
         if(piece.getMoves().contains(sec)){
             Piece secPiece = null;
 
@@ -323,43 +297,3 @@ public class Move {
     }
 
 }
-
-
-
-
-/*    private boolean enPassant(ArrayList<Tile> tiles){
-        int i = tiles.indexOf(sec);
-        Tile tileToCheck = tiles.get(i+2);
-
-        if(tileToCheck.getPiece().isPresent()){
-
-            if(tileToCheck.getPiece().get() instanceof Pawn){
-                //now we know the square we checking is indeed a pawn. Next we check if the previous move
-                //was for this pawn and it was the first move! - check that its not null - first move
-                Piece pieceToCheck = tileToCheck.getPiece().get();
-                if(previousMove.getPiece().equals(pieceToCheck)){
-                    //check that the pawn moved two squares!
-                    if(pieceToCheck.getColor() != piece.getColor()){
-
-                        if(previousMove.getFirst().getPosition()[0] == 1){
-                            enPassant(first, sec, tileToCheck);
-                            return true;
-                        }
-                        else if(previousMove.getFirst().getPosition()[0] == 6){
-                            enPassant(first, sec, tileToCheck);
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-
-        return false;
-
-    }*/
-/*
-    private void enPassant(Tile first, Tile second, Tile take){
-        second.addPiece(first.getPiece().get());
-        first.removePiece();
-        take.removePiece();
-    }*/

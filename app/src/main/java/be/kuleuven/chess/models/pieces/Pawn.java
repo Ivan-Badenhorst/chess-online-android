@@ -55,12 +55,9 @@ public class Pawn extends Piece {
     public void generateMoves(Move prev)
     {
 
+        moves.clear();
 
-        counter ++;
 
-        if(counter == 5){
-            System.out.println("yo");
-        }
 
 
 
@@ -93,6 +90,15 @@ public class Pawn extends Piece {
             //check if the previous move as a pawn
             //check if it was a double move
             int vert;
+
+
+            counter ++;
+
+            if(counter == 2){
+                System.out.println("yo");
+                System.out.println("how about here");
+            }
+
             if(color == Color.white){
                 vert = -1;
             }
@@ -101,7 +107,7 @@ public class Pawn extends Piece {
             }
 
 
-            if(prev.getFirst() == enPassant.get(0) && prev.getSec() == enPassant.get(2)){
+            if(prev.getFirst().equals(enPassant.get(0)) && prev.getSec().equals(enPassant.get(2)) ){
 
                 if(prev.getPiece() instanceof Pawn){
                     moves.add(board.getTile(tile.getPosition()[0]+vert , tile.getPosition()[1] -1));
@@ -118,7 +124,7 @@ public class Pawn extends Piece {
 
         }
 
-        moves.clear();
+
 
         int up = pos[0]-1;
         int doubleUp = pos[0]-2;
