@@ -107,7 +107,7 @@ public class DBConnect
                                 Tile sec = board.getTile(curObject.getInt("sRow"), curObject.getInt("sCol"));
                                 Log.d("readMove", "3");
 
-                                lMove = new Move(first, sec, board, game.getMove());
+                                lMove = new Move(first, sec, game.getMove());
                                 //lMove.getEnemyPiece();
                                 Log.d("readMove", "4");
 

@@ -24,9 +24,9 @@ public class Tile {
     private  int column;
     private final Color color;
 
-    public Tile(Board board, Color color){
+    public Tile(Color color){
         piece = Optional.empty();
-        this.board = board;
+        this.board = Board.getBoardObj();
         this.color = color;
 
     }

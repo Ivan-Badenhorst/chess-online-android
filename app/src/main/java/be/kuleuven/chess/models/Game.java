@@ -32,7 +32,7 @@ public class Game {
     private DBConnect db;
 
     public Game(AppCompatActivity activity, Color myColor, int gameId) {
-        board = new Board();
+        board = Board.getBoardObj();
         move = null;
         firstClick = true;
 
@@ -82,7 +82,7 @@ public class Game {
                 Log.d("here", "makingmove");
             }
 
-            move = new Move(firstTile, board.getTile(row, column), board, prevMov);
+            move = new Move(firstTile, board.getTile(row, column), prevMov);
             boolean moved = move.makeMove();
 
             if(moved){
@@ -187,7 +187,7 @@ public class Game {
 
                         for(int k =0; k<p.getMoves().size(); k++){
                             Tile tile2 = p.getMoves().get(k);
-                            Move moveTry = new Move(tile1, tile2, board, prevMov);
+                            Move moveTry = new Move(tile1, tile2, prevMov);
                             boolean possible = moveTry.makeMove();
                             if(possible){
                                 //undo move
