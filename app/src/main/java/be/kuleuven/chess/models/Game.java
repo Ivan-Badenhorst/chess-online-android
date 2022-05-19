@@ -33,6 +33,7 @@ public class Game {
 
     public Game(AppCompatActivity activity, Color myColor, int gameId) {
         board = Board.getBoardObj();
+        board.generateBoard();
         move = null;
         firstClick = true;
 

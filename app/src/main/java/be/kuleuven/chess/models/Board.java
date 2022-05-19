@@ -16,11 +16,13 @@ public class Board {
     private List<Piece> whitePieces;
     private List<Piece> blackPieces;
     private static Board boardobj;
+
+    private boolean hasInitialized = true;
+
+
     private Board(){
         board = new Tile[8][8];
-        generateBoard();
     }
-
 
     static {
         boardobj = new Board();
@@ -35,11 +37,13 @@ public class Board {
         return board[row][column];
     }
 
+
+
     public Tile[][] getBoard(){
         return board;
     }
 
-    private void generateBoard(){
+    public void generateBoard(){
         for(int i =0; i<board.length; i++){
             for(int j = 0; j<board[0].length; j++){
                 if( (i %2 == 0 & j%2 != 0) || (i %2 != 0 & j%2 == 0) ) {
