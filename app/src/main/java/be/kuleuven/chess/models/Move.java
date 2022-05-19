@@ -35,13 +35,13 @@ public class Move {
     }
 
     public void undoMove(){
-      /*  first.addPiece(piece1Undo);
+       first.addPiece(piece1Undo);
         if(piece2Undo != null) {
             sec.addPiece(piece2Undo);
         }
-        else{
+        else {
             sec.removePiece();
-        }*/
+        }
 
     }
 

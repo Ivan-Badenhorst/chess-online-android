@@ -123,20 +123,19 @@ public class Game {
     }
     public void myMove(){
         changeColor();
+        boolean canClick = true;
+
         if(board.getKingTile(myColor).checkCheck(myColor)){
             if(isCheckMate(myColor)){
                 //do something useful! - call a method
+                canClick = false;
                 quickCMaction(); //removes quarter of the board
             }
         }
         else {
-            setClickableAll(true);
-            if (board.getKingTile(myColor).checkCheck(myColor)) {
-                if (isCheckMate(myColor)) {
-                    Log.d("checkMate", "check worked");
-                }
-            }
+
         }
+        setClickableAll(canClick);
         display();
 
     }
