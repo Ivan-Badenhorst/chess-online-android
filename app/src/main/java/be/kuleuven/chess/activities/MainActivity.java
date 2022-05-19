@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 import be.kuleuven.chess.R;
 import be.kuleuven.chess.models.Color;
+import be.kuleuven.chess.models.DBActivity;
 import be.kuleuven.chess.models.DBConnect;
 import be.kuleuven.chess.models.Game;
 import be.kuleuven.chess.models.Piece;
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Integer> start;
     private Color color;
     private int gameId;
-    private DBConnect db;
+    private DBActivity db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         //step 1: find a game - and in doing so determine our color
                 //check if there is a game available - if yes join it and get the ID of the game + my color is black
                 //if not, make a new record for me - I am white + get the ID
-        db = new DBConnect(this); //CHANGE THE THIS!!!!
+        db = new DBActivity(this); //CHANGE THE THIS!!!!
         //createGame();
         db.getGame();
     }
