@@ -15,10 +15,20 @@ public class Board {
     private final Tile[][] board;
     private List<Piece> whitePieces;
     private List<Piece> blackPieces;
-
-    public Board(){
+    private static Board boardobj;
+    private Board(){
         board = new Tile[8][8];
         generateBoard();
+    }
+
+
+    static {
+        boardobj = new Board();
+    }
+
+    public static Board getBoardObj()
+    {
+        return boardobj;
     }
 
     public Tile getTile(int row, int column){
