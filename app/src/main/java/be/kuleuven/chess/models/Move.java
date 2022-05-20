@@ -77,73 +77,12 @@ public class Move {
         if(piece.getMoves().contains(sec)){
 
             if(!(piece instanceof King || piece instanceof Pawn) ){
-                if(sec.getPiece().isPresent()){
-                    secPiece = sec.getPiece().get();
-                }
-                makeBasicMove();
-
-                if(board.isCheck(piece.getColor())){
-                    undoBasicMove();
-                }
+                normalMove();
             }
             else if(piece instanceof King){///if the piece is a king
-                //first check castling + direction
-                List<Tile> castlingTiles = ((King) piece).getCastling();
-
-                if(sec.getPosition()[1] < first.getPosition()[1] - 1) {
-                    //he is castling to the left
-                    makeBasicMove();
-                    castlingTiles.get(3).addPiece(castlingTiles.get(0).getPiece().get());
-                    castlingTiles.get(0).removePiece();
-                }
-                else if(sec.getPosition()[1] > first.getPosition()[1] + 1){
-                    //he is castling to the right
-                    makeBasicMove();
-                    castlingTiles.get(4).addPiece(castlingTiles.get(0).getPiece().get());
-                    castlingTiles.get(6).removePiece();
-                }
-                else if(piece.moves.contains(sec)){ //this is regular moves for king
-                    if(sec.getPiece().isPresent()){
-                        secPiece = sec.getPiece().get();
-                    }
-                    makeBasicMove();
-
-                    //at this moment we made the move
-                    //now we check if its okay
-                    if(sec.checkCheck(piece.getColor())){
-                        //if its check we undo the move
-                        undoBasicMove();
-                    }
-                }
-
+                kingMove();
             } else{ //piece is pawn and move is inside the array of the pawn
-                if(sec.getPosition()[1] != first.getPosition()[1] && !sec.getPiece().isPresent()){
-                    //we know the move is en passant
-                    makeBasicMove();
-                    secPiece = previousMove.getSec().getPiece().get();
-                    previousMove.getSec().removePiece();
-                    ( (Pawn) piece).setMadeEnPassant(true);
-
-                    if(board.isCheck(piece.getColor())){
-
-                        first.addPiece(piece);
-                        sec.removePiece();
-                        hasMoved = false;
-
-                        previousMove.getSec().addPiece(secPiece);
-                        ( (Pawn) piece).setMadeEnPassant(false);
-                    }
-                }
-                else {
-                    if(sec.getPiece().isPresent()){
-                        secPiece = sec.getPiece().get();
-                    }
-
-                    makeBasicMove();
-                    if(board.isCheck(piece.getColor())){
-                        undoBasicMove();
-                    }
-                }
+                pawnMove();
             }
         }
 
@@ -160,6 +99,78 @@ public class Move {
             return true;
         }
         return false;
+    }
+
+    private void normalMove(){
+        if(sec.getPiece().isPresent()){
+            secPiece = sec.getPiece().get();
+        }
+        makeBasicMove();
+
+        if(board.isCheck(piece.getColor())){
+            undoBasicMove();
+        }
+    }
+
+    private void kingMove(){
+        //first check castling + direction
+        List<Tile> castlingTiles = ((King) piece).getCastling();
+
+        if(sec.getPosition()[1] < first.getPosition()[1] - 1) {
+            //he is castling to the left
+            makeBasicMove();
+            castlingTiles.get(3).addPiece(castlingTiles.get(0).getPiece().get());
+            castlingTiles.get(0).removePiece();
+        }
+        else if(sec.getPosition()[1] > first.getPosition()[1] + 1){
+            //he is castling to the right
+            makeBasicMove();
+            castlingTiles.get(4).addPiece(castlingTiles.get(0).getPiece().get());
+            castlingTiles.get(6).removePiece();
+        }
+        else if(piece.moves.contains(sec)){ //this is regular moves for king
+            if(sec.getPiece().isPresent()){
+                secPiece = sec.getPiece().get();
+            }
+            makeBasicMove();
+
+            //at this moment we made the move
+            //now we check if its okay
+            if(sec.checkCheck(piece.getColor())){
+                //if its check we undo the move
+                undoBasicMove();
+            }
+        }
+    }
+
+    private void pawnMove(){
+        if(sec.getPosition()[1] != first.getPosition()[1] && !sec.getPiece().isPresent()){
+            //we know the move is en passant
+            makeBasicMove();
+            secPiece = previousMove.getSec().getPiece().get();
+            previousMove.getSec().removePiece();
+            ( (Pawn) piece).setMadeEnPassant(true);
+
+            if(board.isCheck(piece.getColor())){
+
+                first.addPiece(piece);
+                sec.removePiece();
+                hasMoved = false;
+
+                previousMove.getSec().addPiece(secPiece);
+                ( (Pawn) piece).setMadeEnPassant(false);
+            }
+        }
+        else {
+            if(sec.getPiece().isPresent()){
+                secPiece = sec.getPiece().get();
+            }
+
+            makeBasicMove();
+            if(board.isCheck(piece.getColor())){
+                undoBasicMove();
+            }
+        }
     }
 
     private void makeBasicMove(){
