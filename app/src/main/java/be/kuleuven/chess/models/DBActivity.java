@@ -184,7 +184,7 @@ public class DBActivity {
                     @Override
                     public void onResponse(JSONArray response)
                     {
-                        ((MainActivity) activity).resigned();
+                        ((MainActivity) activity).resigned(true);
                     }
                 },
 

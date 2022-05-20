@@ -9,15 +9,18 @@ import android.view.View;
 import be.kuleuven.chess.R;
 
 public class MainMenu extends AppCompatActivity {
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        intent = null;
     }
 
     public void startGame(View caller){
-        Intent intent = new Intent(this, MainActivity.class);
+        intent = null;
+        intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }

@@ -15,6 +15,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import be.kuleuven.chess.activities.MainActivity;
+
 public class DBGame {
 
     private RequestQueue requestQueue;
@@ -145,7 +147,7 @@ public class DBGame {
                             if(resigned == 1){
                                 //do something
                                 //for now as a test I remove pieces from the board!!!
-                                game.resigned();//removes half the board
+                                ((MainActivity) activity).resigned(false);//removes half the board
 
                                 //maybe have to do some more?
                                 //or just actually call a method that stops everything and

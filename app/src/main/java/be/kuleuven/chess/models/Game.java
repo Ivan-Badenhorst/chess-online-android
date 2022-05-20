@@ -14,6 +14,7 @@ import java.util.Optional;
 
 import be.kuleuven.chess.R;
 import be.kuleuven.chess.activities.MainActivity;
+import be.kuleuven.chess.activities.MainMenu;
 
 @SuppressLint("NewApi")
 public class Game {
@@ -110,7 +111,7 @@ public class Game {
 
                 if(board.isCheck(opCol)){
                     if(isCheckMate(opCol)){
-                        quickCMaction();
+                        quickCMaction(true);
                     };
                 }
 
@@ -129,7 +130,7 @@ public class Game {
             if(isCheckMate(myColor)){
                 //do something useful! - call a method
                 canClick = false;
-                quickCMaction(); //removes quarter of the board
+                quickCMaction(false); //removes quarter of the board
             }
         }
         else {
@@ -225,11 +226,12 @@ public class Game {
 
             }
         }
+
         display();
     }
 
 
-    public void quickCMaction(){
+    public void quickCMaction(boolean won){
         /*for(int i = 0; i<5; i++){
             for(int j =0; j<5; j++){
 
@@ -237,7 +239,7 @@ public class Game {
 
             }
         }*/
-        ((MainActivity) activity).checkmateVisibility();
+        ((MainActivity) activity).checkmateVisibility(won);
         display();
     }
 

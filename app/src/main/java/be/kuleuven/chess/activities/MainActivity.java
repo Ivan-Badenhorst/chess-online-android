@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
@@ -126,24 +127,50 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void btnResignedClick(View caller){
+        TableLayout t = findViewById(R.id.gdBoard);
+        t.setClickable(false);
         db.setGameStatus(true, gameId);
     }
 
-    public void checkmateVisibility(){
+    public void checkmateVisibility(boolean won){
         TextView cmText = findViewById(R.id.cmText);
         cmText.setVisibility(View.VISIBLE);
+
+        if(won){
+            cmText.setText("Checkmate! You won!");
+        }
+        else{
+            cmText.setText("Checkmate! You lost :(");
+        }
+
         Button btnReturn = findViewById(R.id.btnReturn);
         btnReturn.setVisibility(View.VISIBLE);
+
+        Button btnResign = findViewById(R.id.btnResign);
+        btnResign.setVisibility(View.GONE);
     }
 
     public void returnToMain(View caller)
     {
-
+        Intent intent = new Intent(this, MainMenu.class);
+        startActivity(intent);
     }
 
-    public void resigned(){
-            game.resigned();
+    public void resigned(boolean loser){
+            //game.resigned();
+        TextView cmText = findViewById(R.id.cmText);
+        cmText.setVisibility(View.VISIBLE);
+        Button btnResign = findViewById(R.id.btnResign);
+        btnResign.setVisibility(View.GONE);
+        if(loser){
+            cmText.setText("You resigned!");
+        }
+        else{
+            cmText.setText("Opponent resigned!");
+        }
 
+        Button btnReturn = findViewById(R.id.btnReturn);
+        btnReturn.setVisibility(View.VISIBLE);
     }
 
 
