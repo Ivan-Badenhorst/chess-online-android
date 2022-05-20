@@ -11,15 +11,24 @@ import be.kuleuven.chess.R;
 import be.kuleuven.chess.models.Board;
 import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Piece;
+import be.kuleuven.chess.models.SpecialMoves.Castling;
 import be.kuleuven.chess.models.Tile;
 
 public class King extends Piece {
     //to do: write code to get the correct file
     private boolean hasMoved;
+    private List<Tile> castlingTiles;
+
+
+    private int counter = 0;
+
+
+
 
     public King(Color color) {
         super(color);
         hasMoved = false;
+        castlingTiles = new ArrayList<>();
     }
 
     @Override
@@ -38,6 +47,13 @@ public class King extends Piece {
     @Override
     public void generateMoves()
     {
+
+
+        counter++;
+
+
+
+
         determineTile();
         moves.clear();
         int[] pos = tile.getPosition();
@@ -60,8 +76,34 @@ public class King extends Piece {
         }
 
 
+        //create castling moves
+
+        if(counter == 14){
+            System.out.println("here now");
+        }
+
+        Castling castling = new Castling(tile.getPosition(), hasMoved,color);
+        castlingTiles = castling.getCastlingSquares();
+
+        if(castlingTiles != null && !tile.checkCheck(color)) {
+            //first we check left
+            if(castling.castlingPossible(castlingTiles.get(0), true)){
+                moves.add(castlingTiles.get(2));
+            }
+            if(castling.castlingPossible(castlingTiles.get(6), false)){
+                moves.add(castlingTiles.get(5));
+            }
+
+        }
+
+
 
     }
+
+    public List<Tile> getCastling(){
+        return castlingTiles;
+    }
+
 
     public int[] getBound(int row, int column){
         //order: lowerH, lowerV, higherH, higherV
@@ -101,41 +143,29 @@ public class King extends Piece {
 
     }
 
-    public List<Tile> getCastlingSquares(){
-        /*
-        send array in the format:
-        4 left, 3 left, 2 left, 1 left, 1 right, 2 right, 3 right, 4 right
-         */
-
-        int[] pos = tile.getPosition();
-        int[] current = new int[2];
-        List<Tile> ls = new ArrayList<>();
-        boolean empty = true;
-
-        current[0] = pos[0];
-
-        for(int i = -4; i<5; i++){
-            if(hasMoved){
-                return null;
-            }
-            if(i != 0){
-                current[1] = pos[1] + i;
-                if(current[1] >= 0 && current[1] <8){
-                    empty = false;
-                    ls.add(board.getTile(current[0], current[1]));
-                }
-
-            }
-        }
-        if(empty){
-            return null;
-        }
-        return ls;
-
-    }
 
     public void setHasMoved(boolean val){
         hasMoved = val;
+    }
+
+
+    public boolean checkCastlingRook(Tile rookTile){
+        if(rookTile.getPiece().isPresent()){
+            //means there is a piece on the left most square
+            Piece pc = rookTile.getPiece().get();
+
+            if(pc instanceof Rook){
+                //the piece is a rook
+                if( !( (Rook) pc).hasMoved()){
+                    //the rook hasn't moved either
+                    return true;
+
+                }
+
+            }
+
+        }
+        return false;
     }
 
 
