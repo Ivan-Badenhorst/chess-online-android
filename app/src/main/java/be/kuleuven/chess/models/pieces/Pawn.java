@@ -25,6 +25,7 @@ public class Pawn extends Piece {
 
 
     private int counter = 0;
+    private boolean madeEnPassant;
 
 
 
@@ -32,6 +33,7 @@ public class Pawn extends Piece {
     public Pawn(Color color) {
         super(color);
         enPassant = null;
+        madeEnPassant = false;
     }
 
     @Override
@@ -56,7 +58,7 @@ public class Pawn extends Piece {
     {
 
         moves.clear();
-
+        madeEnPassant = false;
 
 
 
@@ -94,7 +96,7 @@ public class Pawn extends Piece {
 
             counter ++;
 
-            if(counter == 2){
+            if(counter == 18){
                 System.out.println("yo");
                 System.out.println("how about here");
             }
@@ -229,5 +231,13 @@ public class Pawn extends Piece {
 
     public ArrayList<Tile> getEnPassant(){
         return enPassant;
+    }
+
+    public void setMadeEnPassant(boolean madeEnPassant) {
+        this.madeEnPassant = madeEnPassant;
+    }
+
+    public boolean isMadeEnPassant() {
+        return madeEnPassant;
     }
 }

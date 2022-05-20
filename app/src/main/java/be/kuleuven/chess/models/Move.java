@@ -21,6 +21,10 @@ public class Move {
     private Piece piece2Undo;
     private Piece piece1Undo;
 
+    private Piece secPiece;
+
+    private boolean hasMoved;
+
     public Move(Tile first, Tile sec, Move previousMove) {
         this.first = first;
         this.sec = sec;
@@ -28,6 +32,7 @@ public class Move {
         this.previousMove = previousMove;
         if(first.getPiece().isPresent()){
             this.piece = first.getPiece().get();
+            hasMoved = false;
         }
 
 
@@ -45,6 +50,15 @@ public class Move {
         else {
             sec.removePiece();
         }
+        if(piece instanceof Pawn){
+            if(((Pawn) piece).isMadeEnPassant()){
+
+                previousMove.getSec().addPiece(previousMove.getPiece());
+                ( (Pawn) piece).setMadeEnPassant(false);
+
+            }
+        }
+        hasMoved = false;
 
     }
 
@@ -65,20 +79,18 @@ public class Move {
             Log.e("clone fail",e.getMessage());
         }
 
-        boolean hasMoved = false;
+        hasMoved = false;
 
         if(piece.getMoves().contains(sec)){
-            Piece secPiece = null;
+            secPiece = null;
 
             Log.d("moveClass", "array contains the tile");
             if(!(piece instanceof King || piece instanceof Pawn) ){
                 if(sec.getPiece().isPresent()){
                     secPiece = sec.getPiece().get();
                 }
-                sec.addPiece(piece);
-                first.removePiece();
-                hasMoved = true;
-
+                makeBasicMove();
+//MAKE THIS BOARD.ISCHECK(COLOR)
                 if(board.getKingTile(piece.getColor()).checkCheck(piece.getColor())){
                     //if the move puts the king in check
                     //undo the move!
@@ -106,28 +118,23 @@ public class Move {
 
                 if(sec.getPosition()[1] < first.getPosition()[1] - 1) {
                     //he is castling to the left
-                            hasMoved = true;
-                            sec.addPiece(piece);
-                            first.removePiece();
-                            castlingTiles.get(3).addPiece(castlingTiles.get(0).getPiece().get());
-                            castlingTiles.get(0).removePiece();
+                    makeBasicMove();
+                    castlingTiles.get(3).addPiece(castlingTiles.get(0).getPiece().get());
+                    castlingTiles.get(0).removePiece();
+
                 }
                 else if(sec.getPosition()[1] > first.getPosition()[1] + 1){
                     //he is castling to the right
-                            hasMoved = true;
-                            sec.addPiece(piece);
-                            first.removePiece();
-                            castlingTiles.get(4).addPiece(castlingTiles.get(0).getPiece().get());
-                            castlingTiles.get(6).removePiece();
+                    makeBasicMove();
+                    castlingTiles.get(4).addPiece(castlingTiles.get(0).getPiece().get());
+                    castlingTiles.get(6).removePiece();
 
                 }
                 else if(piece.moves.contains(sec)){ //this is regular moves for king
                     if(sec.getPiece().isPresent()){
                         secPiece = sec.getPiece().get();
                     }
-                    sec.addPiece(piece);
-                    first.removePiece();
-                    hasMoved = true;
+                    makeBasicMove();
 
                     //at this moment we made the move
                     //now we check if its okay
@@ -148,12 +155,11 @@ public class Move {
             } else{ //piece is pawn and move is inside the array of the pawn
                 if(sec.getPosition()[1] != first.getPosition()[1] && !sec.getPiece().isPresent()){
                     //we know the move is en passant
-
-                    sec.addPiece(piece);
-                    first.removePiece();
+                    makeBasicMove();
                     secPiece = previousMove.getSec().getPiece().get();
                     previousMove.getSec().removePiece();
-                    hasMoved = true;
+                    ( (Pawn) piece).setMadeEnPassant(true);
+
 
                     if(board.getKingTile(piece.getColor()).checkCheck(piece.getColor())){
 
@@ -161,7 +167,7 @@ public class Move {
                         sec.removePiece();
                         previousMove.getSec().addPiece(secPiece);
                         hasMoved = false;
-
+                        ( (Pawn) piece).setMadeEnPassant(false);
                     }
 
                 }
@@ -170,9 +176,7 @@ public class Move {
                         secPiece = sec.getPiece().get();
                     }
 
-                    sec.addPiece(piece);
-                    first.removePiece();
-                    hasMoved = true;
+                    makeBasicMove();
                     Log.d("moveClass", "we made the move");
                     if(board.getKingTile(piece.getColor()).checkCheck(piece.getColor())){
                         //if the move puts the king in check
@@ -204,15 +208,20 @@ public class Move {
             }else if(piece instanceof Pawn){
                 ((Pawn) piece).setHasMoved(true);
             }
-            board.calculateMoves(previousMove);
+            //board.calculateMoves(previousMove);
             return true;
         }
-        board.calculateMoves(this);
+        //board.calculateMoves(this);
         return false;
 
 
     }
 
+    private void makeBasicMove(){
+        sec.addPiece(piece);
+        first.removePiece();
+        hasMoved = true;
+    }
 
 
     public Piece getPiece() {
@@ -230,5 +239,7 @@ public class Move {
     public Move getPreviousMove(){
         return this.previousMove;
     }
+
+
 
 }

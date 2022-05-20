@@ -180,7 +180,7 @@ public class Game {
     }
 
     public boolean isCheckMate(Color c){
-
+        board.calculateMoves(prevMov);
         for(int i = 0; i<8; i++){
             for(int j =0; j<8; j++){
                 if(i == 6 && j ==0){
@@ -230,8 +230,8 @@ public class Game {
 
 
     public void quickCMaction(){
-        for(int i = 0; i<5; i++){
-            for(int j =0; j<5; j++){
+        for(int i = 0; i<2; i++){
+            for(int j =0; j<2; j++){
 
                 board.getTile(i,j).removePiece();
 
