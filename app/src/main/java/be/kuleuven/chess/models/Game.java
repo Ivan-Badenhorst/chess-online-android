@@ -230,13 +230,14 @@ public class Game {
 
 
     public void quickCMaction(){
-        for(int i = 0; i<5; i++){
+        /*for(int i = 0; i<5; i++){
             for(int j =0; j<5; j++){
 
                 board.getTile(i,j).removePiece();
 
             }
-        }
+        }*/
+        ((MainActivity) activity).checkmateVisibility();
         display();
     }
 

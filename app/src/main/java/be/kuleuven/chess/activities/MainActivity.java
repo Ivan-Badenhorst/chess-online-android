@@ -5,21 +5,19 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 
 import android.annotation.SuppressLint;
-import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 import be.kuleuven.chess.R;
 import be.kuleuven.chess.models.Color;
@@ -120,31 +118,8 @@ public class MainActivity extends AppCompatActivity {
             display(start.get(1));
         }
 
-             /*Resources r = getResources();
-             Drawable im = r.getDrawable(R.drawable.tester_on_click);
-             tile.setImageDrawable(im);*/
-
-
-
     }
 
-    public void createGame(){
-        //here I have a loop that runs until I have a game
-        // db.createNewGame();
-
-
-        /*while(db.getGameId() == 0){
-            try{
-                Thread.sleep(1000);
-            }catch(InterruptedException e){
-                Log.e( "Sleep", e.getMessage(), e );
-            }
-
-
-        }*/
-        //this.color = db.getColorPlayer();
-        //this.gameId = db.getGameId();
-    }
 
     public static void main(String[] args) {
 
@@ -154,10 +129,23 @@ public class MainActivity extends AppCompatActivity {
         db.setGameStatus(true, gameId);
     }
 
+    public void checkmateVisibility(){
+        TextView cmText = findViewById(R.id.cmText);
+        cmText.setVisibility(View.VISIBLE);
+        Button btnReturn = findViewById(R.id.btnReturn);
+        btnReturn.setVisibility(View.VISIBLE);
+    }
+
+    public void returnToMain(View caller)
+    {
+
+    }
+
     public void resigned(){
             game.resigned();
-            //this is useless for now!!!
+
     }
+
 
     public void gameFound(){
         this.color = db.getColorPlayer();
@@ -173,28 +161,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-
-/*THIS IS THE CORRECT ONE IF I FUCK IT UP
-for(int i = 0; i<8; i++){
-            TableRow row = (TableRow) tableLayout.getChildAt(i);
-
-            for(int j = 0; j<8; j++){
-                ImageView imageView =  (ImageView) row.getChildAt(j);
-                Optional<Piece> piece = game.getBoard().getTile(i, j).getPiece();
-
-                if(piece.isPresent()){
-                    Drawable[] image = game.getBoard().getTile(i,j).getImage(this.getApplicationContext());
-                    LayerDrawable layers = new LayerDrawable(image);
-                    imageView.setImageDrawable(layers);
-                    }
-                else {
-                    Drawable image = game.getBoard().getTile(i, j).getTileImage(this.getApplicationContext());
-                    imageView.setImageDrawable(image);
-                    }
-
-                }
-
-            }
-
-        }
- */
