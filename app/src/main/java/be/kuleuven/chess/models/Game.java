@@ -108,7 +108,7 @@ public class Game {
                     opCol = Color.white;
                 }
 
-                if(board.getKingTile(opCol).checkCheck(opCol)){
+                if(board.isCheck(opCol)){
                     if(isCheckMate(opCol)){
                         quickCMaction();
                     };
@@ -125,7 +125,7 @@ public class Game {
         changeColor();
         boolean canClick = true;
 
-        if(board.getKingTile(myColor).checkCheck(myColor)){
+        if(board.isCheck(myColor)){
             if(isCheckMate(myColor)){
                 //do something useful! - call a method
                 canClick = false;

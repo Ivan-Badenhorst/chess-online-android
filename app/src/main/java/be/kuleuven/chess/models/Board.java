@@ -180,7 +180,7 @@ public class Board {
         //blackPieces.stream().forEach(n -> n.generateMoves());
     }
 
-    public Tile getKingTile(Color color){
+    private Tile getKingTile(Color color){
         for(int i = 0; i<8; i++){
             for(int j = 0; j<8; j++){
                 Tile t = board[i][j];
@@ -193,6 +193,10 @@ public class Board {
             }
         }
         return null;
+    }
+
+    public boolean isCheck(Color color){
+        return getKingTile(color).checkCheck(color);
     }
 
 }
