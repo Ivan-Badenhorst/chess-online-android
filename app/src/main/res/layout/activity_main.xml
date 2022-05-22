@@ -25,6 +25,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
@@ -258,9 +259,9 @@
                 android:id="@+id/ivB4"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                app:srcCompat="@drawable/place_holder"
                 android:contentDescription="@string/content_imageView"
-                android:onClick="tileClick" />
+                android:onClick="tileClick"
+                app:srcCompat="@drawable/place_holder" />
 
             <ImageView
                 android:id="@+id/ivC4"
@@ -603,6 +604,7 @@
         android:layout_height="wrap_content"
         android:onClick="btnResignedClick"
         android:text="Resign"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

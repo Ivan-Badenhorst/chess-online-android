@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
     private int gameId;
     private DBActivity db;
 
+    private ProgressDialog progress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,14 @@ public class MainActivity extends AppCompatActivity {
                 //if not, make a new record for me - I am white + get the ID
         db = new DBActivity(this); //CHANGE THE THIS!!!!
         //createGame();
+
+        progress = new ProgressDialog(this);
+        progress.setTitle("Loading");
+        progress.setMessage("Finding a match...");
+        progress.setCancelable(true); // disable dismiss by tapping outside of the dialog
+        progress.show();
+
+
         db.getGame();
     }
 
@@ -179,6 +190,11 @@ public class MainActivity extends AppCompatActivity {
         this.gameId = db.getGameId();
 
         game = new Game(this, color, gameId);
+        // To dismiss the dialog
+        progress.dismiss();
+        findViewById(R.id.gdBoard).setVisibility(View.VISIBLE);
+        findViewById(R.id.btnResign).setVisibility(View.VISIBLE);
+
         if(color == Color.white){
             display(start.get(0));
         }
