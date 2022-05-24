@@ -80,7 +80,7 @@ public class DBGame {
                                 else{
 
                                     try{
-                                        Thread.sleep(1000);
+                                        Thread.sleep(100);
                                     } catch(InterruptedException e){
                                         Log.e("readMove error", e.getMessage());
                                     }
@@ -91,7 +91,7 @@ public class DBGame {
                             }
                             if (response.length() == 0){
                                 try{
-                                    Thread.sleep(1000);
+                                    Thread.sleep(10);
                                 } catch(InterruptedException e){
                                     Log.e("readMove error", e.getMessage());
                                 }

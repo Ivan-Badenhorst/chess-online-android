@@ -94,7 +94,7 @@ public class Move {
                 ((Rook) piece).setHasMoved(true);
             }else if(piece instanceof Pawn){
                 ((Pawn) piece).setHasMoved(true);
-                ( (Pawn) piece).generateMoves(this);
+                //( (Pawn) piece).generateMoves(this);
             }
             return true;
         }
