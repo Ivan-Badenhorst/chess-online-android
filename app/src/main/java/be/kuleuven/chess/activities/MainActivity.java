@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -188,6 +189,7 @@ public class MainActivity extends AppCompatActivity {
     public void gameFound(){
         this.color = db.getColorPlayer();
         this.gameId = db.getGameId();
+        Log.d("deleteGame", "gameFound -> ID set");
 
         game = new Game(this, color, gameId);
         // To dismiss the dialog
@@ -202,5 +204,28 @@ public class MainActivity extends AppCompatActivity {
         {
             display(start.get(1));
         }
+    }
+
+    @Override
+    public void onBackPressed(){
+        //check db if there is a game with us that is empty
+        //if yes, delete it
+
+        Log.d("deleteGame", "onBackPressed");
+        if(gameId == 0){
+            Log.d("deleteGame", "onBackPressed -> IF");
+            db.closeGame();//gameId);
+       }
+        else{
+            Log.d("deleteGame", "onBackPressed -> ELSE");
+            btnResignedClick(findViewById(R.id.btnResign));
+            closeActivity();
+        }
+
+
+    }
+
+    public void closeActivity(){
+        super.onBackPressed();
     }
 }

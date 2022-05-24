@@ -23,6 +23,7 @@ public class DBActivity {
     private AppCompatActivity activity;
     private Color colorPlayer;
     private int gameId;
+    private int gameIdGameNotFound;
 
 
     public DBActivity(AppCompatActivity activity){
@@ -45,7 +46,7 @@ public class DBActivity {
                     public void onResponse(JSONArray response)
                     {
                         Log.d("getGame","on response");
-                        int idTemp;
+                        int idTemp = 0;
                         try {
                             for( int i = 0; i < response.length(); i++ )
                             {
@@ -66,6 +67,7 @@ public class DBActivity {
                                 }
                             }
                             if(gameId == 0 && colorPlayer != null){
+                                gameIdGameNotFound = idTemp;
                                 getGame();
                             }
                         }
@@ -200,4 +202,97 @@ public class DBActivity {
 
         requestQueue.add(submitRequest);
     }
+
+
+    public void closeGame()//int gameId)
+    {
+        requestQueue = Volley.newRequestQueue(activity);
+        String requestURL = "https://studev.groept.be/api/a21pt402/getGame";
+        Log.d("deleteGame", "closeGame -> url made");
+
+
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+
+                new Response.Listener<JSONArray>()
+                {
+                    @Override
+                    public void onResponse(JSONArray response)
+                    {
+                        Log.d("deleteGame", "closeGame -> onResponse1");
+                        int idTemp;
+                        try {
+                            for( int i = 0; i < response.length(); i++ )
+                            {
+                                JSONObject curObject = response.getJSONObject( i );
+                                Log.d("deleteGame", "closeGame -> onResponse2");
+                                if(curObject.getInt("idGame") == gameIdGameNotFound){
+                                    Log.d("deleteGame", "closeGame -> onResponse3");
+                                    if(curObject.isNull("playerb")){
+                                        Log.d("deleteGame", "closeGame -> onResponse4");
+                                        deleteGame();//gameId);
+
+                                    }
+                                    else{
+                                        ( (MainActivity) activity).closeActivity();
+                                    }
+
+                                }
+
+                            }
+                        }
+                        catch( JSONException e )
+                        {
+                            Log.d("deleteGame", "closeGame -> error response");
+                            Log.e( "Database", e.getMessage(), e );
+                        }
+                    }
+                },
+
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Log.d("getGame DBActivity",error.getMessage());
+                    }
+                }
+        );
+
+        requestQueue.add(submitRequest);
+    }
+
+
+
+    public void deleteGame()//int gameId)
+    {
+        requestQueue = Volley.newRequestQueue(activity);
+        String requestURL = "https://studev.groept.be/api/a21pt402/deleteGame/" + gameIdGameNotFound;
+        Log.d("deleteGame", "deleteGame -> url made");
+
+        JsonArrayRequest submitRequest = new JsonArrayRequest(Request.Method.GET, requestURL, null,
+
+                new Response.Listener<JSONArray>()
+                {
+                    @Override
+                    public void onResponse(JSONArray response)
+                    {
+                        Log.d("deleteGame", "deleteGame -> response");
+                        ( (MainActivity) activity).closeActivity();
+                    }
+                },
+
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error)
+                    {
+                        Log.d("deleteGame", "deleteGame -> error response");
+                    }
+                }
+        );
+
+        requestQueue.add(submitRequest);
+    }
+
+
 }
