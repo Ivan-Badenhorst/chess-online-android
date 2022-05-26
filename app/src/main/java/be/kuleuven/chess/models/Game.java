@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import java.util.Optional;
 
 import be.kuleuven.chess.activities.MainActivity;
+import be.kuleuven.chess.models.Database.DBGame;
 
 @SuppressLint("NewApi")
 public class Game {

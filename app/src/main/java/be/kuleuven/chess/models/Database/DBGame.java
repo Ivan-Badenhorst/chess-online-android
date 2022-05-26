@@ -1,4 +1,4 @@
-package be.kuleuven.chess.models;
+package be.kuleuven.chess.models.Database;
 
 import android.util.Log;
 
@@ -16,6 +16,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import be.kuleuven.chess.activities.MainActivity;
+import be.kuleuven.chess.models.Board;
+import be.kuleuven.chess.models.Color;
+import be.kuleuven.chess.models.Game;
+import be.kuleuven.chess.models.Move;
+import be.kuleuven.chess.models.Tile;
 
 public class DBGame {
 

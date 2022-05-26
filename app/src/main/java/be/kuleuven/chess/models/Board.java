@@ -12,12 +12,12 @@ import be.kuleuven.chess.models.pieces.Queen;
 import be.kuleuven.chess.models.pieces.Rook;
 
 public class Board {
+
     private final Tile[][] board;
+    private static Board boardObj;
+
     private List<Piece> whitePieces;
     private List<Piece> blackPieces;
-    private static Board boardobj;
-
-    private boolean hasInitialized = true;
 
 
     private Board(){
@@ -25,23 +25,23 @@ public class Board {
     }
 
     static {
-        boardobj = new Board();
+        boardObj = new Board();
     }
 
     public static Board getBoardObj()
     {
-        return boardobj;
+        return boardObj;
     }
+
 
     public Tile getTile(int row, int column){
         return board[row][column];
     }
 
-
-
     public Tile[][] getBoard(){
         return board;
     }
+
 
     public void generateBoard(){
         for(int i =0; i<board.length; i++){
@@ -66,15 +66,12 @@ public class Board {
     }
 
     private void placePieces(){
-        /*this is a first version that can only initialize a default position in order
-        to check if the placement works.
-        Replace with an algo that takes some input and uses it to create custom position
-         */
+
         for(int i = 0; i<2; i++){
 
             for(int j = 0; j <5; j++){
 
-                if(i == 0 ){//first row of black:
+                if(i == 0 ){
                     switch(j){
                         case 0:{
                             getTile(i, j).addPiece(new Rook(Color.black));
@@ -127,7 +124,7 @@ public class Board {
         }
 
         readPieces();
-        calculateMoves(null);
+        //calculateMoves(null);
     }
 
     private void readPieces(){

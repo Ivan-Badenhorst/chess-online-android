@@ -20,7 +20,7 @@ import java.util.Optional;
 
 import be.kuleuven.chess.R;
 import be.kuleuven.chess.models.Color;
-import be.kuleuven.chess.models.DBActivity;
+import be.kuleuven.chess.models.Database.DBActivity;
 import be.kuleuven.chess.models.Game;
 import be.kuleuven.chess.models.Piece;
 
@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Color color;
     private int gameId;
+    private boolean resigned;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+        resigned = false;
         db = new DBActivity(this);
 
         progress = new ProgressDialog(this);
@@ -142,8 +144,10 @@ public class MainActivity extends AppCompatActivity {
     public void gameOver(String message){
         TextView cmText = findViewById(R.id.cmText);
         cmText.setVisibility(View.VISIBLE);
+        if(!resigned){
+            cmText.setText(message);
+        }
 
-        cmText.setText(message);
 
         Button btnReturn = findViewById(R.id.btnReturn);
         btnReturn.setVisibility(View.VISIBLE);
@@ -163,9 +167,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void btnResignedClick(View caller){
+
         TableLayout t = findViewById(R.id.gdBoard);
         t.setClickable(false);
         db.setGameStatus(true, gameId);
+        gameOver("You resigned!");
+        resigned = true;
+
     }
 
     public void btnReturnToMainClick(View caller)
