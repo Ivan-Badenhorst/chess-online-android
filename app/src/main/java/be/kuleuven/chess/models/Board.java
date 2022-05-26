@@ -1,6 +1,5 @@
 package be.kuleuven.chess.models;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,14 +13,16 @@ import be.kuleuven.chess.models.pieces.Rook;
 public class Board {
 
     private final Tile[][] board;
-    private static Board boardObj;
+    private static final Board boardObj;
 
-    private List<Piece> whitePieces;
-    private List<Piece> blackPieces;
+    private final List<Piece> whitePieces;
+    private final List<Piece> blackPieces;
 
 
     private Board(){
         board = new Tile[8][8];
+        whitePieces = new ArrayList<>();
+        blackPieces = new ArrayList<>();
     }
 
     static {
@@ -31,15 +32,6 @@ public class Board {
     public static Board getBoardObj()
     {
         return boardObj;
-    }
-
-
-    public Tile getTile(int row, int column){
-        return board[row][column];
-    }
-
-    public Tile[][] getBoard(){
-        return board;
     }
 
 
@@ -124,32 +116,33 @@ public class Board {
         }
 
         readPieces();
-        //calculateMoves(null);
     }
 
+
     private void readPieces(){
-        //for now this only works for the initial setup, not for a midgame start
-        whitePieces = new ArrayList<>();
-        blackPieces = new ArrayList<>();
+
         whitePieces.clear();
         blackPieces.clear();
-        //REFACTOR TO NOT USE GET 60000 TIMES
+
         for(int i =0; i<8 ; i++) {
             for (int j = 0; j < 8; j++) {
 
                 if(getTile(i, j).getPiece().isPresent()){
                     Piece p  = getTile(i, j).getPiece().get();
                     Color color = p.getColor();
+
                     if(color == Color.black){
                         blackPieces.add(getTile(i, j).getPiece().get());
                     }
                     else{
                         whitePieces.add(getTile(i, j).getPiece().get());
                     }
+
                 }
             }
         }
     }
+
 
     public void calculateMoves(Move move){
         readPieces();
@@ -178,24 +171,28 @@ public class Board {
     }
 
     private Tile getKingTile(Color color){
+
         for(int i = 0; i<8; i++){
             for(int j = 0; j<8; j++){
+
                 Tile t = board[i][j];
                 if(t.getPiece().isPresent()){
+
                     if(t.getPiece().get() instanceof King && t.getPiece().get().getColor() == color){
                         return t;
                     }
+
                 }
 
             }
         }
         return null;
+
     }
 
     public boolean isCheck(Color color){
         return getKingTile(color).checkCheck(color);
     }
-
 
 
     public boolean isNoMovePossible(Color color, Move prevMov){
@@ -226,9 +223,12 @@ public class Board {
     }
 
 
+    public Tile getTile(int row, int column){
+        return board[row][column];
+    }
 
-
+    public Tile[][] getBoard(){
+        return board;
+    }
 
 }
-
-
