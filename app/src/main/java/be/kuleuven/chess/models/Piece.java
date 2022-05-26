@@ -59,14 +59,12 @@ public abstract class Piece implements Cloneable{
      * Method determines all tiles that a specific piece can move to in straight lines
      * Straight line - left, right, up or down
      *
-     * @return A list of Tiles the specific could move to based on mentioned directions
      */
 
     protected void getStraightMoves(){
         determineTile();
 
         int[] pos = tile.getPosition();
-        List<Tile> moves = new ArrayList<>();
         int[] current = new int[2];
         boolean left = true, right = true, top = true, bottom = true;
 
@@ -107,14 +105,11 @@ public abstract class Piece implements Cloneable{
     /**
      *  Method determines all tiles that a specific piece can move to in diagonal lines
      *  Straight line - left top/bottom, right top/bottom
-     *
-     * @return A list of Tiles the specific could move to based on mentioned directions
      */
     protected void getDiagonalMoves(){
         determineTile();
 
         int[] pos = tile.getPosition();
-        List<Tile> moves = new ArrayList<>();
         int[] current = new int[2];
         boolean leftTop = true, leftBottom = true, rightTop = true, rightBottom = true;
 
