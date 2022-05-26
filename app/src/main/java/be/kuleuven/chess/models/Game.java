@@ -1,242 +1,152 @@
 package be.kuleuven.chess.models;
 
 import android.annotation.SuppressLint;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
-import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Optional;
 
-import be.kuleuven.chess.R;
 import be.kuleuven.chess.activities.MainActivity;
-import be.kuleuven.chess.activities.MainMenu;
 
 @SuppressLint("NewApi")
 public class Game {
-    private Board board;
-    private Tile firstTile, secondTile;
-    private boolean firstClick;
+
+    private final MainActivity activity;
+    private final DBGame db;
+    private final Board board;
+
     private Move move;
-    private int counterForTesting;
-    private Color turnColor;
-    private AppCompatActivity activity;
-    private Color myColor;
-    private int gameId;
-    private boolean firstMove;
     private Move prevMov;
+    private Tile firstTile;
+
+    private boolean firstClick;
+    private Color turnColor;
+    private final Color myColor;
+    private final Color opponentColor;
+    private final int gameId;
 
 
+    public Game(MainActivity activity, Color myColor, int gameId) {
+        this.myColor = myColor;
+        this.gameId = gameId;
+        this.activity = activity;
 
-
-
-    private DBGame db;
-
-    public Game(AppCompatActivity activity, Color myColor, int gameId) {
         board = Board.getBoardObj();
         board.generateBoard();
         move = null;
         firstClick = true;
-
-
-
-
-
-
-
-
-        counterForTesting = 0;
-
         turnColor = Color.white;
-        this.activity = activity;//MAYBE FIND BETTER WAY, CHECK COMMENT DB CONNECT CLASS
         db = new DBGame(activity, turnColor, this);
-        //initialize db correctly
-        //somewhere in this class we'll need to create a loop that runs
-        firstMove=false;
-
-        this.myColor = myColor;
-        this.gameId = gameId;
 
         if(myColor == Color.black){
-            setClickableAll(false);
-            //go look in database for the next move
+            opponentColor = Color.white;
+            activity.setClickable(false);
             db.readMove(gameId);
         }
         else{
-            setClickableAll(true);
+            opponentColor = Color.black;
+            activity.setClickable(true);
         }
 
-    }
-
-    public Board getBoard() {
-        return board;
     }
 
 
     public void addClick(int row, int column){
-        Optional<Piece> first = board.getTile(row, column).getPiece();
+
         if (firstClick){
-            if(first.isPresent()){
-                firstTile = board.getTile(row, column);
-                if(firstTile.getPiece().get().getColor() == turnColor){
-                    firstClick = false;
-                }
-            }
+            setupFirstTile(row, column);
         }
         else{
             firstClick = true;
-            counterForTesting += 1;
-
-            if(counterForTesting == 3){
-                Log.d("here", "makingmove");
-            }
-
             move = new Move(firstTile, board.getTile(row, column), prevMov);
-            boolean moved = move.makeMove();
 
-            if(moved){
-                setClickableAll(false);
-                //check cm for oponent
-                Color opCol;
-                if(myColor == Color.white){
-                    opCol = Color.black;
-                }
-                else{
-                    opCol = Color.white;
-                }
+            if(move.makeMove()){
 
-                if(board.isCheck(opCol)){
-                    if(isCheckMate(opCol)){
-                        quickCMaction(true);
-                    };
-                }
-
+                activity.setClickable(false);
+                checkOpponentMate();
 
                 db.addMove(move.getFirst().getPosition()[0], move.getFirst().getPosition()[1], move.getSec().getPosition()[0], move.getSec().getPosition()[1], gameId, myColor);
+            }
+        }
+
+    }
+
+    public void setupFirstTile(int row, int column){
+        Optional<Piece> first = board.getTile(row, column).getPiece();
+
+        if(first.isPresent()){
+            firstTile = board.getTile(row, column);
+            if(firstTile.getPiece().get().getColor() == turnColor){
+                firstClick = false;
+            }
+        }
+
+    }
+
+    public void checkOpponentMate(){
+
+        if(noPossibleMoves(opponentColor)){
+
+            if(board.isCheck(opponentColor)){
+                checkmate(true);
+            }
+            else{
+                activity.gameOver("Stalemate! It's a draw");
             }
 
         }
 
     }
+
+
+    public boolean noPossibleMoves(Color color){
+        return board.isNoMovePossible(color, prevMov);
+    }
+
+
     public void myMove(){
         changeColor();
         boolean canClick = true;
 
-        if(board.isCheck(myColor)){
-            if(isCheckMate(myColor)){
-                //do something useful! - call a method
-                canClick = false;
-                quickCMaction(false); //removes quarter of the board
+        if(noPossibleMoves(myColor)) {
+            canClick = false;
+
+            if(board.isCheck(myColor)){
+                checkmate(false);
             }
-        }
-        else {
-
-        }
-        setClickableAll(canClick);
-        display();
-
-    }
-    private void display(){
-        if(myColor == Color.white){
-            ( (MainActivity) activity).display(0);
-        }
-        else
-        {
-            ( (MainActivity) activity).display(7);
-        }
-    }
-
-    private void setClickableAll(boolean val){
-        TableLayout tableLayout= activity.findViewById(R.id.gdBoard);
-        for(int i = 0; i<8; i++){
-            TableRow row = (TableRow) tableLayout.getChildAt(i);
-            for(int j = 0; j<8; j++){
-                ImageView imageView =  (ImageView) row.getChildAt(j);
-                           imageView.setClickable(val);
-
+            else{
+                stalemate();
             }
 
         }
+
+        activity.setClickable(canClick);
+        activity.display();
     }
 
     public void changeColor(){
+
         if(turnColor == Color.white){
             turnColor = Color.black;
         }
         else{
             turnColor = Color.white;
         }
-    }
 
-    public Move getMove(){
-        return move;
-    }
-
-    public void setPrevMov(Move lMove){
-        prevMov = lMove;
-    }
-
-    public boolean isCheckMate(Color c){
-        board.calculateMoves(prevMov);
-        for(int i = 0; i<8; i++){
-            for(int j =0; j<8; j++){
-                if(i == 6 && j ==0){
-                    System.out.println();
-                }
-                Tile tile1 = board.getTile(i,j);
-
-                if(tile1.getPiece().isPresent()){
-
-                    Piece p = tile1.getPiece().get();
-
-                    if(p.getColor() == c){
-
-                        //for a move we need: prev mov, tile 1, tile 2
-
-                        for(int k =0; k<p.getMoves().size(); k++){
-                            Tile tile2 = p.getMoves().get(k);
-                            Move moveTry = new Move(tile1, tile2, prevMov);
-                            boolean possible = moveTry.makeMove();
-                            if(possible){
-                                //undo move
-                                moveTry.undoMove();
-                                return false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        return true;
     }
 
 
-
-
-    public void resigned(){//possbily delete tyhis!!
-        for(int i = 0; i<8; i++){
-            for(int j =0; j<5; j++){
-
-                board.getTile(i,j).removePiece();
-
-            }
-        }
-
-        display();
+    public void stalemate(){
+        activity.gameOver("Stalemate! It's a draw");
     }
 
 
-    public void quickCMaction(boolean won){
-        ((MainActivity) activity).checkmateVisibility(won);
-        display();
+    public void checkmate(boolean won){
+        activity.gameOver(won);
+        activity.display();
     }
 
-    public Color getMyColor(){
-        return myColor;
-    }
+    public Board getBoard() { return board;}
+
+    public Move getMove(){ return move;}
+
+    public void setPrevMov(Move lMove){ prevMov = lMove;}
 }

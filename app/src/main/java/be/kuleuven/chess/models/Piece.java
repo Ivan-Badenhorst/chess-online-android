@@ -25,6 +25,7 @@ public abstract class Piece implements Cloneable{
         this.board = Board.getBoardObj();
         moves = new ArrayList<>();
         this.color = color;
+        determineTile();
     }
 
 
@@ -243,5 +244,9 @@ public abstract class Piece implements Cloneable{
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
+    }
+
+    public Tile getTile(){
+        return this.tile;
     }
 }

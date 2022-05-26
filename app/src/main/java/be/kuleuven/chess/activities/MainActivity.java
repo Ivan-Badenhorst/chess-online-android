@@ -1,7 +1,6 @@
 package be.kuleuven.chess.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 
 import android.annotation.SuppressLint;
@@ -10,7 +9,6 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,8 +16,6 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import be.kuleuven.chess.R;
@@ -32,50 +28,89 @@ import be.kuleuven.chess.models.Piece;
 public class MainActivity extends AppCompatActivity {
 
     private Game game;
-    private ImageView tile;
-    private List<Integer> start;
+    private DBActivity db;
+    private ProgressDialog progress;
+
     private Color color;
     private int gameId;
-    private DBActivity db;
-
-    private ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         setContentView(R.layout.activity_main);
-        //for inverting display
-        start = new ArrayList<>();
-        start.add(0);
-        start.add(7);
 
-        //for now we hardcode it in such a way that we assume we play multiplayer across devices
-
-        //step 1: find a game - and in doing so determine our color
-                //check if there is a game available - if yes join it and get the ID of the game + my color is black
-                //if not, make a new record for me - I am white + get the ID
-        db = new DBActivity(this); //CHANGE THE THIS!!!!
-        //createGame();
+        db = new DBActivity(this);
 
         progress = new ProgressDialog(this);
         progress.setTitle("Loading");
         progress.setMessage("Finding a match...");
-        progress.setCancelable(true); // disable dismiss by tapping outside of the dialog
+        progress.setCancelable(true);
         progress.show();
-
 
         db.getGame();
     }
 
-    public void display(int start){
-        int sign;
-        if(start == 0){
-             sign = 1;
+    public void gameFound(){
+        this.color = db.getColorPlayer();
+        this.gameId = db.getGameId();
+
+        game = new Game(this, color, gameId);
+
+        progress.dismiss();
+        findViewById(R.id.gdBoard).setVisibility(View.VISIBLE);
+        findViewById(R.id.btnResign).setVisibility(View.VISIBLE);
+
+        display();
+    }
+
+
+
+    public void tileClick(View caller){
+        int id = caller.getId();
+
+        ImageView tile = (ImageView) findViewById(id);
+        TableRow tblRow = (TableRow) tile.getParent();
+
+        int column = tblRow.indexOfChild(tile);
+        int row = ((TableLayout) tblRow.getParent()).indexOfChild(tblRow);
+
+        if(this.color == Color.white){
+            game.addClick(row, column);
         }
         else{
-             sign = -1;
+            game.addClick(7-row, 7-column);
+        }
+
+        display();
+
+    }
+
+    public void setClickable(boolean val){
+
+        TableLayout tableLayout= findViewById(R.id.gdBoard);
+        for(int i = 0; i<8; i++){
+            TableRow row = (TableRow) tableLayout.getChildAt(i);
+            for(int j = 0; j<8; j++){
+                ImageView imageView =  (ImageView) row.getChildAt(j);
+                imageView.setClickable(val);
+
+            }
+
+        }
+    }
+
+    public void display(){
+
+        int sign, start;
+
+        if(color == Color.white){
+            sign = 1;
+            start = 0;
+        }
+        else{
+            sign = -1;
+            start = 7;
         }
 
         TableLayout tableLayout= findViewById(R.id.gdBoard);
@@ -83,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
             TableRow row = (TableRow) tableLayout.getChildAt(i);
 
             for(int j = 0; j<8; j++){
+
                 ImageView imageView =  (ImageView) row.getChildAt(j);
                 Optional<Piece> piece = game.getBoard().getTile(start+sign*i, start+sign*j).getPiece();
 
@@ -90,53 +126,41 @@ public class MainActivity extends AppCompatActivity {
                     Drawable[] image = game.getBoard().getTile(start+sign*i,start+sign*j).getImage(this.getApplicationContext());
                     LayerDrawable layers = new LayerDrawable(image);
                     imageView.setImageDrawable(layers);
-                    }
+                }
                 else {
                     Drawable image = game.getBoard().getTile(start+sign*i, start+sign*j).getTileImage(this.getApplicationContext());
                     imageView.setImageDrawable(image);
-                    }
-
                 }
 
             }
 
         }
 
-
-    public void tileClick(View caller){ 
-        int id = caller.getId();
-
-         tile = (ImageView) findViewById(id);
-
-
-         int row, column;
-        TableRow tblRow = (TableRow) tile.getParent();
-         column = tblRow.indexOfChild(tile);
-
-         row = ((TableLayout) tblRow.getParent()).indexOfChild(tblRow);
-
-         if(this.color == Color.white){
-             game.addClick(row, column);
-         }
-         else{
-             game.addClick(7-row, 7-column);
-         }
-
-
-        if(color == Color.white){
-            display(start.get(0));
-        }
-        else
-        {
-            display(start.get(1));
-        }
-
     }
 
 
-    public static void main(String[] args) {
+    public void gameOver(String message){
+        TextView cmText = findViewById(R.id.cmText);
+        cmText.setVisibility(View.VISIBLE);
 
+        cmText.setText(message);
+
+        Button btnReturn = findViewById(R.id.btnReturn);
+        btnReturn.setVisibility(View.VISIBLE);
+
+        Button btnResign = findViewById(R.id.btnResign);
+        btnResign.setVisibility(View.GONE);
     }
+
+    public void gameOver(boolean won){
+        if(won){
+            gameOver("Checkmate! You won!");
+        }
+        else{
+            gameOver("Checkmate! You lost :(");
+        }
+    }
+
 
     public void btnResignedClick(View caller){
         TableLayout t = findViewById(R.id.gdBoard);
@@ -144,88 +168,28 @@ public class MainActivity extends AppCompatActivity {
         db.setGameStatus(true, gameId);
     }
 
-    public void checkmateVisibility(boolean won){
-        TextView cmText = findViewById(R.id.cmText);
-        cmText.setVisibility(View.VISIBLE);
-
-        if(won){
-            cmText.setText("Checkmate! You won!");
-        }
-        else{
-            cmText.setText("Checkmate! You lost :(");
-        }
-
-        Button btnReturn = findViewById(R.id.btnReturn);
-        btnReturn.setVisibility(View.VISIBLE);
-
-        Button btnResign = findViewById(R.id.btnResign);
-        btnResign.setVisibility(View.GONE);
-    }
-
-    public void returnToMain(View caller)
+    public void btnReturnToMainClick(View caller)
     {
         Intent intent = new Intent(this, MainMenu.class);
         startActivity(intent);
     }
 
-    public void resigned(boolean loser){
-            //game.resigned();
-        TextView cmText = findViewById(R.id.cmText);
-        cmText.setVisibility(View.VISIBLE);
-        Button btnResign = findViewById(R.id.btnResign);
-        btnResign.setVisibility(View.GONE);
-        if(loser){
-            cmText.setText("You resigned!");
-        }
-        else{
-            cmText.setText("Opponent resigned!");
-        }
-
-        Button btnReturn = findViewById(R.id.btnReturn);
-        btnReturn.setVisibility(View.VISIBLE);
-    }
-
-
-    public void gameFound(){
-        this.color = db.getColorPlayer();
-        this.gameId = db.getGameId();
-        Log.d("deleteGame", "gameFound -> ID set");
-
-        game = new Game(this, color, gameId);
-        // To dismiss the dialog
-        progress.dismiss();
-        findViewById(R.id.gdBoard).setVisibility(View.VISIBLE);
-        findViewById(R.id.btnResign).setVisibility(View.VISIBLE);
-
-        if(color == Color.white){
-            display(start.get(0));
-        }
-        else
-        {
-            display(start.get(1));
-        }
-    }
-
     @Override
     public void onBackPressed(){
-        //check db if there is a game with us that is empty
-        //if yes, delete it
 
-        Log.d("deleteGame", "onBackPressed");
         if(gameId == 0){
-            Log.d("deleteGame", "onBackPressed -> IF");
-            db.closeGame();//gameId);
-       }
+            db.closeGame();
+        }
         else{
-            Log.d("deleteGame", "onBackPressed -> ELSE");
             btnResignedClick(findViewById(R.id.btnResign));
             closeActivity();
         }
-
 
     }
 
     public void closeActivity(){
         super.onBackPressed();
     }
+
+
 }

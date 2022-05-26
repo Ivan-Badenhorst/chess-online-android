@@ -614,7 +614,7 @@
         android:id="@+id/btnReturn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="returnToMain"
+        android:onClick="btnReturnToMainClick"
         android:text="Return to Main Menu"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/btnResign"

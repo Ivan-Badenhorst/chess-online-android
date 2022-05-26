@@ -2,8 +2,6 @@ package be.kuleuven.chess.models;
 
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -20,13 +18,16 @@ import be.kuleuven.chess.activities.MainActivity;
 public class DBActivity {
 
     private RequestQueue requestQueue;
-    private AppCompatActivity activity;
+    private MainActivity activity;
     private Color colorPlayer;
     private int gameId;
     private int gameIdGameNotFound;
 
 
-    public DBActivity(AppCompatActivity activity){
+    private int debugCounter = 0;
+
+
+    public DBActivity(MainActivity activity){
         this.activity = activity;
         colorPlayer = null;
         gameId = 0;
@@ -63,7 +64,7 @@ public class DBActivity {
                                 else if (!curObject.getString("playerb").equals("null") && colorPlayer != null){//this means I am white but now I have a second player
                                     Log.d("getGame","third if");
                                     gameId = curObject.getInt("idGame");
-                                    ( (MainActivity) activity).gameFound();
+                                    activity.gameFound();
                                 }
                             }
                             if(gameId == 0 && colorPlayer != null){
@@ -109,7 +110,7 @@ public class DBActivity {
                         Log.d("PB", "Resp");
                         colorPlayer = Color.black;
                         gameId = idGame;
-                        ( (MainActivity) activity).gameFound();
+                        activity.gameFound();
                     }
                 },
 
@@ -186,7 +187,7 @@ public class DBActivity {
                     @Override
                     public void onResponse(JSONArray response)
                     {
-                        ((MainActivity) activity).resigned(true);
+                        activity.gameOver("You resigned!");
                     }
                 },
 
@@ -219,7 +220,7 @@ public class DBActivity {
                     public void onResponse(JSONArray response)
                     {
                         Log.d("deleteGame", "closeGame -> onResponse1");
-                        int idTemp;
+
                         try {
                             for( int i = 0; i < response.length(); i++ )
                             {
@@ -233,7 +234,7 @@ public class DBActivity {
 
                                     }
                                     else{
-                                        ( (MainActivity) activity).closeActivity();
+                                        activity.closeActivity();
                                     }
 
                                 }
@@ -277,7 +278,7 @@ public class DBActivity {
                     public void onResponse(JSONArray response)
                     {
                         Log.d("deleteGame", "deleteGame -> response");
-                        ( (MainActivity) activity).closeActivity();
+                        activity.closeActivity();
                     }
                 },
 

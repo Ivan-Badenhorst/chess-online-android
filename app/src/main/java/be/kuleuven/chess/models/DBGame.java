@@ -80,7 +80,7 @@ public class DBGame {
                                 else{
 
                                     try{
-                                        Thread.sleep(100);
+                                        Thread.sleep(1000);
                                     } catch(InterruptedException e){
                                         Log.e("readMove error", e.getMessage());
                                     }
@@ -91,7 +91,7 @@ public class DBGame {
                             }
                             if (response.length() == 0){
                                 try{
-                                    Thread.sleep(10);
+                                    Thread.sleep(1000);
                                 } catch(InterruptedException e){
                                     Log.e("readMove error", e.getMessage());
                                 }
@@ -147,7 +147,7 @@ public class DBGame {
                             if(resigned == 1){
                                 //do something
                                 //for now as a test I remove pieces from the board!!!
-                                ((MainActivity) activity).resigned(false);//removes half the board
+                                ((MainActivity) activity).gameOver("Opponent resigned!");//removes half the board
 
                                 //maybe have to do some more?
                                 //or just actually call a method that stops everything and

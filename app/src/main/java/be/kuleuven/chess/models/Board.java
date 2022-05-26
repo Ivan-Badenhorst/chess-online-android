@@ -199,6 +199,39 @@ public class Board {
         return getKingTile(color).checkCheck(color);
     }
 
+
+
+    public boolean isNoMovePossible(Color color, Move prevMov){
+        calculateMoves(prevMov);
+        readPieces();
+        List<Piece> piecesToCheck;
+        if(color == Color.white){
+            piecesToCheck = whitePieces;
+        }
+        else{
+            piecesToCheck = blackPieces;
+        }
+
+        for(Piece piece: piecesToCheck)
+        {
+          for(int i = 0; i<piece.getMoves().size(); i++){
+              Tile tile2 = piece.getMoves().get(i);
+              Move moveTry = new Move(piece.getTile(), tile2, prevMov);
+              boolean possible = moveTry.makeMove();
+              if(possible){
+                  moveTry.undoMove();
+                  return false;
+              }
+          }
+        }
+
+        return true;
+    }
+
+
+
+
+
 }
 
 
