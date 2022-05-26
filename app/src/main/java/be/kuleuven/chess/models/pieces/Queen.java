@@ -32,8 +32,7 @@ public class Queen extends Piece {
     public void generateMoves()
     {
         moves.clear();
-        moves = getDiagonalMoves();
-        moves.addAll(getStraightMoves());
-
+        getDiagonalMoves();
+        getStraightMoves();
     }
 }

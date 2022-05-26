@@ -31,6 +31,6 @@ public class Bishop extends Piece {
     public void generateMoves()
     {
         moves.clear();
-        moves = getDiagonalMoves();
+        getDiagonalMoves();
     }
 }

@@ -33,7 +33,7 @@ public class Rook extends Piece {
     public void generateMoves()
     {
         moves.clear();
-        moves = getStraightMoves();
+        getStraightMoves();
     }
 
     public void setHasMoved(boolean val){

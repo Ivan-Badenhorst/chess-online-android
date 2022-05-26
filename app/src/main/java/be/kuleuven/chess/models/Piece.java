@@ -15,19 +15,21 @@ import java.util.List;
  * @Structure:  Parent of classes in package: be.kuleuven.chess.models.pieces
  */
 public abstract class Piece implements Cloneable{
-    protected Color color;
+
     protected Board board;
     protected Tile tile;
+
+    protected Color color;
     protected List<Tile> moves;
 
     public Piece(Color color)
     {
         this.board = Board.getBoardObj();
-        moves = new ArrayList<>();
         this.color = color;
+        moves = new ArrayList<>();
+
         determineTile();
     }
-
 
 
     public abstract Drawable getImage(Context ctx);
@@ -37,20 +39,21 @@ public abstract class Piece implements Cloneable{
      *Method determines the Tile that this Piece is positioned on
      */
     protected void determineTile(){
+
         for(int i = 0; i<8;i++){
             for(int j = 0; j<8;j++){
+
                 if(board.getTile(i,j).getPiece().isPresent()){
                     if(board.getTile(i,j).getPiece().get().equals(this)){
                         this.tile = board.getTile(i,j);
                     }
                 }
+
             }
         }
+
     }
 
-    public List<Tile> getMoves() {
-        return moves;
-    }
 
     /**
      * Method determines all tiles that a specific piece can move to in straight lines
@@ -58,7 +61,8 @@ public abstract class Piece implements Cloneable{
      *
      * @return A list of Tiles the specific could move to based on mentioned directions
      */
-    protected List<Tile> getStraightMoves(){
+
+    protected void getStraightMoves(){
         determineTile();
 
         int[] pos = tile.getPosition();
@@ -72,49 +76,32 @@ public abstract class Piece implements Cloneable{
                 current[0] = pos[0] ;
                 current[1] = pos[1] - i;
 
-                Pair<Boolean, Tile> res = getMove(current);
-                left = res.first;
-                if(res.second != null){
-                    moves.add(res.second);
-                }
+                left = checkTileForMove(current);
             }
 
             if(right) {
                 current[0] = pos[0];
                 current[1] = pos[1] + i;
 
-                Pair<Boolean, Tile> res = getMove(current);
-                right = res.first;
-                if(res.second != null){
-                    moves.add(res.second);
-                }
+                right = checkTileForMove(current);
             }
 
             if(top){
                 current[0] = pos[0] - i;
                 current[1] = pos[1];
 
-                Pair<Boolean, Tile> res = getMove(current);
-                top = res.first;
-                if(res.second != null){
-                    moves.add(res.second);
-                }
+                top = checkTileForMove(current);
             }
 
             if(bottom){
                 current[0] = pos[0] + i;
                 current[1] = pos[1];
 
-                Pair<Boolean, Tile> res = getMove(current);
-                bottom = res.first;
-                if(res.second != null){
-                    moves.add(res.second);
-                }
+                bottom = checkTileForMove(current);
             }
 
         }
 
-        return moves;
     }
 
     /**
@@ -123,7 +110,7 @@ public abstract class Piece implements Cloneable{
      *
      * @return A list of Tiles the specific could move to based on mentioned directions
      */
-    protected List<Tile> getDiagonalMoves(){
+    protected void getDiagonalMoves(){
         determineTile();
 
         int[] pos = tile.getPosition();
@@ -137,50 +124,42 @@ public abstract class Piece implements Cloneable{
                 current[0] = pos[0] - i;
                 current[1] = pos[1] - i;
 
-                Pair<Boolean, Tile> res = getMove(current);
-                leftTop = res.first;
-                if(res.second != null){
-                    moves.add(res.second);
-                }
+                leftTop = checkTileForMove(current);
             }
 
             if(rightBottom) {
                 current[0] = pos[0] + i;
                 current[1] = pos[1] + i;
 
-                Pair<Boolean, Tile> res = getMove(current);
-                rightBottom = res.first;
-                if(res.second != null){
-                    moves.add(res.second);
-                }
+                rightBottom = checkTileForMove(current);
             }
 
             if(rightTop){
                 current[0] = pos[0] - i;
                 current[1] = pos[1] + i;
 
-                Pair<Boolean, Tile> res = getMove(current);
-                rightTop = res.first;
-                if(res.second != null){
-                    moves.add(res.second);
-                }
+                rightTop = checkTileForMove(current);
             }
 
            if(leftBottom){
                current[0] = pos[0] + i;
                current[1] = pos[1] - i;
 
-               Pair<Boolean, Tile> res = getMove(current);
-               leftBottom = res.first;
-               if(res.second != null){
-                   moves.add(res.second);
-               }
+               leftBottom = checkTileForMove(current);
            }
 
         }
 
-        return moves;
+    }
 
+    protected boolean checkTileForMove(int[] tilePosition){
+        Pair<Boolean, Tile> res = getMove(tilePosition);
+
+        if(res.second != null){
+            moves.add(res.second);
+        }
+
+        return res.first;
     }
 
     /**
@@ -217,10 +196,6 @@ public abstract class Piece implements Cloneable{
     }
 
 
-    public Color getColor(){
-       return this.color;
-    }
-
     public void addNormalMove(int row, int col)
     {
         if(!board.getTile(row, col).getPiece().isPresent())
@@ -248,5 +223,13 @@ public abstract class Piece implements Cloneable{
 
     public Tile getTile(){
         return this.tile;
+    }
+
+    public List<Tile> getMoves() {
+        return moves;
+    }
+
+    public Color getColor(){
+        return this.color;
     }
 }
