@@ -206,8 +206,10 @@ public class Board {
             piecesToCheck = blackPieces;
         }
 
-        for(Piece piece: piecesToCheck)
+        for(int j = 0; j<piecesToCheck.size(); j++)
         {
+            Piece piece = piecesToCheck.get(j);
+
           for(int i = 0; i<piece.getMoves().size(); i++){
               Tile tile2 = piece.getMoves().get(i);
               Move moveTry = new Move(piece.getTile(), tile2, prevMov);

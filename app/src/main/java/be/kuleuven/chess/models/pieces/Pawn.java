@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import java.util.ArrayList;
 
 import be.kuleuven.chess.R;
-import be.kuleuven.chess.models.Board;
 import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Move;
 import be.kuleuven.chess.models.Piece;
@@ -109,14 +108,14 @@ public class Pawn extends Piece {
             }
 
 
-            if(prev.getFirst().equals(enPassant.get(0)) && prev.getSec().equals(enPassant.get(2)) ){
+            if(prev.getFirstTile().equals(enPassant.get(0)) && prev.getSecondTile().equals(enPassant.get(2)) ){
 
                 if(prev.getPiece() instanceof Pawn){
                     moves.add(board.getTile(tile.getPosition()[0]+vert , tile.getPosition()[1] -1));
                 }
 
             }
-            else if(prev.getFirst() == enPassant.get(1) && prev.getSec() == enPassant.get(3)){
+            else if(prev.getFirstTile() == enPassant.get(1) && prev.getSecondTile() == enPassant.get(3)){
 
                 if(prev.getPiece() instanceof Pawn){
                     moves.add(board.getTile(tile.getPosition()[0]+vert , tile.getPosition()[1] + 1));

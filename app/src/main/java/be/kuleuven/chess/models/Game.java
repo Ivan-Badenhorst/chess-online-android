@@ -25,6 +25,9 @@ public class Game {
     private final int gameId;
 
 
+    private int counter = 0;
+
+
     public Game(MainActivity activity, Color myColor, int gameId) {
         this.myColor = myColor;
         this.gameId = gameId;
@@ -60,11 +63,15 @@ public class Game {
             move = new Move(firstTile, board.getTile(row, column), prevMov);
 
             if(move.makeMove()){
+                counter++;
+                if(counter == 4){
+                    System.out.println("lol");
+                }
 
                 activity.setClickable(false);
                 checkOpponentMate();
 
-                db.addMove(move.getFirst().getPosition()[0], move.getFirst().getPosition()[1], move.getSec().getPosition()[0], move.getSec().getPosition()[1], gameId, myColor);
+                db.addMove(move.getFirstTile().getPosition()[0], move.getFirstTile().getPosition()[1], move.getSecondTile().getPosition()[0], move.getSecondTile().getPosition()[1], gameId, myColor);
             }
         }
 

@@ -29,7 +29,6 @@ public class Tile {
         this.board = Board.getBoardObj();
         this.color = color;
 
-
     }
 
 
