@@ -39,10 +39,10 @@ public class Board {
         for(int i =0; i<board.length; i++){
             for(int j = 0; j<board[0].length; j++){
                 if( (i %2 == 0 & j%2 != 0) || (i %2 != 0 & j%2 == 0) ) {
-                    board[i][j] = new Tile(Color.white);
+                    board[i][j] = new Tile(Color.black);
                 }
                 else{
-                    board[i][j] = new Tile(Color.black);
+                    board[i][j] = new Tile(Color.white);
                 }
             }
         }
