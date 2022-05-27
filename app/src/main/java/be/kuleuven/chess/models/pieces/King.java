@@ -14,15 +14,9 @@ import be.kuleuven.chess.models.SpecialMoves.Castling;
 import be.kuleuven.chess.models.Tile;
 
 public class King extends Piece {
-    //to do: write code to get the correct file
+
     private boolean hasMoved;
     private List<Tile> castlingTiles;
-
-
-    private int counter = 0;
-
-
-
 
     public King(Color color) {
         super(color);
@@ -46,15 +40,16 @@ public class King extends Piece {
     @Override
     public void generateMoves()
     {
-
-
-        counter++;
-
-
-
-
         determineTile();
         moves.clear();
+
+        addRegularMoves();
+        addCastlingMoves();
+
+    }
+
+    private void addRegularMoves(){
+
         int[] pos = tile.getPosition();
         int[] bounds = getBound(pos[0], pos[1]);
 
@@ -73,19 +68,14 @@ public class King extends Piece {
 
             }
         }
+    }
 
-
-        //create castling moves
-
-        if(counter == 14){
-            System.out.println("here now");
-        }
-
+    public void addCastlingMoves(){
         Castling castling = new Castling(tile.getPosition(), hasMoved,color);
         castlingTiles = castling.getCastlingSquares();
 
         if(castlingTiles != null && !tile.checkCheck(color)) {
-            //first we check left
+
             if(castling.castlingPossible(castlingTiles.get(0), true)){
                 moves.add(castlingTiles.get(2));
             }
@@ -95,19 +85,12 @@ public class King extends Piece {
 
         }
 
-
-
-    }
-
-    public List<Tile> getCastling(){
-        return castlingTiles;
     }
 
 
-    public int[] getBound(int row, int column){
+    private int[] getBound(int row, int column){
         //order: lowerH, lowerV, higherH, higherV
         int[] ret = new int[4];
-
 
         if(row == 0){
             ret[0] = row;
@@ -139,7 +122,6 @@ public class King extends Piece {
 
         return ret;
 
-
     }
 
 
@@ -147,25 +129,8 @@ public class King extends Piece {
         hasMoved = val;
     }
 
-
-    public boolean checkCastlingRook(Tile rookTile){
-        if(rookTile.getPiece().isPresent()){
-            //means there is a piece on the left most square
-            Piece pc = rookTile.getPiece().get();
-
-            if(pc instanceof Rook){
-                //the piece is a rook
-                if( !( (Rook) pc).hasMoved()){
-                    //the rook hasn't moved either
-                    return true;
-
-                }
-
-            }
-
-        }
-        return false;
+    public List<Tile> getCastling(){
+        return castlingTiles;
     }
-
 
 }
