@@ -13,21 +13,10 @@ import be.kuleuven.chess.models.Piece;
 import be.kuleuven.chess.models.Tile;
 
 public class Pawn extends Piece {
+
     private boolean hasMoved;
-    private ArrayList<Tile> enPassant; /*
-    format:
-    [0] - left top/bottom
-    [1] - right top/bottom
-    [2] - left
-    [3] - right
-    */
-
-
-    private int counter = 0;
+    private ArrayList<Tile> enPassant;
     private boolean madeEnPassant;
-
-
-
 
     public Pawn(Color color) {
         super(color);
@@ -59,137 +48,115 @@ public class Pawn extends Piece {
         moves.clear();
         madeEnPassant = false;
 
-
-
-
         determineTile();
 
         int[] pos = tile.getPosition();
-        int currentRank = pos[0];
-        int currentFile = pos[1];
+        int currentRow = pos[0];
+        int currentColumn = pos[1];
 
-        //pawn promotes to queen automatically
-        if(this.color == Color.white && currentRank == 0){
-            tile.addPiece(new Queen(this.color));
-        }
-        else if(currentRank == 7){
-            tile.addPiece(new Queen(this.color));
-        }
+        promotion(currentRow);
 
-
-        if((this.color == Color.white && currentRank == 3) || (this.color == Color.black && currentRank == 4)){
+        if((this.color == Color.white && currentRow == 3) || (this.color == Color.black && currentRow == 4)){
             generateEnPassant(pos);
         }
         else{
             enPassant = null;
         }
 
-
         if(enPassant != null){
+            addEnPassantMoves(prev);
+        }
 
-            //check if prev move, sec tile is positione 1 or 2 in the array
-            //check if the previous move as a pawn
-            //check if it was a double move
-            int vert;
-
-
-            counter ++;
-
-            if(counter == 18){
-                System.out.println("yo");
-                System.out.println("how about here");
-            }
-
-            if(color == Color.white){
-                vert = -1;
-            }
-            else{
-                vert = 1;
-            }
+        addMoves(currentRow, currentColumn);
+    }
 
 
-            if(prev.getFirstTile().equals(enPassant.get(0)) && prev.getSecondTile().equals(enPassant.get(2)) ){
+    private void promotion(int currentRow) {
+        if(this.color == Color.white && currentRow == 0){
+            tile.addPiece(new Queen(this.color));
+        }
+        else if(currentRow == 7){
+            tile.addPiece(new Queen(this.color));
+        }
+    }
 
-                if(prev.getPiece() instanceof Pawn){
-                    moves.add(board.getTile(tile.getPosition()[0]+vert , tile.getPosition()[1] -1));
-                }
+    private void addEnPassantMoves(Move prev) {
+        int vert;
 
-            }
-            else if(prev.getFirstTile() == enPassant.get(1) && prev.getSecondTile() == enPassant.get(3)){
+        if(color == Color.white){
+            vert = -1;
+        }
+        else{
+            vert = 1;
+        }
 
-                if(prev.getPiece() instanceof Pawn){
-                    moves.add(board.getTile(tile.getPosition()[0]+vert , tile.getPosition()[1] + 1));
-                }
+        if(prev.getFirstTile().equals(enPassant.get(0)) && prev.getSecondTile().equals(enPassant.get(2)) ){
 
+            if(prev.getPiece() instanceof Pawn){
+                moves.add(board.getTile(tile.getPosition()[0]+vert , tile.getPosition()[1] -1));
             }
 
         }
+        else if(prev.getFirstTile() == enPassant.get(1) && prev.getSecondTile() == enPassant.get(3)){
+
+            if(prev.getPiece() instanceof Pawn){
+                moves.add(board.getTile(tile.getPosition()[0]+vert , tile.getPosition()[1] + 1));
+            }
+
+        }
+    }
+
+    private void addMoves(int currentRow, int currentColumn) {
+
+        int left = currentColumn-1;
+        int right = currentColumn+1;
+        int up, doubleUp;
+        Color opponentColor;
+
+        if(color == Color.white){
+            up = currentRow-1;
+            doubleUp = currentRow-2;
+            opponentColor = Color.black;
+        }
+        else{
+            up = currentRow+1;
+            doubleUp = currentRow+2;
+            opponentColor = Color.white;
+        }
 
 
-
-        int up = pos[0]-1;
-        int doubleUp = pos[0]-2;
-        int down = pos[0]+1;
-        int doubleDown = pos[0]+2;
-        int left = pos[1]-1;
-        int right = pos[1]+1;
-
-
-        if(currentRank < 7 && currentRank > 0){
+        if(currentRow < 7 && currentRow > 0){
 
             if(this.color == Color.white) {
 
+                addNormalMove(up, currentColumn);
 
-
-
-
-                addNormalMove(up, currentFile);
-
-                if (!hasMoved && !board.getTile(up, currentFile).getPiece().isPresent()) {
-                    addNormalMove(doubleUp, currentFile);
+                if (!hasMoved && !board.getTile(up, currentColumn).getPiece().isPresent()) {
+                    addNormalMove(doubleUp, currentColumn);
                 }
 
-
-
-                //capture diagonal left
-                if (currentFile != 0) {
-                    addCaptures(up, left, Color.black);
-                }
-                //capture diagonal right
-                if (currentFile != 7) {
-                    addCaptures(up, right, Color.black);
+                if (currentColumn != 0) {
+                    addCaptures(up, left, opponentColor);
                 }
 
-
-
-
-
-
-            }
-            else if (this.color == Color.black)
-            {
-
-                addNormalMove(down, currentFile);
-
-                if (!hasMoved && !board.getTile(down, currentFile).getPiece().isPresent()) {
-                    addNormalMove(doubleDown, currentFile);
-                }
-
-
-                if(currentFile!=0) {
-                    addCaptures(down, left, Color.white);
-                }
-
-                if(currentFile!=7) {
-                    addCaptures(down, right, Color.white);
+                if (currentColumn != 7) {
+                    addCaptures(up, right, opponentColor);
                 }
             }
+
         }
     }
 
 
-
     private void generateEnPassant(int[] pos) {
+        /*
+    format:
+    [0] - left top/bottom
+    [1] - right top/bottom
+    [2] - left
+    [3] - right
+    */
+
         enPassant = new ArrayList<>(4);
         int vert;
         if(color == Color.white){
@@ -224,19 +191,9 @@ public class Pawn extends Piece {
 
     }
 
-    public void setHasMoved(boolean val){
-        hasMoved = val;
-    }
+    public void setHasMoved(boolean val){ hasMoved = val;}
 
-    public ArrayList<Tile> getEnPassant(){
-        return enPassant;
-    }
+    public void setMadeEnPassant(boolean madeEnPassant) { this.madeEnPassant = madeEnPassant;}
 
-    public void setMadeEnPassant(boolean madeEnPassant) {
-        this.madeEnPassant = madeEnPassant;
-    }
-
-    public boolean isMadeEnPassant() {
-        return madeEnPassant;
-    }
+    public boolean isMadeEnPassant() { return madeEnPassant;}
 }

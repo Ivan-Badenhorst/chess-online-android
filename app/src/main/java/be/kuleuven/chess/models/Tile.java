@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
 import java.util.Optional;
 
 import be.kuleuven.chess.R;
-
+import be.kuleuven.chess.models.SpecialMoves.Check;
 
 
 public class Tile {
