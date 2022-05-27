@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import be.kuleuven.chess.interfaces.HasMoved;
 import be.kuleuven.chess.models.pieces.King;
 import be.kuleuven.chess.models.pieces.Pawn;
 import be.kuleuven.chess.models.pieces.Rook;
@@ -66,12 +67,9 @@ public class Move {
 
 
         if(hasMoved){
-            if(piece instanceof King) {
-                ((King) piece).setHasMoved(true);
-            }else if (piece instanceof Rook){
-                ((Rook) piece).setHasMoved(true);
-            }else if(piece instanceof Pawn){
-                ((Pawn) piece).setHasMoved(true);
+            if(piece instanceof HasMoved) {
+                ((HasMoved) piece).setHasMoved(true);
+
             }
             return true;
         }

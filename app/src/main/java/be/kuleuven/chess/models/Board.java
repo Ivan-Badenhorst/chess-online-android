@@ -167,8 +167,7 @@ public class Board {
             }
 
         }
-        //whitePieces.stream().forEach(Piece::generateMoves);
-        //blackPieces.stream().forEach(n -> n.generateMoves());
+
     }
 
     private Tile getKingTile(Color color){

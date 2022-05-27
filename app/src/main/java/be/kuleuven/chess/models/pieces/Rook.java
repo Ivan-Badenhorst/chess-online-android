@@ -6,10 +6,11 @@ import android.graphics.drawable.Drawable;
 import android.util.Log;
 
 import be.kuleuven.chess.R;
+import be.kuleuven.chess.interfaces.HasMoved;
 import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Piece;
 
-public class Rook extends Piece {
+public class Rook extends Piece implements HasMoved {
     private boolean hasMoved;
 
     public Rook(Color color) {

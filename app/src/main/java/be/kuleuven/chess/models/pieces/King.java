@@ -8,12 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.kuleuven.chess.R;
+import be.kuleuven.chess.interfaces.HasMoved;
 import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Piece;
 import be.kuleuven.chess.models.SpecialMoves.Castling;
 import be.kuleuven.chess.models.Tile;
 
-public class King extends Piece {
+public class King extends Piece implements HasMoved {
 
     private boolean hasMoved;
     private List<Tile> castlingTiles;

@@ -19,13 +19,14 @@ import android.widget.TextView;
 import java.util.Optional;
 
 import be.kuleuven.chess.R;
+import be.kuleuven.chess.interfaces.Display;
 import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Database.DBActivity;
 import be.kuleuven.chess.models.Game;
 import be.kuleuven.chess.models.Piece;
 
 @SuppressLint("NewApi")
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Display {
 
     private Game game;
     private DBActivity db;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         resigned = false;
         db = new DBActivity(this);
@@ -88,19 +90,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void setClickable(boolean val){
+    @Override
+    public void setClickable(boolean canClick){
 
         TableLayout tableLayout= findViewById(R.id.gdBoard);
         for(int i = 0; i<8; i++){
             TableRow row = (TableRow) tableLayout.getChildAt(i);
             for(int j = 0; j<8; j++){
                 ImageView imageView =  (ImageView) row.getChildAt(j);
-                imageView.setClickable(val);
+                imageView.setClickable(canClick);
 
             }
 
         }
     }
+
 
     public void display(){
 

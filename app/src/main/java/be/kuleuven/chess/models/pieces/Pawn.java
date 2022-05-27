@@ -7,12 +7,13 @@ import android.graphics.drawable.Drawable;
 import java.util.ArrayList;
 
 import be.kuleuven.chess.R;
+import be.kuleuven.chess.interfaces.HasMoved;
 import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Move;
 import be.kuleuven.chess.models.Piece;
 import be.kuleuven.chess.models.Tile;
 
-public class Pawn extends Piece {
+public class Pawn extends Piece implements HasMoved {
 
     private boolean hasMoved;
     private ArrayList<Tile> enPassant;
