@@ -5,7 +5,6 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 
 import be.kuleuven.chess.R;
-import be.kuleuven.chess.models.Board;
 import be.kuleuven.chess.models.Color;
 import be.kuleuven.chess.models.Piece;
 
@@ -32,18 +31,15 @@ public class Knight extends Piece {
 
         determineTile();
         moves.clear();
-        int[] pos = tile.getPosition();
+        int[] position = tile.getPosition();
 
-        int[] horizontalComb = {-1, 1, 2, 2, -2, -2, -1, 1};
-        int[] verticalComb = {-2, -2, -1, 1, -1, 1, 2, 2};
+        int[] horizontalCombination = {-1, 1, 2, 2, -2, -2, -1, 1};
+        int[] verticalCombination = {-2, -2, -1, 1, -1, 1, 2, 2};
 
-
-        // Check if each possible move is valid or not  
         for (int i = 0; i < 8; i++) {
 
-            // Position of knight after move
-            int newRow = pos[0] + horizontalComb[i];
-            int newCol = pos[1] + verticalComb[i];
+            int newRow = position[0] + horizontalCombination[i];
+            int newCol = position[1] + verticalCombination[i];
             if (newRow >= 0 && newRow < 8 && newCol >= 0 && newCol < 8) {
 
                 addNormalMove(newRow,newCol);
