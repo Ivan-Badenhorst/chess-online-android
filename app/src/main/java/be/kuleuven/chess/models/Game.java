@@ -1,6 +1,7 @@
 package be.kuleuven.chess.models;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import java.util.Optional;
 
@@ -24,10 +25,6 @@ public class Game {
     private final Color opponentColor;
     private final int gameId;
 
-
-    private int counter = 0;
-
-
     public Game(MainActivity activity, Color myColor, int gameId) {
         this.myColor = myColor;
         this.gameId = gameId;
@@ -38,7 +35,7 @@ public class Game {
         move = null;
         firstClick = true;
         turnColor = Color.white;
-        db = new DBGame(activity, turnColor, this);
+        db = new DBGame(activity, this);
 
         if(myColor == Color.black){
             opponentColor = Color.white;
@@ -63,11 +60,6 @@ public class Game {
             move = new Move(firstTile, board.getTile(row, column), prevMov);
 
             if(move.makeMove()){
-                counter++;
-                if(counter == 4){
-                    System.out.println("lol");
-                }
-
                 activity.setClickable(false);
                 checkOpponentMate();
 

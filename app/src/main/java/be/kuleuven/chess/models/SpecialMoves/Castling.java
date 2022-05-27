@@ -11,10 +11,11 @@ import be.kuleuven.chess.models.pieces.Rook;
 
 public class Castling {
 
-    private Board board;
-    private int[] position;
-    private boolean hasMoved;
-    private Color color;
+    private final Board board;
+
+    private final int[] position;
+    private final boolean hasMoved;
+    private final Color color;
 
 
     public Castling(int[] position, boolean hasMoved, Color color){
@@ -26,10 +27,7 @@ public class Castling {
 
 
     public boolean castlingPossible(Tile rookTile, boolean left){
-        boolean b1 = castlingRowCheck(left);
-        boolean b2 = checkCastlingRook(rookTile);
-        return b1&&b2;
-        //return castlingRowCheck(left) && checkCastlingRook(rookTile);
+        return castlingRowCheck(left) && checkCastlingRook(rookTile);
     }
 
     private boolean castlingRowCheck(boolean left){
@@ -41,14 +39,9 @@ public class Castling {
             value = 1;
         }
 
-
-
         for(int i = 1; i < 3; i++){
 
-            Tile tileToCheck = null;
-
-            tileToCheck = board.getTile(position[0], position[1] + value*i);
-
+            Tile tileToCheck = board.getTile(position[0], position[1] + value*i);
 
             if(tileToCheck.getPiece().isPresent()){
                 return false;
@@ -59,8 +52,7 @@ public class Castling {
         }
 
         if(left){
-            Tile tileToCheck = null;
-            tileToCheck = board.getTile(position[0], position[1] + value*3);
+            Tile tileToCheck = board.getTile(position[0], position[1] + value*3);
             if(tileToCheck.getPiece().isPresent()){
                 return false;
             }
@@ -70,15 +62,31 @@ public class Castling {
 
     }
 
+    public boolean checkCastlingRook(Tile rookTile){
+        if(rookTile.getPiece().isPresent()){
+
+            Piece pc = rookTile.getPiece().get();
+            if(pc instanceof Rook){
+
+                if( !( (Rook) pc).hasMoved()){
+                    return true;
+
+                }
+
+            }
+
+        }
+        return false;
+    }
+
     public List<Tile> getCastlingSquares(){
         /*
         send array in the format:
         4 left, 3 left, 2 left, 1 left, 1 right, 2 right, 3 right
          */
 
-
         int[] current = new int[2];
-        List<Tile> ls = new ArrayList<>();
+        List<Tile> castlingSquares = new ArrayList<>();
         boolean empty = true;
 
         current[0] = position[0];
@@ -91,7 +99,7 @@ public class Castling {
                 current[1] = position[1] + i;
                 if(current[1] >= 0 && current[1] <8){
                     empty = false;
-                    ls.add(board.getTile(current[0], current[1]));
+                    castlingSquares.add(board.getTile(current[0], current[1]));
                 }
 
             }
@@ -99,26 +107,7 @@ public class Castling {
         if(empty){
             return null;
         }
-        return ls;
+        return castlingSquares;
 
-    }
-
-    public boolean checkCastlingRook(Tile rookTile){
-        if(rookTile.getPiece().isPresent()){
-            //means there is a piece on the left most square
-            Piece pc = rookTile.getPiece().get();
-
-            if(pc instanceof Rook){
-                //the piece is a rook
-                if( !( (Rook) pc).hasMoved()){
-                    //the rook hasn't moved either
-                    return true;
-
-                }
-
-            }
-
-        }
-        return false;
     }
 }

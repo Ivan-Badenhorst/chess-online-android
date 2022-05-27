@@ -157,13 +157,14 @@ public class Check {
         return false;
     }
 
-    private boolean isPieceCheckDiagonal(Color color, int i, Piece p, Color white) {
+    private boolean isPieceCheckDiagonal(Color color, int i, Piece p, Color pawnColor) {
+
         if (p.getColor() != color) {
 
             if (p instanceof Bishop || p instanceof Queen) {
                 return true;
             }
-            if (i == 1 && p instanceof Pawn && color == white) {
+            if (i == 1 && p instanceof Pawn && color == pawnColor) {
                 return true;
             }
             if (p instanceof King && i == 1) {
@@ -171,6 +172,7 @@ public class Check {
             }
         }
         return false;
+
     }
 
     public boolean checkKnight(){

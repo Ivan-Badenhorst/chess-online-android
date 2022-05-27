@@ -39,7 +39,6 @@ public class Move {
     public boolean makeMove()
     {
         board.calculateMoves(previousMove);
-
         piece = firstTile.getPiece().get();
         setupForUndo();
 
@@ -56,6 +55,7 @@ public class Move {
 
             if(!(piece instanceof King || piece instanceof Pawn) ){
                 normalMove();
+                Log.d("MOVE", "calcMove");
             }
             else if(piece instanceof King){
                 kingMove();
@@ -155,7 +155,7 @@ public class Move {
     private void castlingRight(){
         List<Tile> castlingTiles = ((King) piece).getCastling();
         makeBasicMove();
-        castlingTiles.get(4).addPiece(castlingTiles.get(0).getPiece().get());
+        castlingTiles.get(4).addPiece(castlingTiles.get(6).getPiece().get());
         castlingTiles.get(6).removePiece();
     }
 

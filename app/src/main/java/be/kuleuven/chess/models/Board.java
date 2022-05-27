@@ -147,6 +147,7 @@ public class Board {
     public void calculateMoves(Move move){
         readPieces();
         for(int i = 0; i<whitePieces.size(); i++){
+
             if(whitePieces.get(i) instanceof Pawn){
                 ( (Pawn) whitePieces.get(i)).generateMoves(move);
             }

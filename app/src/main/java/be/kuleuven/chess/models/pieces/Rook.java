@@ -3,6 +3,7 @@ package be.kuleuven.chess.models.pieces;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import be.kuleuven.chess.R;
 import be.kuleuven.chess.models.Color;
@@ -32,6 +33,7 @@ public class Rook extends Piece {
     public void generateMoves()
     {
         moves.clear();
+        Log.d("ROOK", "generateMoves");
         getStraightMoves();
     }
 
