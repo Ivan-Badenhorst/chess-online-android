@@ -127,8 +127,6 @@ public class Pawn extends Piece {
 
         if(currentRow < 7 && currentRow > 0){
 
-            if(this.color == Color.white) {
-
                 addNormalMove(up, currentColumn);
 
                 if (!hasMoved && !board.getTile(up, currentColumn).getPiece().isPresent()) {
@@ -142,8 +140,6 @@ public class Pawn extends Piece {
                 if (currentColumn != 7) {
                     addCaptures(up, right, opponentColor);
                 }
-            }
-
         }
     }
 
